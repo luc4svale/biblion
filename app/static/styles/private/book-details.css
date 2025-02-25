@@ -1,0 +1,28 @@
+@import url("./common.css");
+
+/* specific styles */
+
+.book-container {
+  & .book-cover {
+    aspect-ratio: 2 / 3;
+    border-radius: 0.375rem;
+    box-shadow: 0rem 0.25rem 1.25rem rgba(0, 0, 0, 0.2);
+  }
+
+  & .btn-group {
+    & .btn {
+      flex: 1;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+
+      &.add-favorite:hover {
+        background-color: var(--blue-dark);
+      }
+
+      &.start-reading:hover {
+        background-color: var(--text-gray);
+      }
+
+    }
+  }
+}

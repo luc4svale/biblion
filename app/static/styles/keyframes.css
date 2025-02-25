@@ -1,0 +1,50 @@
+@keyframes spin {
+  25% {
+    transform: rotate(90deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  75% {
+    transform: rotate(270deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+} 
+
+@keyframes changeColor {
+  25% {
+    color: var(--yellow-light);
+  }
+
+  50% {
+    color: var(--green-light);
+  }
+
+  75% {
+    color: var(--orange-light);
+  }
+}
+
+@keyframes leftEntry {
+  from {
+    transform: translate(-2000px);
+  }
+  to {
+    transform: translate(0);
+  }
+}
+
+@keyframes smoothAppear {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+      opacity: 1;
+    }
+}

@@ -1,0 +1,12 @@
+@import url("./common.css");
+
+/* specific styles */
+body {
+  & main {
+    & #logo-container {
+      & img[src*="logo"] {
+        animation: spin 0.20s 8 linear;
+      }
+    }
+  }
+}

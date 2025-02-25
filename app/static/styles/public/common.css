@@ -1,0 +1,41 @@
+@import url("../global.css");
+@import url("../utilities.css");
+@import url("../keyframes.css");
+
+body {
+  background: linear-gradient(to bottom, var(--surface-tertiary), var(--surface-primary));
+
+  & main {
+    animation: leftEntry 1.5s ease-out backwards;
+
+    & header .logo-text {
+        animation: changeColor 1.5s 1.5s ease-in ;
+    }
+
+    & .bg-blue-light:hover {
+        background-color: var(--blue-hover);
+    }
+
+    & .bg-green-light:hover {
+      background-color: var(--green-hover);
+    }
+  }
+
+  & footer {
+    animation: smoothAppear 1.5s 1.5s backwards;
+  }
+  
+  & .social-container .btn:hover {
+    color: var(--blue-dark);
+  }
+
+  & .btn {
+    border-radius: 0.5rem;
+    transition: all 0.3s ease-in-out;
+  
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0rem 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+    }
+  }
+}

@@ -1,0 +1,36 @@
+@import url("./common.css");
+
+/* specific styles */
+
+form {
+
+  &#change-personal-info-form {
+    #photo-container {
+      & label {
+        width: 65%;
+        cursor: pointer;
+
+        & #photo-overlay {
+          z-index: 99;
+          opacity: 0;
+        }
+
+        &:hover {
+          & #photo-overlay {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  &#change-password-form {
+      max-width: 31.25rem;
+  }
+
+
+  & .btn:hover {
+    background-color: var(--blue-dark);
+  }
+
+}

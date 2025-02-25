@@ -1,0 +1,12 @@
+@import url("./common.css");
+
+/* specific styles */
+
+#page-top {
+  height: 100vh;
+  overflow: hidden;
+
+  & #book-reader {
+    height: 80vh;
+  }
+}

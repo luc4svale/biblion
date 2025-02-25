@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Biblion | Livros Favoritos</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="static/icons/biblion-favicon.svg" type="image/x-icon">
+
+
+  <!-- Custom fonts for this template-->
+  <link href="static/libs/sb-admin-2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+
+
+  <!-- Template styles-->
+  <link href="static/libs/sb-admin-2/css/sb-admin-2.css" rel="stylesheet">
+
+  <!-- Custom styles-->
+  <link href="static/styles/private/favorites.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <aside>
+      <nav>
+        <ul class="navbar-nav sidebar accordion" id="accordion-sidebar">
+
+          <!-- Sidebar Brand -->
+          <li>
+            <a class="sidebar-brand d-flex align-items-center justify-content-center gap-1" href="#">
+              <img class="sidebar-brand-icon" src="static/icons/biblion-logo.svg">
+              <strong class="text-blue-light fs-lg font-weight-black sidebar-brand-text">Biblion</strong>
+            </a>
+          </li>
+
+          <!-- Home -->
+          <li class="nav-item mt-2">
+            <a class="nav-link" href="/home">
+              <i class="fas fa-fw fa-house text-white"></i>
+              <span class="text-white">Início</span>
+            </a>
+          </li>
+
+          <!-- Favorites -->
+          <li class="nav-item">
+            <a class="nav-link" href="/favorites">
+              <i class="fas fa-fw fa-heart text-white"></i>
+              <span class="text-white">Favoritos</span>
+            </a>
+          </li>
+
+          <!-- Logout -->
+          <li class="nav-item mb-5">
+            <a class="nav-link" href="/login" data-toggle="modal" data-target="#logoutModal">
+              <i class="fas fa-fw fa-sign-out-alt text-white"></i>
+              <span class="text-white">Sair</span>
+            </a>
+          </li>
+
+          <!-- Sidebar Toggler (Sidebar) -->
+          <div class="text-center d-none d-md-inline mt-5 position-absolute">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+          </div>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Content Wrapper -->
+    <main id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Topbar -->
+      <header>
+        <nav class="navbar navbar-expand navbar-light bg-light topbar static-top shadow">
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- Topbar Search -->
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+              <input name="search" type="text" class="form-control bg-white border-0 small" placeholder="Buscar por..."
+                aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+            <li class="nav-item dropdown no-arrow d-sm-none">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
+                <form class="form-inline mr-auto w-100 navbar-search">
+                  <div class="input-group">
+                    <input name="search" type="text" class="form-control bg-light border-0 small"
+                      placeholder="Buscar por..." aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+
+            <div class="topbar-divider d-none d-sm-block"></div>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Antonio</span>
+                <img class="img-profile rounded-circle object-fit-cover" src="static/icons/default-profile.svg">
+              </a>
+
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="/profile">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Perfil
+                </a>
+
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/login" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Sair
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <!-- Favorites Cards -->
+      <section class="card shadow my-4 mx-2 mx-lg-5 d-flex flex-column align-items-center">
+        <header class="card-header w-100 py-3 px-4">
+          <h1 class="font-weight-bold text-blue-dark mb-0">Livros favoritos</h1>
+        </header>
+
+        <div class="card-body row w-100">
+
+          <div class="favorite-card-wrapper px-4 pb-4 col-lg-4">
+            <div class="favorite-book-card bg-surface-primary rounded row">
+              <div class="book-cover col-6 p-0">
+                <img class="w-100 h-100 rounded" src="./static/images/ps-eu-te-amo.jpg" alt="Capa do livro 'PS, Eu Te Amo'">
+              </div>
+  
+              <div class="col-6 d-flex py-3 px-2 flex-column justify-content-between">
+                <h2 class="book-title text-center fs-base font-weight-bold">PS, Eu Te Amo</h2>
+
+                <dl class="book-info mx-auto fs-sm d-flex flex-column gap-0.5">
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-user"></i></dt>
+                    <dd class="truncate book-author">Cecelia Ahern</dd>
+                  </div>
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-book-open"></i></dt>
+                    <dd class="truncate book-publisher">Novo Conceito</dd>
+                  </div>
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-calendar-days"></i></dt>
+                    <dd class="truncate book-year">2023</dd>
+                  </div>
+                </dl>
+
+                <div class="book-actions d-flex gap-1 justify-content-center">
+                  <a href="/reading" class="btn start-reading" title="Iniciar leitura"><i class="fas fa-play"></i></a>
+                  <button class="btn delete" data-toggle="modal" data-target="#deleteFavoriteModal" title="Remover dos favoritos"><i class="fas fa-trash-alt"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="favorite-card-wrapper px-4 pb-4 col-lg-4">
+            <div class="favorite-book-card bg-surface-primary rounded row">
+              <div class="book-cover col-6 p-0">
+                <img class="w-100 h-100 rounded" src="./static/images/neuromancer.jpg" alt="Capa do livro 'Neuromancer'">
+              </div>
+  
+              <div class="col-6 d-flex py-3 px-2 flex-column justify-content-between">
+                <h2 class="book-title text-center fs-base font-weight-bold">Neuromancer</h2>
+
+                <dl class="book-info mx-auto fs-sm d-flex flex-column gap-0.5">
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-user"></i></dt>
+                    <dd class="truncate book-author">Wiiliam Gibson</dd>
+                  </div>
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-book-open"></i></dt>
+                    <dd class="truncate book-publisher">Aleph</dd>
+                  </div>
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-calendar-days"></i></dt>
+                    <dd class="truncate book-year">2015</dd>
+                  </div>
+                </dl>
+
+                <div class="book-actions d-flex gap-1 justify-content-center">
+                  <a href="#" class="btn start-reading" title="Iniciar leitura"><i class="fas fa-play"></i></a>
+                  <button class="btn delete" data-toggle="modal" data-target="#deleteFavoriteModal" title="Remover dos favoritos"><i class="fas fa-trash-alt"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="favorite-card-wrapper px-4 pb-4 col-lg-4">
+            <div class="favorite-book-card bg-surface-primary rounded row">
+              <div class="book-cover col-6 p-0">
+                <img class="w-100 h-100 rounded" src="./static/images/teto-para-dois.jpg" alt="Capa do livro 'Teto para dois'">
+              </div>
+  
+              <div class="col-6 d-flex py-3 px-2 flex-column justify-content-between">
+                <h2 class="book-title text-center fs-base font-weight-bold">Teto para dois</h2>
+
+                <dl class="book-info mx-auto fs-sm d-flex flex-column gap-0.5">
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-user"></i></dt>
+                    <dd class="truncate book-author">Beth O´Leary</dd>
+                  </div>
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-book-open"></i></dt>
+                    <dd class="truncate book-publisher">Intrínseca</dd>
+                  </div>
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-calendar-days"></i></dt>
+                    <dd class="truncate book-year">2019</dd>
+                  </div>
+                </dl>
+  
+                <div class="book-actions d-flex gap-1 justify-content-center">
+                  <a href="#" class="btn start-reading" title="Iniciar leitura"><i class="fas fa-play"></i></a>
+                  <button class="btn delete" data-toggle="modal" data-target="#deleteFavoriteModal" title="Remover dos favoritos"><i class="fas fa-trash-alt"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="favorite-card-wrapper px-4 pb-4 col-lg-4">
+            <div class="favorite-book-card bg-surface-primary rounded row">
+              <div class="book-cover col-6 p-0">
+                <img class="w-100 h-100 rounded" src="./static/images/o-hobbit.jpg" alt="Capa do livro 'O Hobbit'">
+              </div>
+  
+              <div class="col-6 d-flex py-3 px-2 flex-column justify-content-between">
+                <h2 class="book-title text-center fs-base font-weight-bold">O Hobbit</h2>
+
+                <dl class="book-info mx-auto fs-sm d-flex flex-column gap-0.5">
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-user"></i></dt>
+                    <dd class="truncate book-author">J.R.R. Tolkien</dd>
+                  </div>
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-book-open"></i></dt>
+                    <dd class="truncate book-publisher">HarperCollins</dd>
+                  </div>
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-calendar-days"></i></dt>
+                    <dd class="truncate book-year">2019</dd>
+                  </div>
+                </dl>
+  
+                <div class="book-actions d-flex gap-1 justify-content-center">
+                  <a href="#" class="btn start-reading" title="Iniciar leitura"><i class="fas fa-play"></i></a>
+                  <button class="btn delete" data-toggle="modal" data-target="#deleteFavoriteModal" title="Remover dos favoritos"><i class="fas fa-trash-alt"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="favorite-card-wrapper px-4 pb-4 col-lg-4">
+            <div class="favorite-book-card bg-surface-primary rounded row">
+              <div class="book-cover col-6 p-0">
+                <img class="w-100 h-100 rounded" src="./static/images/fahrenheit-451.png" alt="Capa do livro 'Fahrenheit, 451'">
+              </div>
+  
+              <div class="col-6 d-flex py-2 py-lg-3 px-1 px-lg-2 flex-column justify-content-between">
+                <h2 class="book-title text-center fs-base font-weight-bold">Fahrenheit, 451</h2>
+
+                <dl class="book-info mx-auto fs-sm d-flex flex-column gap-0.5">
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-user"></i></dt>
+                    <dd class="truncate book-author">Ray Bradbury</dd>
+                  </div>
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-book-open"></i></dt>
+                    <dd class="truncate book-publisher">Biblioteca Azul</dd>
+                  </div>
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-calendar-days"></i></dt>
+                    <dd class="truncate book-year">2012</dd>
+                  </div>
+                </dl>
+
+                <div class="book-actions d-flex gap-1 justify-content-center">
+                  <a href="#" class="btn start-reading" title="Iniciar leitura"><i class="fas fa-play"></i></a>
+                  <button class="btn delete" data-toggle="modal" data-target="#deleteFavoriteModal" title="Remover dos favoritos"><i class="fas fa-trash-alt"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="favorite-card-wrapper px-4 pb-4 col-lg-4">
+            <div class="favorite-book-card bg-surface-primary rounded row">
+              <div class="book-cover col-6 p-0">
+                <img class="w-100 h-100 rounded" src="./static/images/sombra-e-ossos.jpg" alt="Capa do livro 'Sombra e Ossos'">
+              </div>
+  
+              <div class="col-6 d-flex py-3 px-2 flex-column justify-content-between">
+
+                <h2 class="book-title text-center fs-base font-weight-bold">Sombra e Ossos</h2>
+
+                <dl class="book-info mx-auto fs-sm d-flex flex-column gap-0.5">
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-user"></i></dt>
+                    <dd class="truncate book-author">Leigh Bardugo</dd>
+                  </div>
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-book-open"></i></dt>
+                    <dd class="truncate book-publisher">Planeta Minotauro fvbtbrtrtgtgtrtr</dd>
+                  </div>
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt><i class="fas fa-calendar-days"></i></dt>
+                    <dd class="truncate book-year">2021</dd>
+                  </div>
+                </dl>
+
+              
+                <div class="book-actions d-flex gap-1 justify-content-center">
+                  <a href="#" class="btn start-reading" title="Iniciar leitura"><i class="fas fa-play"></i></a>
+                  <button class="btn delete" data-toggle="modal" data-target="#deleteFavoriteModal" title="Remover dos favoritos"><i class="fas fa-trash-alt"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+  </div>
+
+
+
+  <!-- Scroll to Top Button-->
+  <!--a class="scroll-to-top rounded d-none d-lg-block" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a-->
+
+    <!-- Delete Favorite Modal-->
+    <div class="modal fade" id="deleteFavoriteModal" tabindex="-1" role="dialog" aria-labelledby="deleteFavoriteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteFavoriteModalLabel">Remover dos Favoritos</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Tem certeza que deseja remover esse livro dos favoritos?</div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
+          <button class="btn btn-primary" type="button" data-dismiss="modal">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="logoutModalLabel">Deseja encerrar a sessão atual?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Clique em "Sair" para confirmar.</div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" href="/login.html">Sair</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="static/libs/sb-admin-2/vendor/jquery/jquery.min.js"></script>
+  <script src="static/libs/sb-admin-2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="static/libs/sb-admin-2/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="static/libs/sb-admin-2/js/sb-admin-2.min.js"></script>
+
+  <!-- Fontawesome -->
+  <script src="static/libs/fontawesome/index.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

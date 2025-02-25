@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Detalhes do livro PS, Eu Te Amo">
+  <meta name="author" content="">
+
+  <title>Biblion | Detalhes - PS, Eu Te Amo</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="static/icons/biblion-favicon.svg" type="image/x-icon">
+
+  <!-- Custom fonts for this template -->
+  <link href="static/libs/sb-admin-2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+
+  <!-- Template styles -->
+  <link href="static/libs/sb-admin-2/css/sb-admin-2.css" rel="stylesheet">
+
+  <!-- Custom styles -->
+  <link href="static/styles/private/book-details.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <aside>
+      <nav>
+        <ul class="navbar-nav sidebar accordion" id="accordion-sidebar">
+
+          <!-- Sidebar Brand -->
+          <li>
+            <a class="sidebar-brand d-flex align-items-center justify-content-center gap-1" href="#">
+              <img class="sidebar-brand-icon" src="static/icons/biblion-logo.svg">
+              <strong class="text-blue-light fs-lg font-weight-black sidebar-brand-text">Biblion</strong>
+            </a>
+          </li>
+
+          <!-- Home -->
+          <li class="nav-item mt-2">
+            <a class="nav-link" href="/home">
+              <i class="fas fa-fw fa-house text-white"></i>
+              <span class="text-white">Início</span>
+            </a>
+          </li>
+
+          <!-- Favorites -->
+          <li class="nav-item">
+            <a class="nav-link" href="/favorites">
+              <i class="fas fa-fw fa-heart text-white"></i>
+              <span class="text-white">Favoritos</span>
+            </a>
+          </li>
+
+          <!-- Logout -->
+          <li class="nav-item mb-5">
+            <a class="nav-link" href="/login" data-toggle="modal" data-target="#logoutModal">
+              <i class="fas fa-fw fa-sign-out-alt text-white"></i>
+              <span class="text-white">Sair</span>
+            </a>
+          </li>
+
+          <!-- Sidebar Toggler (Sidebar) -->
+          <div class="text-center d-none d-md-inline mt-5 position-absolute">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+          </div>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Content Wrapper -->
+    <main id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Topbar -->
+      <header>
+        <nav class="navbar navbar-expand navbar-light bg-light topbar static-top shadow">
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+            <div class="topbar-divider d-none d-sm-block"></div>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Antonio</span>
+                <img class="img-profile rounded-circle object-fit-cover" src="static/icons/default-profile.svg">
+              </a>
+
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="/profile">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Perfil
+                </a>
+
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/login" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Sair
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <!-- Favorites Cards -->
+      <section class="card shadow my-4 mx-2 mx-lg-5 d-flex flex-column align-items-center">
+        <header class="card-header w-100 py-3 px-4">
+          <h1 class="font-weight-bold text-blue-dark mb-0">Detalhes do livro</h1>
+        </header>
+
+        <div class="card-body book-container row max-w-100 p-3">
+            <div class="col-md-4 text-center">
+              <img src="static/images/ps-eu-te-amo.jpg" class="book-cover w-100 object-fit-cover"
+                alt="Capa do Livro 'PS, Eu Te Amo'">
+            </div>
+  
+            <div class="col-md-8 book-info d-flex flex-column justify-content-between">
+              <h2 class="book-title fs-lg font-weight-bold  text-blue-dark mt-3 mt-lg-0 mb-4 text-center text-md-left">PS, Eu Te
+                Amo</h2>
+  
+              <div class="short-info">
+                <p class="text-gray">
+                  <strong class="d-inline-flex gap-0.5 align-items-center  text-blue-dark">
+                    <i class="fas fa-user"></i> Autor:
+                  </strong> Cecelia Ahern
+                </p>
+                <p class="text-gray">
+                  <strong class="d-inline-flex gap-0.5 align-items-center  text-blue-dark">
+                    <i class="fas fa-book-open"></i> Editora:
+                  </strong> Novo Conceito
+                </p>
+                <p class="text-gray">
+                  <strong class="d-inline-flex gap-0.5 align-items-center  text-blue-dark">
+                    <i class="fas fa-calendar-alt"></i> Ano:
+                  </strong> 2023
+                </p>
+              </div>
+  
+              <p class="book-description text-gray">
+                <strong class="d-inline-flex gap-0.5 align-items-center text-blue-dark">
+                  <i class="fas fa-align-left"></i> Sinopse:
+                </strong>
+                Gerry e Holly tiveram a sorte que a maioria das pessoas não têm: encontraram suas almas gêmeas. Feitos um
+                para o outro, sabiam que se amariam até o fim de suas vidas. O que não esperavam é que esse fim chegaria
+                tão cedo: a descoberta tardia de um tumor cerebral em Gerry lhe dá poucos meses de vida. Devastada, Holly
+                nem mesmo consegue imaginar como conseguirá viver sem o marido. Até que ela descobre que, antes de morrer,
+                Gerry a deixou uma série de cartas, uma para cada mês e todas assinadas com “P.S. Eu te amo”...
+              </p>
+  
+              <div class="btn-group gap-1 d-flex flex-column flex-lg-row">
+                <button class="btn add-favorite p-2 bg-blue-hover text-white rounded d-flex gap-0.5 align-items-center    justify-content-center" data-toggle="modal" data-target="#addFavoriteModal">
+                  <i class="fas fa-heart"></i> Adicionar aos Favoritos
+                </button>
+
+                <a href="/reading" class="btn start-reading p-2 bg-dark text-white rounded d-flex gap-0.5 align-items-center text-center justify-content-center">
+                  <i class="fas fa-book"></i> Iniciar Leitura
+                </a>
+              </div>
+            </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+      <!-- Delete Favorite Modal-->
+      <div class="modal fade" id="addFavoriteModal" tabindex="-1" role="dialog" aria-labelledby="addFavoriteModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addFavoriteModalLabel">Adicionar aos Favoritos</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Deseja adicionar esse livro aos favoritos?</div>
+          <div class="modal-footer">
+            <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
+            <button class="btn btn-primary" type="button" data-dismiss="modal">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <script src="static/libs/sb-admin-2/vendor/jquery/jquery.min.js"></script>
+  <script src="static/libs/sb-admin-2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/libs/sb-admin-2/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="static/libs/sb-admin-2/js/sb-admin-2.min.js"></script>
+  <script src="static/libs/fontawesome/index.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

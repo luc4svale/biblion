@@ -1,0 +1,82 @@
+*, 
+*::after, 
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* surface colors */
+  --surface-primary: #FFFFFF;
+  --surface-secondary: #F2F2F2;
+  --surface-tertiary: #E9F0FA;
+
+
+  /* light colors */
+  --blue-light: #06A5CC;
+  --green-light: #27AE60;
+  --yellow-light: #F2C94C;
+  --orange-light: #F2994A;
+
+  /* dark colors */
+  --blue-dark: #003366; 
+
+  /* highlight colors */
+  --blue-highlight: #007bff;
+  --blue-highlight-hover: #0056b3;
+  --red-highlight: #dc3545 ;
+  --red-highlight-hover: #b52b3b;
+  
+
+
+
+  /* hover colors */
+  --blue-hover: #1B74A3;
+  --green-hover: #1E8E47;
+
+  /* text colors */
+  --text-gray: #555555;
+
+  /* stroke colors */
+  --stroke-primary: #BFC3C980;
+  --stroke-secondary: #CCC;
+
+  /* scroll thumb color */
+  --scroll-color: #A5A3A3;
+
+  /* Overlay background color */
+  --bg-overlay: #00000080;
+
+  /* font sizes */
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.25rem;
+  --fs-lg: 1.5rem;
+  --fs-xl: 2rem;
+  --fs-2xl: 2.5rem;
+  --fs-3xl: 3rem;
+
+
+  /* line heights */
+  --line-h-120: 120%;
+  --line-h-125: 125%;
+  --line-h-140: 140%;
+  --line-h-150: 150%;
+}
+
+h1, h2, h3 {
+  font: inherit;
+}
+
+a {
+  font: inherit;
+  color: inherit
+}
+
+a:hover {
+  color: inherit;
+}
+  
+
