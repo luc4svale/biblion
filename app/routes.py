@@ -34,7 +34,7 @@ def init_routes(app):
 
     @app.route('/book-details')
     def book_details():
-        return render_template('book-details.html')
+        return render_template('private/book-details.html')
 
     @app.route('/reading')
     def reading():

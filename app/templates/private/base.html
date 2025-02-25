@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Biblion | {% block title %}{% endblock %}</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="static/icons/biblion-favicon.svg" type="image/x-icon">
+
+
+  <!-- Custom fonts for this template-->
+  <link href="static/libs/sb-admin-2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+
+
+  <!-- Template styles-->
+  <link href="static/libs/sb-admin-2/css/sb-admin-2.css" rel="stylesheet">
+
+  <!-- Custom styles-->
+  <link href="{{ url_for('static', filename='styles/private/') }}{% block custom_style %}{% endblock %}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    {% include 'private/components/sidebar/base.html' %}
+
+    <!-- Content Wrapper -->
+    <main id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Topbar -->
+      {% include 'private/components/topbar/base.html' %}
+      
+      <div class="topbar-divider d-none d-sm-block"></div>
+
+      <!-- Page Content -->
+      {% block page_content %}{% endblock %}
+    </main>
+  </div>
+
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="logoutModalLabel">Deseja encerrar a sessão atual?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Clique em "Sair" para confirmar.</div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" href="/login.html">Sair</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="static/libs/sb-admin-2/vendor/jquery/jquery.min.js"></script>
+  <script src="static/libs/sb-admin-2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="static/libs/sb-admin-2/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="static/libs/sb-admin-2/js/sb-admin-2.min.js"></script>
+
+  <!-- Fontawesome -->
+  <script src="static/libs/fontawesome/index.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

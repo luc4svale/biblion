@@ -1,0 +1,94 @@
+{% extends 'private/base.html' %}
+
+{% block title %}Detalhes - PS, Eu Te Amo{% endblock %}
+
+{% block custom_style %}book-details.css{% endblock %}
+
+{% block page_content %}
+<!-- Book Details Card -->
+<section class="card shadow my-4 mx-2 mx-lg-5 d-flex flex-column align-items-center">
+  <header class="card-header w-100 py-3 px-4">
+    <h1 class="font-weight-bold text-blue-dark mb-0">Detalhes do livro</h1>
+  </header>
+
+  <div class="card-body book-container row max-w-100 p-3">
+    <div class="col-md-4 text-center">
+      <img src="static/images/ps-eu-te-amo.jpg" class="book-cover w-100 object-fit-cover"
+        alt="Capa do Livro 'PS, Eu Te Amo'">
+    </div>
+
+    <div class="col-md-8 book-info d-flex flex-column justify-content-between">
+      <h2 class="book-title fs-lg font-weight-bold  text-blue-dark mt-3 mt-lg-0 mb-4 text-center text-md-left">PS,
+        Eu Te
+        Amo</h2>
+
+      <div class="short-info">
+        <p class="text-gray">
+          <strong class="d-inline-flex gap-0.5 align-items-center  text-blue-dark">
+            <i class="fas fa-user"></i> Autor:
+          </strong> Cecelia Ahern
+        </p>
+        <p class="text-gray">
+          <strong class="d-inline-flex gap-0.5 align-items-center  text-blue-dark">
+            <i class="fas fa-book-open"></i> Editora:
+          </strong> Novo Conceito
+        </p>
+        <p class="text-gray">
+          <strong class="d-inline-flex gap-0.5 align-items-center  text-blue-dark">
+            <i class="fas fa-calendar-alt"></i> Ano:
+          </strong> 2023
+        </p>
+      </div>
+
+      <p class="book-description text-gray">
+        <strong class="d-inline-flex gap-0.5 align-items-center text-blue-dark">
+          <i class="fas fa-align-left"></i> Sinopse:
+        </strong>
+        Gerry e Holly tiveram a sorte que a maioria das pessoas não têm: encontraram suas almas gêmeas. Feitos um
+        para o outro, sabiam que se amariam até o fim de suas vidas. O que não esperavam é que esse fim chegaria
+        tão cedo: a descoberta tardia de um tumor cerebral em Gerry lhe dá poucos meses de vida. Devastada, Holly
+        nem mesmo consegue imaginar como conseguirá viver sem o marido. Até que ela descobre que, antes de morrer,
+        Gerry a deixou uma série de cartas, uma para cada mês e todas assinadas com “P.S. Eu te amo”...
+      </p>
+
+      <div class="btn-group gap-1 d-flex flex-column flex-lg-row">
+        <button
+          class="btn add-favorite p-2 bg-blue-hover text-white rounded d-flex gap-0.5 align-items-center    justify-content-center"
+          data-toggle="modal" data-target="#addFavoriteModal">
+          <i class="fas fa-heart"></i> Adicionar aos Favoritos
+        </button>
+
+        <a href="/reading"
+          class="btn start-reading p-2 bg-dark text-white rounded d-flex gap-0.5 align-items-center text-center justify-content-center">
+          <i class="fas fa-book"></i> Iniciar Leitura
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Add Favorite Modal-->
+<div class="modal fade" id="addFavoriteModal" tabindex="-1" role="dialog" aria-labelledby="addFavoriteModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addFavoriteModalLabel">Adicionar aos Favoritos</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">Deseja adicionar esse livro aos favoritos?</div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary" type="button" data-dismiss="modal">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+

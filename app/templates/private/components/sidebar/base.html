@@ -1,0 +1,43 @@
+<aside>
+  <nav>
+    <ul class="navbar-nav sidebar accordion" id="accordion-sidebar">
+
+      <!-- Sidebar Brand -->
+      <li>
+        <a class="sidebar-brand d-flex align-items-center justify-content-center gap-1" href="#">
+          <img class="sidebar-brand-icon" src="static/icons/biblion-logo.svg">
+          <strong class="text-blue-light fs-lg font-weight-bold sidebar-brand-text">Biblion</strong>
+        </a>
+      </li>
+
+      <!-- Home -->
+      <li class="nav-item mt-2">
+        <a class="nav-link" href="/home">
+          <i class="fas fa-fw fa-house text-white"></i>
+          <span class="text-white">Início</span>
+        </a>
+      </li>
+
+      <!-- Favorites -->
+      <li class="nav-item">
+        <a class="nav-link" href="/favorites">
+          <i class="fas fa-fw fa-heart text-white"></i>
+          <span class="text-white">Favoritos</span>
+        </a>
+      </li>
+
+      <!-- Logout -->
+      <li class="nav-item mb-5">
+        <a class="nav-link" href="/login" data-toggle="modal" data-target="#logoutModal">
+          <i class="fas fa-fw fa-sign-out-alt text-white"></i>
+          <span class="text-white">Sair</span>
+        </a>
+      </li>
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline mt-5 position-absolute">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+    </ul>
+  </nav>
+</aside>
