@@ -1,5 +1,6 @@
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, redirect, url_for
 from app.controllers.auth_controller import register_user
+from app.controllers.book_controller import register_book
 
 
 def init_routes(app):
@@ -59,3 +60,18 @@ def init_routes(app):
     @app.route('/profile')
     def profile():
         return render_template('private/profile.html')
+    
+    @app.route('/book-register', methods=['GET', 'POST'])
+    def register_book_route():
+        if request.method == 'POST':
+            # Chama a função do controller para registrar o livro
+            result = register_book(request.form, request.files)
+
+            # Se o resultado for None, houve erro no cadastro
+            if result is None:
+                return redirect(url_for('register_book_route'))
+
+            # Se o cadastro for bem-sucedido, redireciona para a página de cadastro
+            return redirect(url_for('register_book_route'))
+
+        return render_template('private/book-register.html')
