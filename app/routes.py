@@ -1,4 +1,6 @@
 from flask import render_template, request, jsonify
+from app.controllers.auth_controller import register_user
+
 
 def init_routes(app):
     """Função para registrar as rotas na aplicação"""
@@ -17,11 +19,21 @@ def init_routes(app):
                 "password": password
             }
             return jsonify(response)
-
         return render_template('public/login.html')
 
-    @app.route('/register')
+    @app.route('/register', methods=['GET','POST'])
     def register():
+        if request.method == 'POST':
+            user = {
+                "first_name": request.form['first_name'],
+                "last_name": request.form['last_name'],
+                "email": request.form['email'],
+                "password": request.form['password'],
+                "confirm_password": request.form['confirm_password'], 
+            }
+
+            return jsonify(register_user(user))
+
         return render_template('public/register.html')
 
     @app.route('/forgot-password')
