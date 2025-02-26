@@ -1,4 +1,4 @@
-{% extends "base-public.html" %}
+{% extends "public/base-public.html" %}
 
 {% block title %}Cadastro{% endblock %}
 
@@ -7,9 +7,9 @@
 {% block content %}
 <main class="row rounded bg-light m-3 w-lg-75 shadow-lg">
 
-    <section id="logo-container" class="d-grid col-sm-12 col-lg-5 rounded p-3 p-lg-5 bg-blue-dark items-center">
-        <img src="{{ url_for('static', filename='icons/biblion-logo.svg') }}" alt="Logomarca Biblion"
-            class="max-w-50 max-w-lg-75 rounded object-fit-contain">
+    <section id="logo-container" class="d-grid col-sm-12 col-lg-5 rounded p-3 p-lg-5 bg-blue-dark ">
+        <img src="{{ url_for('static', filename='icons/biblion-logo.svg')}}" alt="Logomarca Biblion"
+            class="self-center max-w-50 max-w-lg-75 rounded object-fit-contain">
     </section>
 
     <section id="register-container" class="d-grid items-center col-sm-12 col-lg-7 p-4 p-lg-5 gap-1">

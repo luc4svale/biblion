@@ -5,7 +5,7 @@ def init_routes(app):
 
     @app.route('/')
     def intro():
-        return render_template('index.html')
+        return render_template('public/index.html')
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
@@ -18,19 +18,19 @@ def init_routes(app):
             }
             return jsonify(response)
 
-        return render_template('login.html')
+        return render_template('public/login.html')
 
     @app.route('/register')
     def register():
-        return render_template('register.html')
+        return render_template('public/register.html')
 
     @app.route('/forgot-password')
     def forgot_password():
-        return render_template('forgot-password.html')
+        return render_template('public/forgot-password.html')
 
     @app.route('/home')
     def home():
-        return render_template('home.html')
+        return render_template('private/home.html')
 
     @app.route('/book-details')
     def book_details():
@@ -38,12 +38,12 @@ def init_routes(app):
 
     @app.route('/reading')
     def reading():
-        return render_template('reading.html')
+        return render_template('private/reading.html')
 
     @app.route('/favorites')
     def favorites():
-        return render_template('favorites.html')
+        return render_template('private/favorites.html')
 
     @app.route('/profile')
     def profile():
-        return render_template('profile.html')
+        return render_template('private/profile.html')
