@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Biblion | {% block title %}{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='icons/biblion-favicon.svg') }}" type="image/x-icon">
+
+    <!-- Custom fonts for this template-->
+    <link href="{{ url_for('static', filename='libs/sb-admin-2/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+
+    <!-- Template styles-->
+    <link href="{{ url_for('static', filename='libs/sb-admin-2/css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+    <!-- Custom styles -->
+    <link href="{{ url_for('static', filename='styles/public/') }}{% block custom_style %}{% endblock %}" rel="stylesheet">
+</head>
+
+<body class="{% block body_class %}d-flex flex-column align-items-center justify-content-center min-vh-100{% endblock %}">
+
+    {% block content %}{% endblock %}
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ url_for('static', filename='libs/sb-admin-2/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/sb-admin-2/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{{ url_for('static', filename='libs/sb-admin-2/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/sb-admin-2/js/sb-admin-2.min.js') }}"></script>
+
+    <!-- Fontawesome -->
+    <script src="{{ url_for('static', filename='libs/fontawesome/index.js') }}" crossorigin="anonymous"></script>
+
+</body>
+</html>

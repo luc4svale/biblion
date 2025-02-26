@@ -1,0 +1,101 @@
+{% extends 'private/base.html' %}
+
+{% block title %}Perfil{% endblock %}
+
+{% block custom_style %}profile.css>{% endblock %}
+
+{% block page_content %}
+<!-- Edit informations card-->
+<section class="card shadow mt-4 mb-5 mx-2 mx-md-5">
+  <header class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
+    <h2 class="m-0 text-blue-dark font-weight-bold">Informações pessoais</h2>
+    <div class="d-grid icon-wrapper content-center bg-white text-center rounded-circle fs-base">
+      <i class="fas fa-user text-blue-dark"></i>
+    </div>
+  </header>
+
+  <div class="card-body px-md-5 px-lg-5 border border-white">
+    <form id="change-personal-info-form" class="row" enctype="multipart/form-data">
+      <input name="identifier" type="hidden" class="d-none" />
+
+      <div id="photo-container" class="col-12 col-lg-6 my-3 d-flex justify-content-center align-items-center">
+        <label for="photo" class="mb-0 d-flex embed-responsive embed-responsive-1by1 position-relative">
+          <span id="photo-overlay"
+            class="d-grid content-center rounded-circle text-light embed-responsive-item bg-overlay font-weight-bold">Escolher
+            foto de perfil</span>
+          <img id="photo-preview" src="{{ url_for('static', filename='icons/default-profile.svg') }}" alt="Foto de perfil"
+            class="object-fit-cover embed-responsive-item">
+          <input type="file" name="photo" id="photo" class="invisible embed-responsive-item">
+        </label>
+      </div>
+
+      <div class="col-12 col-lg-6 my-3">
+        <div class="form-group">
+          <label for="firstname">Nome</label>
+          <input id="firstname" name="firstname" type="text" value="Antonio" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="lastname">Sobrenome</label>
+          <input id="lastname" name="lastname" type="text" value="Lucas da Silva Vale" autocomplete="off"
+            class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="text" value="alucavalle@gmail.com" autocomplete="email"
+            class="form-control" />
+        </div>
+
+        <button id="change-personal-info-button" type="button" class="w-100 btn bg-blue-hover text-white mt-4">
+          Alterar informações
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Edit password card-->
+<section class="card shadow mt-5 mb-4 mx-2 mx-md-5">
+  <header class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
+    <h2 class="m-0 text-blue-dark font-weight-bold">Nova senha</h2>
+    <div class="d-grid icon-wrapper content-center bg-white text-center rounded-circle fs-base">
+      <i class="fas fa-key text-blue-dark"></i>
+    </div>
+  </header>
+
+  <div class="card-body px-md-5 px-lg-5 border border-white">
+    <form id="change-password-form" class="mx-auto" enctype="multipart/form-data">
+      <input name="identifier" type="hidden" />
+
+      <div class="form-group position-relative">
+        <label for="password">Senha atual</label>
+        <div class="d-flex align-items-center position-relative">
+          <input id="password" name="password" type="password" class="form-control" />
+          <i class="fa-solid fa-eye-slash position-absolute r-1" title="Mostrar"></i>
+        </div>
+      </div>
+
+      <div class="form-group position-relative">
+        <label for="new-password">Nova senha</label>
+        <div class="d-flex align-items-center position-relative">
+          <input id="new-password" name="new-password" type="password" class="form-control" />
+          <i class="fa-solid fa-eye-slash position-absolute r-1" title="Mostrar"></i>
+        </div>
+      </div>
+
+      <div class="form-group position-relative">
+        <label for="confirm-new-password">Confirmar nova senha</label>
+        <div class="d-flex align-items-center position-relative">
+          <input id="confirm-new-password" name="confirm-new-password" type="password" class="form-control" />
+          <i class="fa-solid fa-eye-slash position-absolute r-1" title="Mostrar"></i>
+        </div>
+      </div>
+
+      <button id="change-passowrd-button" type="button" class="w-100 btn bg-blue-hover text-white mt-4 mb-3">
+        Alterar senha
+      </button>
+    </form>
+  </div>
+</section>
+{% endblock %}

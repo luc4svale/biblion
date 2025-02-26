@@ -1,0 +1,12 @@
+{% extends 'private/base.html' %}
+
+{% block title %}Leitura - PS, Eu Te Amo{% endblock %}
+
+{% block custom_style %}reading.css>{% endblock %}
+
+{% block page_content %}
+<!-- Reader Container -->
+<section id="reader-container" class="container-fluid px-2 px-lg-5 py-3 d-flex justify-content-center">
+  <iframe id="book-reader" class="w-100" src="{{ url_for('static', filename='books/ps-eu-te-amo.pdf') }}" frameborder="0"></iframe>
+</section>
+{% endblock %}
