@@ -1,0 +1,41 @@
+{% extends "base-public.html" %}
+
+{% block title %}Biblioteca Digital{% endblock %}
+
+{% block custom_style %}login.css{% endblock %}
+
+{% block content %}
+<main class="row rounded bg-light m-3 w-lg-75 shadow-lg">
+
+    <section id="logo-container" class="d-grid col-sm-12 col-lg-5 rounded p-3 p-lg-5 bg-blue-dark">
+        <img src="{{ url_for('static', filename='icons/biblion-logo.svg') }}" alt="Logomarca Biblion"
+            class="max-w-50 max-w-lg-75 rounded object-fit-contain">
+    </section>
+
+    <section id="presentation-container" class="d-grid items-center col-sm-12 col-lg-7 p-4 p-lg-5">
+
+        <header>
+            <h1 class="text-center text-blue-dark fs-2xl line-h-150 font-weight-bold">Seja bem-vindo à <strong
+                    class="text-blue-light font-weight-bolder logo-text">Biblion</strong></h1>
+            <p class="mt-3 text-center text-gray fs-base mb-0 line-h-140">
+                A leitura é a porta para novos mundos! Descubra histórias incríveis, adquira conhecimento e tenha
+                acesso a uma biblioteca completa em suas mãos.
+            </p>
+        </header>
+
+        <div id="redirect-buttons" class="d-flex flex-wrap justify-content-around gap-1 mt-5 w-100">
+            <a href="{{ url_for('login') }}" class="btn btn-login text-white bg-blue-light col-12 col-lg-5 py-2">Login</a>
+            <a href="{{ url_for('register') }}" class="btn btn-register text-white bg-green-light col-12 col-lg-5 py-2">Cadastrar-se</a>
+        </div>
+
+        <hr class="mt-5 w-50">
+
+        <div id="social-links" class="d-inline-flex justify-content-center gap-1 social-container">
+            <a href="#" class="btn text-gray"><i class="fab fa-x-twitter fs-lg"></i></a>
+            <a href="#" class="btn text-gray"><i class="fab fa-instagram fs-lg"></i></a>
+            <a href="#" class="btn text-gray"><i class="fab fa-linkedin fs-lg"></i></a>
+        </div>
+
+    </section>
+</main>
+{% endblock %}
