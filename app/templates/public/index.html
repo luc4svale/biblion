@@ -1,4 +1,4 @@
-{% extends "public/base-public.html" %}
+{% extends "public/base.html" %}
 
 {% block title %}Biblioteca Digital{% endblock %}
 
@@ -24,8 +24,8 @@
         </header>
 
         <div id="redirect-buttons" class="d-flex flex-wrap justify-content-around gap-1 mt-5 w-100">
-            <a href="{{ url_for('login') }}" class="btn btn-login text-white bg-blue-light col-12 col-lg-5 py-2">Login</a>
-            <a href="{{ url_for('register') }}" class="btn btn-register text-white bg-green-light col-12 col-lg-5 py-2">Cadastrar-se</a>
+            <a href="/login" class="btn btn-login text-white bg-blue-light col-12 col-lg-5 py-2">Login</a>
+            <a href="/register" class="btn btn-register text-white bg-green-light col-12 col-lg-5 py-2">Cadastrar-se</a>
         </div>
 
         <hr class="mt-5 w-50">

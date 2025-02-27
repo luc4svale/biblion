@@ -1,4 +1,4 @@
-{% extends "public/base-public.html" %}
+{% extends "public/base.html" %}
 
 {% block title %}Cadastro{% endblock %}
 
@@ -19,7 +19,7 @@
                     class="text-blue-light font-weight-bolder logo-text">Biblion</strong></h1>
         </header>
 
-        <form id="register-form" class="row gap-1 w-100 px-lg-4" method="POST" action="{{ url_for('register') }}">
+        <form id="register-form" class="row gap-1 w-100 px-lg-4">
 
             <div class="d-grid d-lg-flex gap-1 col-12 p-0">
                 <label for="first_name" class="d-flex align-items-center position-relative w-100 mb-0 p-0">
@@ -56,7 +56,7 @@
         <hr class="w-50 mt-3 mb-0">
 
         <div class="redirect-links row">
-            <a class="small col-12 text-center" href="{{ url_for('login') }}">Já possui uma conta? Faça login!</a>
+            <a class="small col-12 text-center" href="/login">Já possui uma conta? Faça login!</a>
         </div>
 
     </section>

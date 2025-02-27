@@ -1,7 +1,10 @@
 from datetime import datetime, timezone
 import uuid
+from flask_bcrypt import Bcrypt
 from sqlalchemy.types import String
 from .database import db
+
+bcrypt = Bcrypt()
 
 class User(db.Model):
     __tablename__ = "users"
@@ -17,8 +20,8 @@ class User(db.Model):
                            default=lambda: datetime.now(timezone.utc),
                            onupdate=lambda: datetime.now(timezone.utc))
 
-    def __repr__(self):
-        return f"<User {self.first_name} - {self.email}>"
+    def set_password(self, password):
+        self.password = bcrypt.generate_password_hash(password).decode("utf-8")
 
     def to_dict(self):
         return {
