@@ -5,8 +5,6 @@ from config import Config
 from .models import db
 from .routes import auth_bp, books_bp, users_bp
 
-
-
 def create_app():
     """Factory function to create and configure the Flask application"""
     app = Flask(__name__, static_folder='static', template_folder='templates')
