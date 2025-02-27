@@ -39,8 +39,11 @@
   <!-- Fontawesome -->
   <script src="static/libs/fontawesome/index.js" crossorigin="anonymous"></script>
 
-  <script src="{{ url_for('static', filename='/scripts/') }}{% block custom_script %}{% endblock %}"></script>
+  <!-- Sweet Alert 2 -->
+  <script src="static/libs/sweetalert-2/index.js"></script>
 
+  <!-- Custom Page Script -->
+  <script src="{{ url_for('static', filename='/scripts/') }}{% block custom_script %}{% endblock %}"></script>
 
 </body>
 </html>

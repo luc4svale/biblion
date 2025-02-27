@@ -28,8 +28,8 @@
   --red-highlight: #dc3545 ;
   --red-highlight-hover: #b52b3b;
   
-
-
+   /* sweet-alert backdrop */
+   --swal-backdrop: rgba(0,0,0,0.7);
 
   /* hover colors */
   --blue-hover: #1B74A3;
