@@ -1,12 +1,13 @@
 from datetime import datetime, timezone
 import uuid
 from flask_bcrypt import Bcrypt
+from flask_login import UserMixin
 from sqlalchemy.types import String
 from .database import db
 
 bcrypt = Bcrypt()
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = "users"
 
     id = db.Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))

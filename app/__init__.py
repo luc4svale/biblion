@@ -1,9 +1,14 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 from config import Config
-from .models import db
+from .models import db, User
 from .routes import auth_bp, books_bp, users_bp
+
+bcrypt = Bcrypt()
+login_manager = LoginManager()
+
 
 def create_app():
     """Factory function to create and configure the Flask application"""
@@ -12,10 +17,18 @@ def create_app():
 
     db.init_app(app)
     Migrate(app, db)
-    Bcrypt(app)
+
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+    login_manager.login_view = "auth.login"
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(books_bp)
     app.register_blueprint(users_bp)
 
     return app
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
