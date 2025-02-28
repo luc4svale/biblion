@@ -6,6 +6,13 @@ from app.exceptions import APIException
 bcrypt = Bcrypt()
 
 class UserService:
+
+    def authenticate_user(self, email, password):
+        user = User.query.filter_by(email=email).first()
+        if user and bcrypt.check_password_hash(user.password, password):
+            return user
+        raise APIException("Credenciais inválidas.", 401)
+
     def verify_is_valid_name(self, name, field="Nome"):
         invalid_chars_pattern = r"[^a-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ\s']"
         if re.search(invalid_chars_pattern, name):
@@ -33,11 +40,6 @@ class UserService:
         if not re.fullmatch(password_pattern, password):
             raise ValueError("A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial (@$!%*?&.).")
         return True
-
-    def check_password_hash(self, password_hash, password):
-        if bcrypt.check_password_hash(password_hash, password):
-            return True
-        raise ValueError("Credencial inválida")
 
     def is_valid_user(self, user, verify_email_exists=False):
         try:

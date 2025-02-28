@@ -19,7 +19,7 @@ names.forEach(name => {
 
     const cursorPosition = name.selectionStart;
 
-    const pattern = /[\\\/<>"]|[^\sa-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ']|^\s+$|^'/g;
+    const pattern = /[^\sa-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ']|^\s+$|^'/g;
 
     if (pattern.test(name.value)) {
       name.value = name.value.replace(pattern, '');
@@ -89,30 +89,30 @@ registerFormButton.addEventListener('click', async (event) => {
   event.preventDefault();
 
   Swal.fire({
-    title: "Cadastrando usuário...",
+    title: 'Cadastrando usuário...',
     didOpen: async () => {
       Swal.showLoading();
     },
     allowOutsideClick: () => !Swal.isLoading(),
-    backdrop: "rgba(0,0,0,0.7)",
-    background: "#f2f2f2",
+    backdrop: 'var(--swal-backdrop)',
+    background: 'var(--surface-secondary)',
   });
 
   const response = await submitRegisterForm();
 
   if (response.status === 201) {
     Swal.fire({
-      title: "<h3>Usuário cadastrado com sucesso!</h3>",
-      icon: "success",
+      title: '<h3>Usuário cadastrado com sucesso!</h3>',
+      icon: 'success',
       iconHtml: '<i class="fas fa-check-circle text-success"></i>',
-      backdrop: "rgba(0,0,0,0.7)",
-      background: "#f2f2f2",
+      backdrop: 'var(--swal-backdrop)',
+      background: 'var(--surface-secondary)',
       customClass: {
-        icon: "custom-icon-class",
-        confirmButton: "btn-primary"
+        icon: 'custom-icon-class',
+        confirmButton: 'btn-primary'
       }
     }).then(() => {
-      window.location.href = "/login";
+      window.location.href = '/login';
     });
 
   } else {
@@ -135,8 +135,8 @@ async function submitRegisterForm() {
   try {
     const formData = new FormData(registerForm)
 
-    const response = await fetch("/register", {
-      method: "POST",
+    const response = await fetch('/register', {
+      method: 'POST',
       body: formData,
     });
 
@@ -146,7 +146,7 @@ async function submitRegisterForm() {
   } catch (error) {
     return {
       success: false,
-      message: "Erro na conexão. Tente novamente mais tarde."
+      message: 'Erro na conexão. Tente novamente mais tarde.'
     }
   }
 }

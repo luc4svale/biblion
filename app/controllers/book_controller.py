@@ -1,10 +1,10 @@
 import os
-from werkzeug.utils import secure_filename
 from uuid import uuid4
-from flask import flash, redirect, url_for
+from werkzeug.utils import secure_filename
+from flask import flash
 from app import db
 from app.models.book import Book
-from app.utils import allowed_file
+from app.utils.allowed_files import allowed_file
 
 # Função para garantir que os diretórios de upload existam
 def create_upload_directory(path):
@@ -36,7 +36,7 @@ def register_book(form_data, book_files):
         # Criando o diretório de livros se não existir
         books_dir = os.path.join('uploads', 'books')
         create_upload_directory(books_dir)
-        
+
         filename = secure_filename(f'{uuid4()}_{book_file.filename}')
         file_path = os.path.join(books_dir, filename)
         book_file.save(file_path)
@@ -46,7 +46,7 @@ def register_book(form_data, book_files):
         # Criando o diretório de capas se não existir
         covers_dir = os.path.join('uploads', 'covers')
         create_upload_directory(covers_dir)
-        
+
         filename = secure_filename(f'{uuid4()}_{cover_image.filename}')
         cover_image_path = os.path.join(covers_dir, filename)
         cover_image.save(cover_image_path)
