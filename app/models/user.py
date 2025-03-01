@@ -16,6 +16,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     role = db.Column(db.String(20), nullable=False, default="user")
+    photo = db.Column(db.String(70), nullable=False, server_default="default-photo.svg")
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = db.Column(db.DateTime,
                            default=lambda: datetime.now(timezone.utc),
@@ -31,6 +32,8 @@ class User(db.Model, UserMixin):
             "last_name": self.last_name,
             "email": self.email,
             "role": self.role,
+            "password": self.password,
+            "photo": self.photo,
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None
         }

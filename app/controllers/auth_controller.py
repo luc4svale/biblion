@@ -2,7 +2,7 @@ from flask_login import login_user, logout_user
 from app.services.user_service import UserService
 from app.exceptions import APIException
 
-userService = UserService()
+user_service = UserService()
 class AuthController:
     def register_user(self, user_data):
         user = {
@@ -14,10 +14,12 @@ class AuthController:
         }
 
         try:
-            if userService.is_valid_user(user, verify_email_exists=True):
-                userService.create_user(user)
+            if user_service.is_valid_user(user, verify_email_exists=True):
+                user_service.create_user(user)
                 return { "message": "Usuário cadastrado com sucesso.", "status": 201 }
-            return { "message": "Erro desconhecido.", "status": 500 }
+            
+            return { "message": "Dados inválidos.", "status": 400 }
+        
         except APIException as e:
             return { "message": f"{str(e)}", "status": e.status_code }
 
@@ -26,7 +28,7 @@ class AuthController:
         password = user_data.get("password", "")
 
         try:
-            user = userService.authenticate_user(email, password)
+            user = user_service.authenticate_user(email, password)
             login_user(user)
             return { "message": "Usuário autenticado com sucesso.", "status": 200 }
         except APIException as e:

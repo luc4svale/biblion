@@ -19,6 +19,10 @@ body {
     & .bg-green-light:hover {
       background-color: var(--green-hover);
     }
+
+    & form label i {
+      z-index: 1000;
+    }
   }
 
   & footer {

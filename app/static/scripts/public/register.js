@@ -58,11 +58,11 @@ email.addEventListener('input', () => {
 
 
 //-- Passwords Visibility --//
-const passwords = [password, confirmPassword]
+const toggleIcons = document.querySelectorAll('.password-visibility')
 
-passwords.forEach(passwordField => {
-  passwordField.addEventListener('click', () => {
-    const toggleIcon = passwordField.parentElement.querySelector('.password-visibility')
+toggleIcons.forEach(toggleIcon => {
+  toggleIcon.addEventListener('click', () => {
+    const passwordField = toggleIcon.parentElement.querySelector('input')
     const isPasswordVisible = passwordField.type === 'text';
 
     if (isPasswordVisible) {

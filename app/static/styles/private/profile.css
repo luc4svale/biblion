@@ -4,6 +4,9 @@
 
 form {
 
+  max-width: 80rem;
+  flex: 1;
+
   &#change-personal-info-form {
     #photo-container {
       & label {
@@ -13,6 +16,10 @@ form {
         & #photo-overlay {
           z-index: 99;
           opacity: 0;
+        }
+
+        & #photo-preview {
+          border-radius: 50%;
         }
 
         &:hover {

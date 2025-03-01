@@ -14,36 +14,34 @@
     </div>
   </header>
 
-  <div class="card-body px-md-5 px-lg-5 border border-white">
+  <div class="card-body px-md-5 px-lg-5 d-flex justify-content-center  border-white">
     <form id="change-personal-info-form" class="row" enctype="multipart/form-data">
-      <input name="identifier" type="hidden" class="d-none" />
-
       <div id="photo-container" class="col-12 col-lg-6 my-3 d-flex justify-content-center align-items-center">
         <label for="photo" class="mb-0 d-flex embed-responsive embed-responsive-1by1 position-relative">
           <span id="photo-overlay"
-            class="d-grid content-center rounded-circle text-light embed-responsive-item bg-overlay font-weight-bold">Escolher
+            class="d-grid content-center text-light embed-responsive-item bg-overlay font-weight-bold rounded rounded-circle">Escolher
             foto de perfil</span>
-          <img id="photo-preview" src="{{ url_for('static', filename='icons/default-profile.svg') }}" alt="Foto de perfil"
+          <img id="photo-preview" src="{{ url_for('uploads.get_profile_image', filename=user.photo) }}" alt="Foto de {{ user.first_name }} {{ user.last_name }}"
             class="object-fit-cover embed-responsive-item">
           <input type="file" name="photo" id="photo" class="invisible embed-responsive-item">
         </label>
       </div>
 
-      <div class="col-12 col-lg-6 my-3">
+      <div class="col-12 col-lg-6 my-3 d-flex flex-column justify-content-center">
         <div class="form-group">
-          <label for="firstname">Nome</label>
-          <input id="firstname" name="firstname" type="text" value="Antonio" class="form-control" />
+          <label for="first_name">Nome</label>
+          <input id="first_name" name="first_name" type="text" value="{{ user.first_name }}"  autocomplete="name" class="form-control" />
         </div>
 
         <div class="form-group">
-          <label for="lastname">Sobrenome</label>
-          <input id="lastname" name="lastname" type="text" value="Lucas da Silva Vale" autocomplete="off"
+          <label for="last_name">Sobrenome</label>
+          <input id="last_name" name="last_name" type="text" value="{{ user.last_name }}" autocomplete="name"
             class="form-control" />
         </div>
 
         <div class="form-group">
           <label for="email">Email</label>
-          <input id="email" name="email" type="text" value="alucavalle@gmail.com" autocomplete="email"
+          <input id="email" name="email" type="text" value="{{ user.email }}" autocomplete="email"
             class="form-control" />
         </div>
 
@@ -66,13 +64,11 @@
 
   <div class="card-body px-md-5 px-lg-5 border border-white">
     <form id="change-password-form" class="mx-auto" enctype="multipart/form-data">
-      <input name="identifier" type="hidden" />
-
       <div class="form-group position-relative">
         <label for="password">Senha atual</label>
         <div class="d-flex align-items-center position-relative">
           <input id="password" name="password" type="password" class="form-control" />
-          <i class="fa-solid fa-eye-slash position-absolute r-1" title="Mostrar"></i>
+          <i class="fa-solid fa-eye-slash position-absolute r-1 password-visibility" title="Mostrar" data-placement="bottom"></i>
         </div>
       </div>
 
@@ -80,7 +76,7 @@
         <label for="new-password">Nova senha</label>
         <div class="d-flex align-items-center position-relative">
           <input id="new-password" name="new-password" type="password" class="form-control" />
-          <i class="fa-solid fa-eye-slash position-absolute r-1" title="Mostrar"></i>
+          <i class="fa-solid fa-eye-slash position-absolute r-1 password-visibility" title="Mostrar" data-placement="bottom"></i>
         </div>
       </div>
 
@@ -88,14 +84,16 @@
         <label for="confirm-new-password">Confirmar nova senha</label>
         <div class="d-flex align-items-center position-relative">
           <input id="confirm-new-password" name="confirm-new-password" type="password" class="form-control" />
-          <i class="fa-solid fa-eye-slash position-absolute r-1" title="Mostrar"></i>
+          <i class="fa-solid fa-eye-slash position-absolute r-1 password-visibility" title="Mostrar" data-placement="bottom"></i>
         </div>
       </div>
 
-      <button id="change-passowrd-button" type="button" class="w-100 btn bg-blue-hover text-white mt-4 mb-3">
+      <button id="change-password-button" type="button" class="w-100 btn bg-blue-hover text-white mt-4 mb-3">
         Alterar senha
       </button>
     </form>
   </div>
 </section>
 {% endblock %}
+
+{% block custom_script %}profile.js{% endblock %}

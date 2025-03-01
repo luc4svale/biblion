@@ -24,8 +24,9 @@ email.addEventListener('input', () => {
 
 
 //-- Password Visibility --//
-password.addEventListener('click', () => {
-  const toggleIcon = password.parentElement.querySelector('.password-visibility')
+const toggleIcon = document.querySelector('.password-visibility')
+
+toggleIcon.addEventListener('click', () => {
   const isPasswordVisible = password.type === 'text';
 
   if (isPasswordVisible) {
@@ -45,6 +46,7 @@ password.addEventListener('click', () => {
 $(document).ready(() => {
   $('.password-visibility').tooltip('dispose').tooltip();
 });
+
 
 //----- Submit Form ------//
 loginFormButton.addEventListener('click', async (event) => {

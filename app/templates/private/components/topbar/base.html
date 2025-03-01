@@ -18,7 +18,7 @@
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           <span class="mr-2 d-none d-lg-inline text-gray-600 small">Antonio</span>
-          <img class="img-profile rounded-circle object-fit-cover" src="static/icons/default-profile.svg">
+          <img class="img-profile rounded-circle object-fit-cover" src="{{ url_for('uploads.get_profile_image', filename=user.photo) }}" alt="Foto de {{ user.first_name }} {{ user.last_name }}">
         </a>
 
         <!-- Dropdown - User Information -->
