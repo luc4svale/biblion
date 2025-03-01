@@ -5,17 +5,16 @@
 {% block custom_style %}book-register.css{% endblock %}
 
 {% block page_content %}
-    <main id="container-main" class="row rounded bg-light m-3 w-lg-75 shadow-lg d-flex justify-content-center align-items-center">
-        <section id="book-register-container" class="d-grid items-center col-sm-12 col-lg-7 p-4 p-lg-5 gap-1">
-    
+    <main class="container-fluid d-flex flex-column align-items-center justify-content-center py-5">
+        <section  id="book-register-container" class="d-grid items-center">
             <header>
                 <h1 class="text-blue-dark font-weight-bold text-center fs-2xl">Cadastre seu <strong
                         class="text-blue-light font-weight-bolder logo-text">Livro</strong></h1>
             </header>
     
-            <form id="book-register-form" class="row gap-1 w-100 px-lg-4" method="POST" enctype="multipart/form-data">
+            <form id="book-register-form" class="row gap-1 w-100 px-lg-4 d-flex justify-content-center" method="POST" enctype="multipart/form-data">
     
-                <div class="d-grid d-lg-flex gap-1 col-12 p-0">
+                <div class="d-grid d-lg-flex gap-1 col-6 p-0">
                     <label for="title" class="d-flex align-items-center position-relative w-100 mb-0 p-0">
                         <input type="text" name="title" id="title" placeholder="Título" class="form-control" required>
                     </label>
@@ -25,37 +24,35 @@
                     </label>
                 </div>
     
-                <label for="publication_year" class="col-12 d-flex align-items-center position-relative mb-0 p-0">
-                    <input type="number" name="publication_year" id="publication_year" placeholder="Ano de Publicação"
+                <label for="publication_year" class="col-6 d-flex align-items-center position-relative mb-0 p-0">
+                    <input type="date" name="publication_year" id="publication_year" placeholder="Ano de Publicação"
                         class="form-control" required>
                 </label>
     
-                <label for="author_id" class="col-12 d-flex align-items-center position-relative mb-0 p-0">
+                <label for="author_id" class="col-6 d-flex align-items-center position-relative mb-0 p-0">
                     <input type="text" name="author_id" id="author_id" placeholder="Autor" class="form-control" required>
                 </label>
     
-                <label for="category_id" class="col-12 d-flex align-items-center position-relative mb-0 p-0">
+                <label for="category_id" class="col-6 d-flex align-items-center position-relative mb-0 p-0">
                     <input type="text" name="category_id" id="category_id" placeholder="Categoria" class="form-control" required>
                 </label>
     
-                <label for="publisher_id" class="col-12 d-flex align-items-center position-relative mb-0 p-0">
+                <label for="publisher_id" class="col-6 d-flex align-items-center position-relative mb-0 p-0">
                     <input type="text" name="publisher_id" id="publisher_id" placeholder="Editora" class="form-control" required>
                 </label>
                 
                 
-                <label for="book_file" class="col-12 d-flex align-items-center position-relative mb-0 p-0">
+                <label for="book_file" class="col-6 d-flex align-items-center position-relative mb-0 p-0">
                     <input type="file" name="book_file" id="book_file" class="form-control" accept=".pdf, .epub, .mobi" required>
                 </label>
     
-                <label for="cover_image" class="col-12 d-flex align-items-center position-relative mb-0 p-0">
+                <label for="cover_image" class="col-6 d-flex align-items-center position-relative mb-0 p-0">
                     <input type="file" name="cover_image" id="cover_image" class="form-control" accept=".jpg, .png, .jpeg">
                 </label>
     
-                <button id="book-register-button" type="submit" class="btn btn-register text-white bg-blue-light col-12 mt-2">Cadastrar</button>
+                <button id="book-register-button" type="submit" class="btn btn-register text-white bg-blue-light col-6 mt-2">Cadastrar</button>
             </form>
-    
         </section>
-    
     </main>
 {% endblock %}
 
