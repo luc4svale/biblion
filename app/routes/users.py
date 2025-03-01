@@ -27,4 +27,12 @@ def change_personal_info():
 
     print(user_data["photo"])
     response = user_controller.change_user_personal_info(current_user.id, user_data)
+
+    return jsonify(response), response["status"]
+
+@users_bp.route("/profile", methods=["PATCH"])
+@login_required
+def change_password():
+    password_data = request.form
+    response = user_controller.change_user_password(current_user.id, password_data)
     return jsonify(response), response["status"]

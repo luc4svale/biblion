@@ -48,7 +48,7 @@ $(document).ready(() => {
 });
 
 
-//----- Submit Form ------//
+//----- Submit Login Form ------//
 loginFormButton.addEventListener('click', async (event) => {
   event.preventDefault();
 
@@ -97,7 +97,7 @@ async function submitLoginForm() {
 
   } catch (error) {
     return {
-      success: false,
+      status: 503,
       message: 'Erro na conexão. Tente novamente mais tarde.'
     }
   }

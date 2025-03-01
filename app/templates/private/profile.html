@@ -29,13 +29,13 @@
 
       <div class="col-12 col-lg-6 my-3 d-flex flex-column justify-content-center">
         <div class="form-group">
-          <label for="first_name">Nome</label>
-          <input id="first_name" name="first_name" type="text" value="{{ user.first_name }}"  autocomplete="name" class="form-control" />
+          <label for="first-name">Nome</label>
+          <input id="first-name" name="first_name" type="text" value="{{ user.first_name }}"  autocomplete="name" class="form-control" />
         </div>
 
         <div class="form-group">
-          <label for="last_name">Sobrenome</label>
-          <input id="last_name" name="last_name" type="text" value="{{ user.last_name }}" autocomplete="name"
+          <label for="last-name">Sobrenome</label>
+          <input id="last-name" name="last_name" type="text" value="{{ user.last_name }}" autocomplete="name"
             class="form-control" />
         </div>
 
@@ -65,9 +65,9 @@
   <div class="card-body px-md-5 px-lg-5 border border-white">
     <form id="change-password-form" class="mx-auto" enctype="multipart/form-data">
       <div class="form-group position-relative">
-        <label for="password">Senha atual</label>
+        <label for="current-password">Senha atual</label>
         <div class="d-flex align-items-center position-relative">
-          <input id="password" name="password" type="password" class="form-control" />
+          <input id="current-password" name="current_password" type="password" class="form-control" />
           <i class="fa-solid fa-eye-slash position-absolute r-1 password-visibility" title="Mostrar" data-placement="bottom"></i>
         </div>
       </div>
@@ -75,7 +75,7 @@
       <div class="form-group position-relative">
         <label for="new-password">Nova senha</label>
         <div class="d-flex align-items-center position-relative">
-          <input id="new-password" name="new-password" type="password" class="form-control" />
+          <input id="new-password" name="new_password" type="password" class="form-control" />
           <i class="fa-solid fa-eye-slash position-absolute r-1 password-visibility" title="Mostrar" data-placement="bottom"></i>
         </div>
       </div>
@@ -83,7 +83,7 @@
       <div class="form-group position-relative">
         <label for="confirm-new-password">Confirmar nova senha</label>
         <div class="d-flex align-items-center position-relative">
-          <input id="confirm-new-password" name="confirm-new-password" type="password" class="form-control" />
+          <input id="confirm-new-password" name="confirm_new_password" type="password" class="form-control" />
           <i class="fa-solid fa-eye-slash position-absolute r-1 password-visibility" title="Mostrar" data-placement="bottom"></i>
         </div>
       </div>

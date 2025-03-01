@@ -13,7 +13,9 @@ class UserController:
                 "email": user.email,
                 "photo": user.photo,
             }
+
             return { "message": "Perfil encontrado", "data": user_profile, "status": 200}
+        
         except APIException as e:
             return {"message": str(e), "status": e.status_code}
 
@@ -32,7 +34,7 @@ class UserController:
             user_data = user
 
             if user_service.is_valid_user(user):
-                response = user_service.update_user(user_id, user_data)
+                response = user_service.update_user_personal_info(user_id, user_data)
 
                 return {
                     "message": "Informações alteradas com sucesso!", 
@@ -41,6 +43,23 @@ class UserController:
                 }
 
             return { "message": "Dados inválidos.", "status": 400 }
+
+        except APIException as e:
+            return { "message": str(e), "status": e.status_code }
+
+
+
+    def change_user_password(self, user_id, password_data):
+        try:
+            password_data = {
+                "current_password": password_data.get("current_password"),
+                "new_password": password_data.get("new_password"),
+                "confirm_new_password": password_data.get("confirm_new_password")
+            }
+
+            user_service.update_user_password(user_id, password_data)
+
+            return { "message": "Senha alterada com sucesso", "status": 200 }
 
         except APIException as e:
             return {"message": str(e), "status": e.status_code}

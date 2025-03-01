@@ -2,6 +2,7 @@ import re
 import os
 from pathlib import Path
 from werkzeug.utils import secure_filename
+from flask_login import login_user, logout_user
 from flask_bcrypt import Bcrypt
 from app.models import db, User
 from app.exceptions import APIException
@@ -10,13 +11,6 @@ from app.utils.random_str import str_rand
 bcrypt = Bcrypt()
 
 class UserService:
-
-    def authenticate_user(self, email, password):
-        user = User.query.filter_by(email=email).first()
-        if user and bcrypt.check_password_hash(user.password, password):
-            return user
-        raise APIException("Credenciais inválidas.", 401)
-
 
     def verify_is_valid_name(self, name, field="Nome"):
         invalid_chars_pattern = r"[^a-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ\s']"
@@ -29,7 +23,7 @@ class UserService:
 
         if (not name) or (len(name) < 2 or len(name) > 100):
             raise ValueError(f"O {field} deve ter entre 2 e 100 caracteres.")
-        
+
         return True
 
 
@@ -38,7 +32,7 @@ class UserService:
 
         if ((not email) or len(email) > 120) or (not re.fullmatch(email_pattern, email)):
             raise ValueError("Email inválido.")
-        
+
         return True
 
 
@@ -107,11 +101,11 @@ class UserService:
         return True
 
 
-    def verify_is_valid_password(self, password):
+    def verify_is_valid_password(self, password, label="senha"):
         password_pattern = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&\.])[A-Za-z\d@$!%*?&\.]{8,}$"
 
         if not re.fullmatch(password_pattern, password):
-            raise ValueError("A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial (@$!%*?&.).")
+            raise ValueError(f"A {label} deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial (@$!%*?&.).")
 
         return True
 
@@ -132,7 +126,7 @@ class UserService:
             if "password" in user:
                 self.verify_is_valid_password(user["password"])
                 if "confirm_password" in user and (user["password"] != user["confirm_password"]):
-                    raise ValueError("As senhas não coincidem.")
+                    raise ValueError("Verifique a confirmação de senha. As senhas não coincidem.")
 
             if "photo" in user:
                 self.verify_is_valid_photo(user["photo"])
@@ -157,6 +151,20 @@ class UserService:
             raise APIException ("Erro desconhecido", 500) from e
 
 
+    def authenticate_user(self, email, password):
+        user = User.query.filter_by(email=email).first()
+
+        if user and bcrypt.check_password_hash(user.password, password):
+            login_user(user)
+            return user.to_dict()
+
+        raise APIException("Credenciais inválidas.", 401)
+
+
+    def logout_user(self):
+        return logout_user()
+
+
     def create_user(self, user):
         new_user = User(first_name=user["first_name"], last_name=user["last_name"], email=user["email"])
         new_user.set_password(user["password"])
@@ -171,7 +179,7 @@ class UserService:
             raise APIException ("Erro desconhecido", 500) from e
 
 
-    def update_user(self, user_id, user_data):
+    def update_user_personal_info(self, user_id, user_data):
         try:
             user = self.get_user_by_id(user_id)
 
@@ -209,6 +217,44 @@ class UserService:
                 return { "keep_logged": not has_changed_email, "updated_user": user.to_dict }
 
             raise APIException("Usuário não encontrado", 404)
+
+        except APIException as e:
+            db.session.rollback()
+            raise APIException(f"{str(e)}", e.status_code) from e
+
+        except Exception as e:
+            db.session.rollback()
+            raise APIException ("Erro desconhecido", 500) from e
+
+
+    def update_user_password(self, user_id, password_data):
+        try:
+            user = self.get_user_by_id(user_id)
+
+            if not user:
+                raise APIException("Usuário não encontrado", 404)
+
+            if password_data["current_password"] == "":
+                raise APIException("Informe a senha atual", 400)
+
+            if not bcrypt.check_password_hash(user.password, password_data["current_password"]):
+                raise APIException("Senha atual incorreta", 400)
+
+            if password_data["new_password"] == "":
+                raise APIException("Informe a nova senha", 400)
+
+            self.verify_is_valid_password(password_data["new_password"], "nova senha")
+
+
+            if password_data["current_password"] == password_data["new_password"]:
+                raise APIException("A senha atual e a nova senha não devem coincidir", 400)
+
+            if password_data["new_password"] != password_data["confirm_new_password"]:
+                raise APIException("Verifique a confirmação de nova senha. As senhas não coincidem.", 400)
+
+            user.set_password(password_data["new_password"])
+
+            db.session.commit()
 
         except APIException as e:
             db.session.rollback()

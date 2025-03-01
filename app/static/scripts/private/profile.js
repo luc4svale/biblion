@@ -1,12 +1,21 @@
 const changePersonalInfoForm = document.querySelector('#change-personal-info-form')
-const firstName = changePersonalInfoForm.querySelector('#first_name')
-const lastName = changePersonalInfoForm.querySelector('#last_name')
 const photoContainer = changePersonalInfoForm.querySelector('#photo-container')
 const photoOverlay = changePersonalInfoForm.querySelector('#photo-overlay')
 const photoPreview = changePersonalInfoForm.querySelector('#photo-preview')
 const photoInput = changePersonalInfoForm.querySelector('#photo')
+const firstName = changePersonalInfoForm.querySelector('#first-name')
+const lastName = changePersonalInfoForm.querySelector('#last-name')
+const names = [firstName, lastName]
+const email = changePersonalInfoForm.querySelector('#email')
 const changePersonalInfoFormButton = changePersonalInfoForm.querySelector('#change-personal-info-button')
 
+
+const changePasswordForm = document.querySelector('#change-password-form')
+const currentPassword = changePasswordForm.querySelector("#current-password");
+const newPassword = changePasswordForm.querySelector("#new-password");
+const confirmNewPassword = changePasswordForm.querySelector("#confirm-new-password");
+const toggleIcons = changePasswordForm.querySelectorAll('.password-visibility')
+const changePasswordFormButton = changePasswordForm.querySelector('#change-password-button')
 
 
 
@@ -21,7 +30,7 @@ photoInput.addEventListener('change', async (event) => {
 
         let validPhotoNewsObject = await validatePhoto(photoInput);
 
-        if (!validPhotoNewsObject.success) {
+        if (!validPhotoNewsObject.status == 200) {
 
             photoInput.value = "";
 
@@ -33,7 +42,7 @@ photoInput.addEventListener('change', async (event) => {
                 backdrop: 'var(--swal-backdrop)',
                 background: 'var(--surface-secondary)',
                 customClass: {
-                    icon: 'custom-icon-class',
+                    icon: 'swal-icon',
                     confirmButton: 'btn-primary'
                 }
             });
@@ -64,12 +73,11 @@ photoInput.addEventListener('change', async (event) => {
 
 
 async function validatePhoto(input) {
-
     let file = input.files[0];
 
     if (file.size > 5000000) {
         return {
-            success: false,
+            status: 400,
             message: "Tamanho máximo de 5MB excedido para <strong>imagem de perfil</strong>."
         };
     }
@@ -88,26 +96,25 @@ async function validatePhoto(input) {
 
         if (!isValidFormat) {
             return {
-                success: false,
+                status: 400,
                 message: "Tipo de arquivo inválido para <strong>imagem de perfil</strong>."
             };
         }
 
 
         return {
-            success: true,
+            status: 200,
             message: "Imagem de perfil válida."
         };
 
 
     } catch (error) {
         return {
-            success: false,
+            status: 404,
             message: "Erro ao carregar <strong>imagem de perfil</strong>. Tente novamente."
         };
     }
 }
-
 
 
 function readFileAsArrayBuffer(file) {
@@ -128,7 +135,6 @@ function readFileAsArrayBuffer(file) {
 
 
 function readFileAsText(file) {
-
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
 
@@ -147,7 +153,6 @@ function readFileAsText(file) {
 
 
 function isValidPhotoExtension(arrayBuffer) {
-
     let fileCodes = ["89504e47", "ffd8ffdb", "ffd8ffe0", "ffd8ffee", "ffd8ffe1", "0000000c", "ff4fff51", "52494646"];
 
     var arr = arrayBuffer.subarray(0, 4);
@@ -165,8 +170,6 @@ function isValidPhotoExtension(arrayBuffer) {
 
 
 //------- Names Mask -------//
-const names = [firstName, lastName]
-
 names.forEach(name => {
   name.addEventListener('input', () => {
     if (name.value.length > 100) {
@@ -215,36 +218,7 @@ email.addEventListener('input', () => {
 });
 
 
-//------ Passwords Visibility -------//
-const toggleIcons = document.querySelectorAll('.password-visibility')
-
-toggleIcons.forEach(toggleIcon => {
-  toggleIcon.addEventListener('click', () => {
-    const passwordField = toggleIcon.parentElement.querySelector('input')
-    const isPasswordVisible = passwordField.type === 'text';
-
-    if (isPasswordVisible) {
-      passwordField.type = 'password';
-      toggleIcon.classList.remove("fa-eye");
-      toggleIcon.classList.add('fa-eye-slash');
-      toggleIcon.title = 'Mostrar';
-    } else {
-      passwordField.type = 'text';
-      toggleIcon.classList.remove('fa-eye-slash');
-      toggleIcon.classList.add('fa-eye');
-      toggleIcon.title = 'Ocultar';
-    }
-    $(toggleIcon).tooltip('dispose').tooltip('show');
-  })
-})
-
-$(document).ready(() => {
-  $('.password-visibility').tooltip('dispose').tooltip();
-});
-
-
-
-//------ Submit Personal Info Form -------//
+//------ Submit Change Personal Info Form -------//
 changePersonalInfoFormButton.addEventListener("click", async (event) => {
     event.preventDefault();
     Swal.fire({
@@ -271,7 +245,7 @@ changePersonalInfoFormButton.addEventListener("click", async (event) => {
             backdrop:'var(--swal-backdrop))',
             background:'var(--surface-secondary)',
             customClass: {
-                icon:'custom-icon-class',
+                icon:'swal-icon',
                 confirmButton:'btn-primary'
             }
         }).then(() => {
@@ -287,7 +261,7 @@ changePersonalInfoFormButton.addEventListener("click", async (event) => {
             backdrop:'var(--swal-backdrop))',
             background:'var(--surface-secondary)',
             customClass: {
-                icon: 'custom-icon-class',
+                icon: 'swal-icon',
                 confirmButton: 'btn-primary'
             }
         });
@@ -295,12 +269,11 @@ changePersonalInfoFormButton.addEventListener("click", async (event) => {
 });
 
 async function SubmitChangePersonalInfoForm() {
-
     if (photoInput.files.length != 0) {
 
         const validPhotoProfileObject = await validatePhoto(photoInput);
 
-        if (!validPhotoProfileObject.success) {
+        if (!validPhotoProfileObject.status == 200) {
             return await new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve(
@@ -327,11 +300,171 @@ async function SubmitChangePersonalInfoForm() {
 
     } catch (error) {
         return {
-            success: false,
+            status: 503,
             message: "Erro na conexão. Por favor, recarregue a página e tente novamente."
         };
     }
 }
 
+
+
+//------ Passwords Visibility -------//
+toggleIcons.forEach(toggleIcon => {
+    toggleIcon.addEventListener('click', () => {
+      const passwordField = toggleIcon.parentElement.querySelector('input')
+      const isPasswordVisible = passwordField.type === 'text';
+  
+      if (isPasswordVisible) {
+        passwordField.type = 'password';
+        toggleIcon.classList.remove("fa-eye");
+        toggleIcon.classList.add('fa-eye-slash');
+        toggleIcon.title = 'Mostrar';
+      } else {
+        passwordField.type = 'text';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+        toggleIcon.title = 'Ocultar';
+      }
+      $(toggleIcon).tooltip('dispose').tooltip('show');
+    })
+  })
+  
+  $(document).ready(() => {
+    $('.password-visibility').tooltip('dispose').tooltip();
+  });
+  
+
+
+//-------- Submit Change Password Form --------//
+changePasswordFormButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+    Swal.fire({
+        title: 'Alterando senha...',
+        didOpen: async () => {
+            Swal.showLoading();
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+        backdrop: 'var(--swal-backdrop)',
+        background: 'var(--surface-secondary)',
+    });
+
+    const response = await submitChangePasswordForm();
+
+    if (response.status == 200) {
+        Swal.fire({
+            title: '<h3>Senha alterada com sucesso!</h3>',
+            text: 'Para continuar, por favor, faça login novamente utilizando sua nova senha.',
+            icon: 'success',
+            iconHtml: '<i class="fas fa-check-circle text-success"></i>',
+            backdrop: 'var(--swal-backdrop)',
+            background: 'var(--surface-secondary)',
+            customClass: {
+                icon: 'swal-icon',
+                confirmButton: 'btn-primary'
+            }
+        }).then(() => {
+            window.location.href = '/logout'
+        });
+    } else {
+        Swal.fire({
+            title: '<h3>Falha ao alterar senha!</h3>',
+            html: response.message,
+            icon: 'error',
+            iconHtml: '<i class="fas fa-times-circle text-danger"></i>',
+            backdrop: 'var(--swal-backdrop)',
+            background: 'var(--surface-secondary)',
+            customClass: {
+                icon: 'swal-icon',
+                confirmButton: 'btn-primary'
+            }
+        });
+    }
+});
+
+
+
+async function submitChangePasswordForm() {
+    if (currentPassword.value == "") {
+        return await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({
+                    status: 400,
+                    message: "Informe a sua senha atual"
+                });
+            })
+        })
+    }
+
+
+    if (newPassword.value == "") {
+        return await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({
+                    status: 400,
+                    message: "Informe a nova senha"
+                });
+            })
+        })
+    }
+
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&\.])[A-Za-z\d@$!%*?&\.]{8,}$/
+    if(!passwordPattern.test(newPassword.value)) {
+        return await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({
+                    status: 400,
+                    message: "A nova senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial (@$!%*?&.)"
+                });
+            })
+        })
+    }
+
+
+
+    if (currentPassword.value == newPassword.value) {
+        return await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({
+                    status: 400,
+                    message: "A senha atual e a nova senha não devem coincidir"
+                });
+            })
+        })
+    }
+
+
+
+
+    if (newPassword.value != confirmNewPassword.value) {
+        return await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({
+                    status: 400,
+                    message: "Verifique a confirmação de nova senha. Senhas não coincidem"
+                });
+            })
+        })
+    }
+
+
+
+    try {
+
+        const formData = new FormData(changePasswordForm);
+
+        const response = await fetch("/profile", {
+            method: "PATCH",
+            body: formData
+        });
+
+        return await response.json();
+
+    } catch (error) {
+        return {
+            status: 503,
+            message:  "Erro na conexão. Por favor, recarregue a página e tente novamente."
+        };
+    }
+}
 
 

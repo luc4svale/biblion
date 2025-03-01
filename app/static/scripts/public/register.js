@@ -1,9 +1,9 @@
 const registerForm = document.querySelector('#register-form')
-const firstName = registerForm.querySelector('#first_name')
-const lastName = registerForm.querySelector('#last_name')
+const firstName = registerForm.querySelector('#first-name')
+const lastName = registerForm.querySelector('#last-name')
 const email = registerForm.querySelector('#email')
 const password = registerForm.querySelector('#password')
-const confirmPassword = registerForm.querySelector('#confirm_password')
+const confirmPassword = registerForm.querySelector('#confirm-password')
 const registerFormButton = registerForm.querySelector('#register-button')
 
 
@@ -84,7 +84,7 @@ $(document).ready(() => {
   $('.password-visibility').tooltip('dispose').tooltip();
 });
 
-//----- Submit Form ------//
+//----- Submit Register Form ------//
 registerFormButton.addEventListener('click', async (event) => {
   event.preventDefault();
 
@@ -108,7 +108,7 @@ registerFormButton.addEventListener('click', async (event) => {
       backdrop: 'var(--swal-backdrop)',
       background: 'var(--surface-secondary)',
       customClass: {
-        icon: 'custom-icon-class',
+        icon: 'swal-icon',
         confirmButton: 'btn-primary'
       }
     }).then(() => {
@@ -145,7 +145,7 @@ async function submitRegisterForm() {
 
   } catch (error) {
     return {
-      success: false,
+      status: 503,
       message: 'Erro na conexão. Tente novamente mais tarde.'
     }
   }

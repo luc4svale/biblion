@@ -1,4 +1,3 @@
-from flask_login import login_user, logout_user
 from app.services.user_service import UserService
 from app.exceptions import APIException
 
@@ -28,12 +27,11 @@ class AuthController:
         password = user_data.get("password", "")
 
         try:
-            user = user_service.authenticate_user(email, password)
-            login_user(user)
+            user_service.authenticate_user(email, password)
             return { "message": "Usuário autenticado com sucesso.", "status": 200 }
         except APIException as e:
             return { "message": f"{str(e)}", "status": e.status_code }
 
     def logout_user(self):
-        logout_user()
+        user_service.logout_user()
         return { "message": "Logout realizado com sucesso.", "status": 200 }
