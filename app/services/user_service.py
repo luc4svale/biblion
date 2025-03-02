@@ -210,7 +210,7 @@ class UserService:
 
                 db.session.commit()
 
-                return { "keep_logged": not has_changed_email, "updated_user": user.to_dict }
+                return { "keep_logged": not has_changed_email, "updated_user": user.to_dict() }
 
             raise APIException("Usuário não encontrado", 404)
 

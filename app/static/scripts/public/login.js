@@ -7,65 +7,65 @@ const loginFormButton = loginForm.querySelector('#login-button')
 //------ Email Mask ------//
 email.addEventListener('input', () => {
   if (email.value.length > 120) {
-    email.value = email.value.substring(0, 120);
+    email.value = email.value.substring(0, 120)
   }
 
-  const cursorPosition = email.selectionStart;
+  const cursorPosition = email.selectionStart
 
-  const pattern = /[^a-zA-Z0-9@_.-]/g;
+  const pattern = /[^a-zA-Z0-9@_.-]/g
 
   if (pattern.test(email.value)) {
-    email.value = email.value.replace(pattern, '');
-    email.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
-    return;
+    email.value = email.value.replace(pattern, '')
+    email.setSelectionRange(cursorPosition - 1, cursorPosition - 1)
+    return
   }
-  email.setSelectionRange(cursorPosition, cursorPosition);
-});
+  email.setSelectionRange(cursorPosition, cursorPosition)
+})
 
 
 //-- Password Visibility --//
 const toggleIcon = document.querySelector('.password-visibility')
 
 toggleIcon.addEventListener('click', () => {
-  const isPasswordVisible = password.type === 'text';
+  const isPasswordVisible = password.type === 'text'
 
   if (isPasswordVisible) {
-    password.type = 'password';
-    toggleIcon.classList.remove("fa-eye");
-    toggleIcon.classList.add('fa-eye-slash');
-    toggleIcon.title = 'Mostrar';
+    password.type = 'password'
+    toggleIcon.classList.remove("fa-eye")
+    toggleIcon.classList.add('fa-eye-slash')
+    toggleIcon.title = 'Mostrar'
   } else {
-    password.type = 'text';
-    toggleIcon.classList.remove('fa-eye-slash');
-    toggleIcon.classList.add('fa-eye');
-    toggleIcon.title = 'Ocultar';
+    password.type = 'text'
+    toggleIcon.classList.remove('fa-eye-slash')
+    toggleIcon.classList.add('fa-eye')
+    toggleIcon.title = 'Ocultar'
   }
-  $(toggleIcon).tooltip('dispose').tooltip('show');
+  $(toggleIcon).tooltip('dispose').tooltip('show')
 })
 
 $(document).ready(() => {
-  $('.password-visibility').tooltip('dispose').tooltip();
-});
+  $('.password-visibility').tooltip('dispose').tooltip()
+})
 
 
 //----- Submit Login Form ------//
 loginFormButton.addEventListener('click', async (event) => {
-  event.preventDefault();
+  event.preventDefault()
 
   Swal.fire({
     title: 'Autenticando...',
     didOpen: async () => {
-      Swal.showLoading();
+      Swal.showLoading()
     },
     allowOutsideClick: () => !Swal.isLoading(),
     backdrop: 'var(--swal-backdrop)',
     background: 'var(--surface-secondary)',
-  });
+  })
 
-  const response = await submitLoginForm();
+  const response = await submitLoginForm()
 
   if (response.status == 200) {
-      window.location.href = "/home";
+      window.location.href = "/home"
 
   } else {
     Swal.fire({
@@ -79,9 +79,9 @@ loginFormButton.addEventListener('click', async (event) => {
         icon: 'swal-icon',
         confirmButton: 'btn-primary'
       },
-    });
+    })
   }
-});
+})
 
 async function submitLoginForm() {
   try {
@@ -90,10 +90,10 @@ async function submitLoginForm() {
     const response = await fetch('/login', {
       method: 'POST',
       body: formData,
-    });
+    })
 
-    const data = await response.json();
-    return data;
+    return await response.json()
+
 
   } catch (error) {
     return {

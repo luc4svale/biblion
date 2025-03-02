@@ -22,48 +22,48 @@ const names = [registerCategoryName, editCategoryName]
 names.forEach(name => {
   name.addEventListener('input', () => {
     if (name.value.length > 100) {
-      name.value = name.value.substring(0, 100);
+      name.value = name.value.substring(0, 100)
     }
 
-    const cursorPosition = name.selectionStart;
+    const cursorPosition = name.selectionStart
 
-    const pattern = /[^\sa-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ']|^\s+$|^'/g;
+    const pattern = /[^\sa-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ']|^\s+$|^'/g
 
     if (pattern.test(name.value)) {
-      name.value = name.value.replace(pattern, '');
-      name.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
+      name.value = name.value.replace(pattern, '')
+      name.setSelectionRange(cursorPosition - 1, cursorPosition - 1)
     }
 
     if (/\s{2,}/g.test(name.value)) {
-      name.value = name.value.replace(/\s{2,}/g, ' ');
-      name.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
+      name.value = name.value.replace(/\s{2,}/g, ' ')
+      name.setSelectionRange(cursorPosition - 1, cursorPosition - 1)
     }
 
     if (/'{2,}/g.test(name.value)) {
-      name.value = name.value.replace(/'{2,}/g, "'");
-      name.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
+      name.value = name.value.replace(/'{2,}/g, "'")
+      name.setSelectionRange(cursorPosition - 1, cursorPosition - 1)
     }
-  });
-});
+  })
+})
 
 
 //-------- Submit Register Category Form --------//
 registerCategoryFormButton.addEventListener('click', async (event) => {
-  event.preventDefault();
+  event.preventDefault()
 
   Swal.fire({
     title: 'Cadastrando categoria...',
     didOpen: async () => {
-      Swal.showLoading();
-      registerCategoryModal.style.display = 'none';
+      Swal.showLoading()
+      registerCategoryModal.style.display = 'none'
     },
     allowOutsideClick: () => !Swal.isLoading(),
     backdrop: 'var(--swal-backdrop)',
     background: 'var(--surface-secondary)'
-  });
+  })
 
 
-  const response = await submitRegisterCategoryForm();
+  const response = await submitRegisterCategoryForm()
 
   if (response.status == 201) {
 
@@ -79,7 +79,7 @@ registerCategoryFormButton.addEventListener('click', async (event) => {
       },
     }).then(() => {
       window.location.reload()
-    });
+    })
 
   } else {
     Swal.fire({
@@ -94,30 +94,30 @@ registerCategoryFormButton.addEventListener('click', async (event) => {
         confirmButton: 'btn-primary'
       },
     }).then(() => {
-      registerCategoryModal.style.display = "block";
-    });
+      registerCategoryModal.style.display = "block"
+    })
   }
-});
+})
 
 
 async function submitRegisterCategoryForm() {
 
-  const formData = new FormData(registerCategoryForm);
+  const formData = new FormData(registerCategoryForm)
 
   try {
     const response = await fetch('/category', {
       method: 'POST',
       body: formData,
-    });
+    })
 
-    return await response.json();
+    return await response.json()
 
 
   } catch (error) {
     return {
       status: 500,
       message: 'Erro na conexão. Por favor, recarregue a página e tente novamente.'
-    };
+    }
 
   }
 }
@@ -128,11 +128,9 @@ async function submitRegisterCategoryForm() {
 editCategoryModalButtons.forEach((button) =>
   button.addEventListener('click', async (event) => {
 
-    overlay(editCategoryModalOverlay, true);
+    overlay(editCategoryModalOverlay, true)
 
-    console.log(button.dataset.categoryId)
-
-    const response = await getCategoryInfo(button.dataset.categoryId);
+    const response = await getCategoryInfo(button.dataset.categoryId)
 
     if (!response.status == 200) {
 
@@ -140,33 +138,32 @@ editCategoryModalButtons.forEach((button) =>
         title: '<h3>Egresso não encontrado!</h3>',
         icon: 'error',
         iconHtml: '<i class="fas fa-times-circle text-danger"></i>',
-      backdrop: 'var(--swal-backdrop)',
-      background: 'var(--surface-secondary)',
+        backdrop: 'var(--swal-backdrop)',
+        background: 'var(--surface-secondary)',
         customClass: {
           icon: 'swal-icon',
         },
       }).then(() => {
         window.location.reload()
-      });
+      })
 
     } else {
-      updateEditCategoryForm(response.data);
-      overlay(editCategoryModalOverlay, false);
+      fillEditCategoryForm(response.data)
+      overlay(editCategoryModalOverlay, false)
     }
 
 
   })
-);
-
+)
 
 async function getCategoryInfo(categoryId) {
   try {
     const response = await fetch(`/category/${categoryId}`, {
       method: 'GET'
 
-    });
+    })
 
-    return await response.json();
+    return await response.json()
 
   } catch (error) {
     return {
@@ -177,11 +174,12 @@ async function getCategoryInfo(categoryId) {
 }
 
 
-function updateEditCategoryForm(categoryData) {
- const { name } = categoryData
- editCategoryName.value = name
-}
+function fillEditCategoryForm(categoryData) {
+ const { id, name } = categoryData
 
+ editCategoryName.value = name
+ editCategoryFormButton.dataset.categoryId = id
+}
 
 
 function overlay(element, show) {
@@ -195,112 +193,92 @@ function overlay(element, show) {
 
 
 
-/* 
-
-const editGraduateSubmitButton = document.querySelector("#editGraduateSubmitButton");
-editGraduateSubmitButton.addEventListener("click", async (e) => {
-  e.preventDefault();
+//------- Submit Edit Category Form -------//
+editCategoryFormButton.addEventListener('click', async (event) => {
+  event.preventDefault()
 
   Swal.fire({
-    title: "Editando egresso...",
+    title: 'Editando categoria...',
     didOpen: async () => {
-      Swal.showLoading();
-      document.getElementById("editGraduateModal").style.display = "none";
+      Swal.showLoading()
+      editCategoryModal.style.display = 'none'
     },
     allowOutsideClick: () => !Swal.isLoading(),
-    backdrop: "rgba(0,0,0,0.7)",
-    background: "#f2f2f2",
-  });
+    backdrop: 'var(--swal-backdrop)',
+    background: 'var(--surface-secondary)',
+  })
 
-  const response = await editGraduate();
+  const response = await submitEditCategoryForm()
 
-  if (response.success) {
+  if (response.status == 200) {
 
     Swal.fire({
-      title: "<h3>Egresso editado com sucesso!</h3>",
-      icon: "success",
+      title: '<h3>Categoria editada com sucesso!</h3>',
+      icon: 'success',
       iconHtml: '<i class="fas fa-check-circle text-success"></i>',
-      backdrop: "rgba(0,0,0,0.7)",
-      background: "#f2f2f2",
+      backdrop: 'var(--swal-backdrop)',
+      background: 'var(--surface-secondary)',
       customClass: {
-        icon: "custom-icon-class",
-        confirmButton: "btn-primary"
+        icon: 'custom-icon-class',
+        confirmButton: 'btn-primary'
       },
     }).then(() => {
-      const editGraduateModal = document.getElementById("editGraduateModal");
-      $(editGraduateModal).modal("hide");
-    });
+      $(editCategoryModal).modal("hide")
+    })
 
-    const graduateCpf = document.querySelector("#editLastCpf").value;
-    const graduateLineContent = document.querySelector(`#graduateLineContent${graduateCpf}`);
+    const { name, updated_at } = response.data
 
-    //UPDATING CPF
-    const cpf = document.querySelector("#editCpf").value.replace(/[^0-9]/g, "");
-    const lineCpf = graduateLineContent.querySelector(".graduate-cpf");
-    lineCpf.innerHTML = cpf;
+    const categoryTableRow = categoriesTable.querySelector(`#category-row-${editCategoryFormButton.dataset.categoryId}`)
 
+    //------- Update Category Table Row Name --------//
+    const categoryTableRowName = categoryTableRow.querySelector('.category-name')
+    categoryTableRowName.innerHTML = name
+    
 
-    //UPDATING BIRTHDATE
-    const birthDate = document.querySelector("#editBirthDate").value;
-    const [year, month, day] = birthDate.split("-");
-    const lineBirthDate = graduateLineContent.querySelector(".graduate-birthdate");
-    lineBirthDate.innerHTML = `${day}/${month}/${year}`;
-
-
-    //UPDATING TD ID
-    graduateLineContent.id = `graduateLineContent${cpf}`;
-
-
-    //UPDATING DATASET EDIT BUTTON
-    const editButton = graduateLineContent.querySelector(".edit-graduate-button");
-    editButton.dataset.graduateCpf = cpf;
-
-
-    //UPDATING DATASET DELETE BUTTON
-    const deleteButton = graduateLineContent.querySelector(".delete-graduate-button");
-    deleteButton.dataset.graduateCpf = cpf;
+    //---- Update Category Table Row Updated At ----//
+    const categoryTableRowUpdatedAt = categoryTableRow.querySelector('.category-updated-at')
+    categoryTableRowUpdatedAt.innerHTML = updated_at.toLocaleString('pt-BR', { 
+      year: 'numeric', month: '2-digit', day: '2-digit', 
+      hour: '2-digit', minute: '2-digit', second: '2-digit' 
+    })
 
 
   } else {
     Swal.fire({
-      title: "Falha ao editar egresso!",
+      title: 'Falha ao editar categoria!',
       html: response.message,
-      icon: "error",
+      icon: 'error',
       iconHtml: '<i class="fas fa-times-circle text-danger"></i>',
-      backdrop: "rgba(0,0,0,0.7)",
-      background: "#f2f2f2",
+      backdrop: 'var(--swal-backdrop)',
+      background: 'var(--surface-secondary)',
       customClass: {
-        icon: "custom-icon-class",
-        confirmButton: "btn-primary"
+        icon: 'swal-icon',
+        confirmButton: 'btn-primary'
       },
     }).then(() => {
-      document.getElementById("editGraduateModal").style.display = "block";
-    });
+      editCategoryModal.style.display = 'block'
+    })
   }
-});
+})
 
 
-async function editGraduate() {
+async function submitEditCategoryForm() {
 
   try {
-    const form = document.getElementById("editGraduateForm");
-    const formData = new FormData(form);
 
-    const cleanedCpf = document.getElementById("editCpf").value.replace(/[^0-9]/g, "");
+    const formData = new FormData(editCategoryForm)
 
-    formData.append("editCpf", cleanedCpf);
-
-    const response = await fetch("/graduate/edit", {
-      method: "POST",
+    const response = await fetch(`/category/${editCategoryFormButton.dataset.categoryId}`, {
+      method: "PUT",
       body: formData,
-    });
+    })
 
-    return await response.json();
+    return await response.json()
 
   } catch (error) {
     return {
-      success: false,
-      message: "Erro na conexão. Por favor, recarregue a página e tente novamente."
+      status: 500,
+      message: 'Erro na conexão. Por favor, recarregue a página e tente novamente.'
     }
   }
 
@@ -309,7 +287,7 @@ async function editGraduate() {
 
 
 
-const deleteGraduateButtons = document.querySelectorAll(".delete-graduate-button");
+/* const deleteGraduateButtons = document.querySelectorAll(".delete-graduate-button")
 deleteGraduateButtons.forEach((button) =>
   button.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -402,55 +380,38 @@ async function deleteGraduate(graduateCpf) {
       message: "Erro na conexão. Por favor, recarregue a página e tente novamente."
     };
   }
-} */
-
+} 
+ */
 
 $(document).ready(() => {
-  $(registerCategoryModalButton).tooltip();
-  $(".edit-category-button").tooltip();
-  $(".delete-category-button").tooltip();
+
+  //--------- Set Buttons Tooltips ---------//
+  $(registerCategoryModalButton).tooltip()
+  $(".edit-category-button").tooltip()
+  $(".delete-category-button").tooltip()
 
 
+  //---- Register Modal on Hidden ----//
   $(registerCategoryModal).on("hidden.bs.modal", () => {
-    $(registerCategoryName).val("");
+    $(registerCategoryName).val("")
+
+    setTimeout(() => {
+      $(registerCategoryModalButton).blur()
+    }, 5)
+
+  })
+
+
+  //---- Edit Modal on Hidden ----//
+  $(editCategoryModal).on("hidden.bs.modal", () => {
+    $(editCategoryName).val("")
+    $(editCategoryFormButton).data('categoryId', '')
 
 
     setTimeout(() => {
-      $(registerCategoryModalButton).blur();
-    }, 5);
-
-  });
+      $(editCategoryModalButtons).blur()
+    }, 5)
+  })
 
 })
-
-
-
-
-/*   $("#editGraduateModal").on("hidden.bs.modal", () => {
-    $("#editLastCpf").val("");
-    $("#editCpf").val("");
-    $("#editBirthDate").val("");
-
-    setTimeout(() => {
-      $(".edit-graduate-button").blur();
-    }, 5);
-  });
-
-
-  $("#registerGraduatesModal").on("hidden.bs.modal", () => {
-    $("#registerGraduatesFile").val("");
-
-    setTimeout(() => {
-      $("#registerGraduatesButton").blur();
-    }, 5);
-  });
-
-  $(".page-item").on("click", () => {
-    $(".edit-graduate-button").tooltip();
-    $(".delete-graduate-button").tooltip();
-  }); */
-
-// });
-
-
 

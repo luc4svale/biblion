@@ -34,3 +34,11 @@ def register_category():
     category_data = request.form
     response = category_controller.resgiter_category(category_data)
     return jsonify(response), response["status"]
+
+
+@categories_bp.route("/category/<category_id>", methods=["PUT"])
+@admin_required
+def edit_category(category_id):
+    category_data = request.form
+    response = category_controller.edit_category(category_id, category_data)
+    return jsonify(response), response["status"]

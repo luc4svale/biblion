@@ -44,3 +44,24 @@ class CategoryController:
 
         except APIException as e:
             return {"message": str(e), "status": e.status_code}
+
+
+    def edit_category(self, category_id, category_data):
+        try:
+            category_data = {
+                "name":  category_data.get("name", "").strip(),
+            }
+
+            if category_service.is_valid_category(category_data):
+                updated_category = category_service.update_category(category_id, category_data)
+
+                return {
+                    "message": "Categoria editada com sucesso!", 
+                    "data": updated_category,
+                    "status": 200, 
+                }
+
+            return { "message": "Dados inválidos.", "status": 400 }
+
+        except APIException as e:
+            return { "message": str(e), "status": e.status_code }

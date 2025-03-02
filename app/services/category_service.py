@@ -68,3 +68,32 @@ class CategoryService:
         except Exception as e:
             db.session.rollback()
             raise APIException ("Erro desconhecido", 500) from e
+
+
+
+    def update_category(self, category_id, category_data):
+        try:
+            category = self.get_category_by_id(category_id)
+
+            if category:
+
+                equal_fields = category_data["name"] == category.name
+
+                if equal_fields:
+                    raise APIException("Nenhuma alteração foi detectada", 400)
+
+                category.name = category_data["name"]
+
+                db.session.commit()
+
+                return category.to_dict()
+
+            raise APIException("Categoria não encontrada", 404)
+
+        except APIException as e:
+            db.session.rollback()
+            raise APIException(f"{str(e)}", e.status_code) from e
+
+        except Exception as e:
+            db.session.rollback()
+            raise APIException ("Erro desconhecido", 500) from e

@@ -33,7 +33,7 @@
                 <tbody>
 
                     {% for category in categories %}
-                    <tr id="category-line-content-{{ category.id }}">
+                    <tr id="category-row-{{ category.id }}">
                         <td class="category-name text-center">{{ category.name }}</td>
                         <td class="category-created-at text-center">{{ category.created_at.strftime('%d/%m/%Y %H:%M:%S') }}</td>
                         <td class="category-updated-at text-center">{{ category.updated_at.strftime('%d/%m/%Y %H:%M:%S') }}</td>

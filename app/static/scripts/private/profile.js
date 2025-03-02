@@ -11,28 +11,28 @@ const changePersonalInfoFormButton = changePersonalInfoForm.querySelector('#chan
 
 
 const changePasswordForm = document.querySelector('#change-password-form')
-const currentPassword = changePasswordForm.querySelector("#current-password");
-const newPassword = changePasswordForm.querySelector("#new-password");
-const confirmNewPassword = changePasswordForm.querySelector("#confirm-new-password");
+const currentPassword = changePasswordForm.querySelector("#current-password")
+const newPassword = changePasswordForm.querySelector("#new-password")
+const confirmNewPassword = changePasswordForm.querySelector("#confirm-new-password")
 const toggleIcons = changePasswordForm.querySelectorAll('.password-visibility')
 const changePasswordFormButton = changePasswordForm.querySelector('#change-password-button')
 
 
 
 //------- Photo Mask/Validation ------//
-var lastPhotoFile;
+var lastPhotoFile
 
 photoInput.addEventListener('change', async (event) => {
 
-    const file = event.target.files[0];
+    const file = event.target.files[0]
 
     if (file) {
 
-        let validPhotoNewsObject = await validatePhoto(photoInput);
+        let validPhotoNewsObject = await validatePhoto(photoInput)
 
         if (!validPhotoNewsObject.status == 200) {
 
-            photoInput.value = "";
+            photoInput.value = ""
 
             Swal.fire({
                 title: '<h3>Ocorreu um problema!</h3>',
@@ -45,126 +45,126 @@ photoInput.addEventListener('change', async (event) => {
                     icon: 'swal-icon',
                     confirmButton: 'btn-primary'
                 }
-            });
+            })
 
         } else {
 
-            lastPhotoFile = file;
+            lastPhotoFile = file
 
-            const reader = new FileReader();
+            const reader = new FileReader()
 
             reader.onload = function (event) {
-                const photoUrl = event.target.result;
-                photoPreview.src = photoUrl;
-            };
+                const photoUrl = event.target.result
+                photoPreview.src = photoUrl
+            }
 
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file)
         }
 
     } else {
 
         if (lastPhotoFile) {
-            const fileList = new DataTransfer();
-            fileList.items.add(new File([lastPhotoFile], lastPhotoFile.name));
-            photoInput.files = fileList.files;
+            const fileList = new DataTransfer()
+            fileList.items.add(new File([lastPhotoFile], lastPhotoFile.name))
+            photoInput.files = fileList.files
         }
     }
-});
+})
 
 
 async function validatePhoto(input) {
-    let file = input.files[0];
+    let file = input.files[0]
 
     if (file.size > 5000000) {
         return {
             status: 400,
             message: "Tamanho máximo de 5MB excedido para <strong>imagem de perfil</strong>."
-        };
+        }
     }
 
 
     try {
 
-        const arrayBuffer = await readFileAsArrayBuffer(file);
+        const arrayBuffer = await readFileAsArrayBuffer(file)
 
-        const text = await readFileAsText(file);
-        const svgPattern = /<svg[^>]*xmlns="http:\/\/www\.w3\.org\/2000\/svg"[^>]*>/;
-        const isSVG = svgPattern.test(text);
+        const text = await readFileAsText(file)
+        const svgPattern = /<svg[^>]*xmlns="http:\/\/www\.w3\.org\/2000\/svg"[^>]*>/
+        const isSVG = svgPattern.test(text)
 
-        const isValidFormat = (isValidPhotoExtension(arrayBuffer) || isSVG);
+        const isValidFormat = (isValidPhotoExtension(arrayBuffer) || isSVG)
 
 
         if (!isValidFormat) {
             return {
                 status: 400,
                 message: "Tipo de arquivo inválido para <strong>imagem de perfil</strong>."
-            };
+            }
         }
 
 
         return {
             status: 200,
             message: "Imagem de perfil válida."
-        };
+        }
 
 
     } catch (error) {
         return {
             status: 404,
             message: "Erro ao carregar <strong>imagem de perfil</strong>. Tente novamente."
-        };
+        }
     }
 }
 
 
 function readFileAsArrayBuffer(file) {
     return new Promise((resolve, reject) => {
-        const reader = new FileReader();
+        const reader = new FileReader()
 
         reader.onload = function (event) {
-            resolve(new Uint8Array(event.target.result));
-        };
+            resolve(new Uint8Array(event.target.result))
+        }
 
         reader.onerror = function (event) {
-            reject(event);
-        };
+            reject(event)
+        }
 
-        reader.readAsArrayBuffer(file);
-    });
+        reader.readAsArrayBuffer(file)
+    })
 }
 
 
 function readFileAsText(file) {
     return new Promise((resolve, reject) => {
-        const reader = new FileReader();
+        const reader = new FileReader()
 
         reader.onload = function (event) {
-            resolve(event.target.result);
-        };
+            resolve(event.target.result)
+        }
 
         reader.onerror = function (event) {
-            reject(event);
-        };
+            reject(event)
+        }
 
-        reader.readAsText(file);
-    });
+        reader.readAsText(file)
+    })
 
 }
 
 
 function isValidPhotoExtension(arrayBuffer) {
-    let fileCodes = ["89504e47", "ffd8ffdb", "ffd8ffe0", "ffd8ffee", "ffd8ffe1", "0000000c", "ff4fff51", "52494646"];
+    let fileCodes = ["89504e47", "ffd8ffdb", "ffd8ffe0", "ffd8ffee", "ffd8ffe1", "0000000c", "ff4fff51", "52494646"]
 
-    var arr = arrayBuffer.subarray(0, 4);
-    var header = "";
+    var arr = arrayBuffer.subarray(0, 4)
+    var header = ""
     for (var i = 0; i < arr.length; i++) {
-        header += arr[i].toString(16);
+        header += arr[i].toString(16)
     }
 
     if (!fileCodes.includes(header)) {
-        return false;
+        return false
     }
-    return true;
+    return true
 }
 
 
@@ -173,65 +173,65 @@ function isValidPhotoExtension(arrayBuffer) {
 names.forEach(name => {
   name.addEventListener('input', () => {
     if (name.value.length > 100) {
-      name.value = name.value.substring(0, 100);
+      name.value = name.value.substring(0, 100)
     }
 
-    const cursorPosition = name.selectionStart;
+    const cursorPosition = name.selectionStart
 
-    const pattern = /[^\sa-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ']|^\s+$|^'/g;
+    const pattern = /[^\sa-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ']|^\s+$|^'/g
 
     if (pattern.test(name.value)) {
-      name.value = name.value.replace(pattern, '');
-      name.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
+      name.value = name.value.replace(pattern, '')
+      name.setSelectionRange(cursorPosition - 1, cursorPosition - 1)
     }
 
     if (/\s{2,}/g.test(name.value)) {
-      name.value = name.value.replace(/\s{2,}/g, ' ');
-      name.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
+      name.value = name.value.replace(/\s{2,}/g, ' ')
+      name.setSelectionRange(cursorPosition - 1, cursorPosition - 1)
     }
 
     if (/'{2,}/g.test(name.value)) {
-      name.value = name.value.replace(/'{2,}/g, "'");
-      name.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
+      name.value = name.value.replace(/'{2,}/g, "'")
+      name.setSelectionRange(cursorPosition - 1, cursorPosition - 1)
     }
-  });
-});
+  })
+})
 
 
 
 //------ Email Mask ------//
 email.addEventListener('input', () => {
   if (email.value.length > 120) {
-    email.value = email.value.substring(0, 120);
+    email.value = email.value.substring(0, 120)
   }
 
-  const cursorPosition = email.selectionStart;
+  const cursorPosition = email.selectionStart
 
-  const pattern = /[^a-zA-Z0-9@_.-]/g;
+  const pattern = /[^a-zA-Z0-9@_.-]/g
 
   if (pattern.test(email.value)) {
-    email.value = email.value.replace(pattern, '');
-    email.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
-    return;
+    email.value = email.value.replace(pattern, '')
+    email.setSelectionRange(cursorPosition - 1, cursorPosition - 1)
+    return
   }
-  email.setSelectionRange(cursorPosition, cursorPosition);
-});
+  email.setSelectionRange(cursorPosition, cursorPosition)
+})
 
 
 //------ Submit Change Personal Info Form -------//
 changePersonalInfoFormButton.addEventListener("click", async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     Swal.fire({
         title: 'Alterando informações...',
         didOpen: async () => {
-            Swal.showLoading();
+            Swal.showLoading()
         },
         allowOutsideClick: () => !Swal.isLoading(),
         backdrop: 'var(--swal-backdrop)',
         background: 'var(--surface-secondary)',
-    });
+    })
 
-    const response = await SubmitChangePersonalInfoForm();
+    const response = await SubmitChangePersonalInfoForm()
 
     if (response.status == 200) {
 
@@ -249,8 +249,8 @@ changePersonalInfoFormButton.addEventListener("click", async (event) => {
                 confirmButton:'btn-primary'
             }
         }).then(() => {
-            window.location.href = response.keep_logged ? "/profile" : "/logout";
-        });
+            window.location.href = response.keep_logged ? "/profile" : "/logout"
+        })
 
     } else {
         Swal.fire({
@@ -264,28 +264,28 @@ changePersonalInfoFormButton.addEventListener("click", async (event) => {
                 icon: 'swal-icon',
                 confirmButton: 'btn-primary'
             }
-        });
+        })
     }
-});
+})
 
 async function SubmitChangePersonalInfoForm() {
     if (photoInput.files.length != 0) {
 
-        const validPhotoProfileObject = await validatePhoto(photoInput);
+        const validPhotoProfileObject = await validatePhoto(photoInput)
 
         if (!validPhotoProfileObject.status == 200) {
             return await new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve(
                         validPhotoProfileObject
-                    );
-                });
-            });
+                    )
+                })
+            })
         }
     }
 
 
-    const formData = new FormData(changePersonalInfoForm);
+    const formData = new FormData(changePersonalInfoForm)
 
     try {
 
@@ -293,16 +293,16 @@ async function SubmitChangePersonalInfoForm() {
         const response = await fetch(`/profile`, {
             method: "PUT",
             body: formData,
-        });
+        })
 
-        return await response.json();
+        return await response.json()
 
 
     } catch (error) {
         return {
             status: 503,
             message: "Erro na conexão. Por favor, recarregue a página e tente novamente."
-        };
+        }
     }
 }
 
@@ -312,43 +312,43 @@ async function SubmitChangePersonalInfoForm() {
 toggleIcons.forEach(toggleIcon => {
     toggleIcon.addEventListener('click', () => {
       const passwordField = toggleIcon.parentElement.querySelector('input')
-      const isPasswordVisible = passwordField.type === 'text';
+      const isPasswordVisible = passwordField.type === 'text'
   
       if (isPasswordVisible) {
-        passwordField.type = 'password';
-        toggleIcon.classList.remove("fa-eye");
-        toggleIcon.classList.add('fa-eye-slash');
-        toggleIcon.title = 'Mostrar';
+        passwordField.type = 'password'
+        toggleIcon.classList.remove("fa-eye")
+        toggleIcon.classList.add('fa-eye-slash')
+        toggleIcon.title = 'Mostrar'
       } else {
-        passwordField.type = 'text';
-        toggleIcon.classList.remove('fa-eye-slash');
-        toggleIcon.classList.add('fa-eye');
-        toggleIcon.title = 'Ocultar';
+        passwordField.type = 'text'
+        toggleIcon.classList.remove('fa-eye-slash')
+        toggleIcon.classList.add('fa-eye')
+        toggleIcon.title = 'Ocultar'
       }
-      $(toggleIcon).tooltip('dispose').tooltip('show');
+      $(toggleIcon).tooltip('dispose').tooltip('show')
     })
   })
   
   $(document).ready(() => {
-    $('.password-visibility').tooltip('dispose').tooltip();
-  });
+    $('.password-visibility').tooltip('dispose').tooltip()
+  })
   
 
 
 //-------- Submit Change Password Form --------//
 changePasswordFormButton.addEventListener("click", async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     Swal.fire({
         title: 'Alterando senha...',
         didOpen: async () => {
-            Swal.showLoading();
+            Swal.showLoading()
         },
         allowOutsideClick: () => !Swal.isLoading(),
         backdrop: 'var(--swal-backdrop)',
         background: 'var(--surface-secondary)',
-    });
+    })
 
-    const response = await submitChangePasswordForm();
+    const response = await submitChangePasswordForm()
 
     if (response.status == 200) {
         Swal.fire({
@@ -364,7 +364,7 @@ changePasswordFormButton.addEventListener("click", async (event) => {
             }
         }).then(() => {
             window.location.href = '/logout'
-        });
+        })
     } else {
         Swal.fire({
             title: '<h3>Falha ao alterar senha!</h3>',
@@ -377,9 +377,9 @@ changePasswordFormButton.addEventListener("click", async (event) => {
                 icon: 'swal-icon',
                 confirmButton: 'btn-primary'
             }
-        });
+        })
     }
-});
+})
 
 
 
@@ -390,7 +390,7 @@ async function submitChangePasswordForm() {
                 resolve({
                     status: 400,
                     message: "Informe a sua senha atual"
-                });
+                })
             })
         })
     }
@@ -402,7 +402,7 @@ async function submitChangePasswordForm() {
                 resolve({
                     status: 400,
                     message: "Informe a nova senha"
-                });
+                })
             })
         })
     }
@@ -414,7 +414,7 @@ async function submitChangePasswordForm() {
                 resolve({
                     status: 400,
                     message: "A nova senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial (@$!%*?&.)"
-                });
+                })
             })
         })
     }
@@ -427,7 +427,7 @@ async function submitChangePasswordForm() {
                 resolve({
                     status: 400,
                     message: "A senha atual e a nova senha não devem coincidir"
-                });
+                })
             })
         })
     }
@@ -441,7 +441,7 @@ async function submitChangePasswordForm() {
                 resolve({
                     status: 400,
                     message: "Verifique a confirmação de nova senha. Senhas não coincidem"
-                });
+                })
             })
         })
     }
@@ -450,20 +450,20 @@ async function submitChangePasswordForm() {
 
     try {
 
-        const formData = new FormData(changePasswordForm);
+        const formData = new FormData(changePasswordForm)
 
         const response = await fetch("/profile", {
             method: "PATCH",
             body: formData
-        });
+        })
 
-        return await response.json();
+        return await response.json()
 
     } catch (error) {
         return {
             status: 503,
             message:  "Erro na conexão. Por favor, recarregue a página e tente novamente."
-        };
+        }
     }
 }
 
