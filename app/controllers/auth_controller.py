@@ -3,6 +3,7 @@ from app.exceptions import APIException
 
 user_service = UserService()
 class AuthController:
+
     def register_user(self, user_data):
         user = {
                 "first_name": user_data.get("first_name", "").strip(),
@@ -16,9 +17,9 @@ class AuthController:
             if user_service.is_valid_user(user, verify_email_exists=True):
                 user_service.create_user(user)
                 return { "message": "Usuário cadastrado com sucesso.", "status": 201 }
-            
+
             return { "message": "Dados inválidos.", "status": 400 }
-        
+
         except APIException as e:
             return { "message": f"{str(e)}", "status": e.status_code }
 
@@ -31,7 +32,3 @@ class AuthController:
             return { "message": "Usuário autenticado com sucesso.", "status": 200 }
         except APIException as e:
             return { "message": f"{str(e)}", "status": e.status_code }
-
-    def logout_user(self):
-        user_service.logout_user()
-        return { "message": "Logout realizado com sucesso.", "status": 200 }

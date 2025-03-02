@@ -33,16 +33,14 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    {% include 'private/components/sidebar/base.html' %}
+    {% include 'private/components/sidebar/index.html' %}
 
     <!-- Content Wrapper -->
     <main id="content-wrapper" class="d-flex flex-column">
 
       <!-- Topbar -->
-      {% include 'private/components/topbar/base.html' %}
+      {% include 'private/components/topbar/index.html' %}
       
-      <div class="topbar-divider d-none d-sm-block"></div>
-
       <!-- Page Content -->
       {% block page_content %}{% endblock %}
     </main>

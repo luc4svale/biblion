@@ -8,6 +8,9 @@
 .bg-surface-tertiary {
   background-color: var(--surface-tertiary);
 }
+.bg-table-header {
+  background-color: var(--surface-table-header);
+}
 .bg-blue-light {
   background-color: var(--blue-light);
 }
@@ -26,6 +29,10 @@
 .bg-overlay {
   background-color: var(--bg-overlay);
 }
+.bg-stroke-primary {
+  background-color: var(--stroke-primary);
+}
+
 
 
 /* text colors */

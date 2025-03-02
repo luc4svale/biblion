@@ -2,7 +2,7 @@ import re
 import os
 from pathlib import Path
 from werkzeug.utils import secure_filename
-from flask_login import login_user, logout_user
+from flask_login import login_user
 from flask_bcrypt import Bcrypt
 from app.models import db, User
 from app.exceptions import APIException
@@ -159,10 +159,6 @@ class UserService:
             return user.to_dict()
 
         raise APIException("Credenciais inválidas.", 401)
-
-
-    def logout_user(self):
-        return logout_user()
 
 
     def create_user(self, user):

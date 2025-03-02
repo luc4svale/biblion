@@ -1,4 +1,4 @@
-{% extends 'private/base.html' %}
+{% extends 'private/pages/base/index.html' %}
 
 {% block title %}Perfil{% endblock %}
 
@@ -14,14 +14,14 @@
     </div>
   </header>
 
-  <div class="card-body px-md-5 px-lg-5 d-flex justify-content-center  border-white">
+  <div class="card-body px-md-5 px-lg-5 d-flex justify-content-center border-white">
     <form id="change-personal-info-form" class="row" enctype="multipart/form-data">
       <div id="photo-container" class="col-12 col-lg-6 my-3 d-flex justify-content-center align-items-center">
         <label for="photo" class="mb-0 d-flex embed-responsive embed-responsive-1by1 position-relative">
           <span id="photo-overlay"
             class="d-grid content-center text-light embed-responsive-item bg-overlay font-weight-bold rounded rounded-circle">Escolher
             foto de perfil</span>
-          <img id="photo-preview" src="{{ url_for('uploads.get_profile_image', filename=user.photo) }}" alt="Foto de {{ user.first_name }} {{ user.last_name }}"
+          <img id="photo-preview" src="{{ url_for('uploads.get_profile_image', filename=user.photo) }}" alt="Foto de {{ user_profile.first_name }} {{ user_profile.last_name }}"
             class="object-fit-cover embed-responsive-item">
           <input type="file" name="photo" id="photo" class="invisible embed-responsive-item">
         </label>
@@ -30,18 +30,18 @@
       <div class="col-12 col-lg-6 my-3 d-flex flex-column justify-content-center">
         <div class="form-group">
           <label for="first-name">Nome</label>
-          <input id="first-name" name="first_name" type="text" value="{{ user.first_name }}"  autocomplete="name" class="form-control" />
+          <input id="first-name" name="first_name" type="text" value="{{ user_profile.first_name }}"  autocomplete="name" class="form-control" />
         </div>
 
         <div class="form-group">
           <label for="last-name">Sobrenome</label>
-          <input id="last-name" name="last_name" type="text" value="{{ user.last_name }}" autocomplete="name"
+          <input id="last-name" name="last_name" type="text" value="{{ user_profile.last_name }}" autocomplete="name"
             class="form-control" />
         </div>
 
         <div class="form-group">
           <label for="email">Email</label>
-          <input id="email" name="email" type="text" value="{{ user.email }}" autocomplete="email"
+          <input id="email" name="email" type="text" value="{{ user_profile.email }}" autocomplete="email"
             class="form-control" />
         </div>
 

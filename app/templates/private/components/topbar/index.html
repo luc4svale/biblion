@@ -6,12 +6,16 @@
       <i class="fa fa-bars"></i>
     </button>
 
-    {% block topbar_search %}{% endblock %}
+    {% if show_search | default(false) %}
+      {% include 'private/components/topbar/topbar-search.html' %}
+    {% endif %}
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
 
-      {% block topbar_search_mobile %}{% endblock %}
+      {% if show_search | default(false) %}
+        {% include 'private/components/topbar/topbar-search-mobile.html' %}
+      {% endif %}
 
       <!-- Nav Item - User Information -->
       <li class="nav-item dropdown no-arrow">

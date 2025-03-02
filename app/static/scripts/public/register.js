@@ -1,6 +1,7 @@
 const registerForm = document.querySelector('#register-form')
 const firstName = registerForm.querySelector('#first-name')
 const lastName = registerForm.querySelector('#last-name')
+const names = [firstName, lastName]
 const email = registerForm.querySelector('#email')
 const password = registerForm.querySelector('#password')
 const confirmPassword = registerForm.querySelector('#confirm-password')
@@ -9,8 +10,6 @@ const registerFormButton = registerForm.querySelector('#register-button')
 
 
 //------- Names Mask -------//
-const names = [firstName, lastName]
-
 names.forEach(name => {
   name.addEventListener('input', () => {
     if (name.value.length > 100) {

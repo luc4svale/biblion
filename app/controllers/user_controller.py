@@ -15,7 +15,7 @@ class UserController:
             }
 
             return { "message": "Perfil encontrado", "data": user_profile, "status": 200}
-        
+
         except APIException as e:
             return {"message": str(e), "status": e.status_code}
 
