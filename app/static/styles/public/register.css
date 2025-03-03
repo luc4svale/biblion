@@ -1,13 +1,14 @@
 @import url("./common.css");
 
 /* specific styles */
+
 body main {
   & #register-container {
-    #email,
-    #password,
-    #confirm_password {
+
+    & #email,
+    & #password,
+    & #confirm_password {
       padding-right: 2rem;
     }
   }
 }
-

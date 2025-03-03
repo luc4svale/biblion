@@ -1,6 +1,6 @@
 <!-- Books -->
 <li class="nav-item">
-    <a class="nav-link" href="/book">
+    <a class="nav-link" href="{{ url_for('books.render_books') }}">
     <i class="fas fa-fw fa-book text-white"></i>
     <span class="text-white">Livros</span>
     </a>
@@ -9,7 +9,7 @@
 
 <!-- Autores -->
 <li class="nav-item">
-    <a class="nav-link" href="/author">
+    <a class="nav-link" href="{{ url_for('authors.render_authors') }}">
     <i class="fas fa-fw fa-feather-alt text-white"></i>
     <span class="text-white">Autores</span>
     </a>
@@ -18,7 +18,7 @@
 
 <!-- Publishers -->
 <li class="nav-item">
-    <a class="nav-link" href="/publisher">
+    <a class="nav-link" href="{{ url_for('publishers.render_publishers') }}">
     <i class="fas fa-fw fa-building text-white"></i>
     <span class="text-white">Editoras</span>
     </a>
@@ -26,7 +26,7 @@
 
 <!-- Categories -->
 <li class="nav-item">
-    <a class="nav-link" href="/category">
+    <a class="nav-link" href="{{ url_for('categories.render_categories') }}">
     <i class="fas fa-fw fa-layer-group text-white"></i>
     <span class="text-white">Categorias</span>
     </a>

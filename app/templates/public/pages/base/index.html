@@ -1,49 +1,59 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Biblion | {% block title %}{% endblock %}</title>
+    {% set page_title = page_title|default('Biblioteca Digital') %}
+    <title>Biblion | {{ page_title }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="static/icons/biblion-favicon.svg" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='icons/biblion-favicon.svg') }}" type="image/x-icon" />
 
-    <!-- Custom fonts for this template-->
-    <link href="static/libs/sb-admin-2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="{{ url_for('static', filename='libs/sb-admin-2/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet" />
 
-    <!-- Template styles-->
-    <link href="static/libs/sb-admin-2/css/sb-admin-2.css" rel="stylesheet">
+    <!-- Template styles -->
+    <link href="{{ url_for('static', filename='libs/sb-admin-2/css/sb-admin-2.css') }}" rel="stylesheet" />
 
     <!-- Custom styles -->
-    <link href="{{ url_for('static', filename='styles/public/') }}{% block custom_style %}{% endblock %}" rel="stylesheet">
-</head>
+    {% set custom_style = custom_style|default('common.css') %}
+    <link href="{{ url_for('static', filename='styles/public/' + custom_style) }}" rel="stylesheet" />
+  </head>
 
-<body class="{% block body_class %}d-flex flex-column align-items-center justify-content-center min-vh-100{% endblock %}">
+  <body class="d-flex flex-column align-items-center justify-content-start justify-content-lg-center min-vh-100">
+    <main class="row rounded bg-light m-3 w-lg-75 shadow-lg">
+      <section id="logo-container" class="d-grid col-sm-12 col-lg-5 rounded p-3 p-lg-5 bg-blue-dark items-center">
+        <img src="{{ url_for('static', filename='icons/biblion-logo.svg') }}" alt="Logomarca Biblion" class="max-w-50 max-w-lg-75 rounded object-fit-contain" />
+      </section>
 
-    {% block content %}{% endblock %}
+      {% block page_content %}
 
-      <!-- Bootstrap core JavaScript-->
-  <script src="static/libs/sb-admin-2/vendor/jquery/jquery.min.js"></script>
-  <script src="static/libs/sb-admin-2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      {% endblock %}
+    </main>
 
-  <!-- Core plugin JavaScript-->
-  <script src="static/libs/sb-admin-2/vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script src="static/libs/sb-admin-2/js/sb-admin-2.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static', filename='libs/sb-admin-2/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/sb-admin-2/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-  <!-- Fontawesome -->
-  <script src="static/libs/fontawesome/index.js" crossorigin="anonymous"></script>
+    <!-- Core plugin JavaScript -->
+    <script src="{{ url_for('static', filename='libs/sb-admin-2/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/sb-admin-2/js/sb-admin-2.min.js') }}"></script>
 
-  <!-- Sweet Alert 2 -->
-  <script src="static/libs/sweetalert-2/index.js"></script>
+    <!-- Fontawesome -->
+    <script src="{{ url_for('static', filename='libs/fontawesome/index.js') }}" crossorigin="anonymous"></script>
 
-  <!-- Custom Page Script -->
-  <script src="{{ url_for('static', filename='/scripts/public/') }}{% block custom_script %}{% endblock %}"></script>
+    <!-- Sweet Alert 2 -->
+    <script src="{{ url_for('static', filename='libs/sweetalert-2/index.js') }}"></script>
 
-</body>
+
+    <!-- Custom Page Script -->
+    {% set custom_script = custom_script|default('common.js') %}
+    <script src="{{ url_for('static', filename='scripts/public/' + custom_script) }}"></script>
+
+  </body>
 </html>

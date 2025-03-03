@@ -1,9 +1,8 @@
 {% extends 'private/pages/base/index.html' %}
 
+{% set page_title = 'Livros Favoritos' %}
 
-{% block title %}Livros Favoritos{% endblock %}
-
-{% block custom_style %}favorites.css{% endblock %}
+{% set custom_style = 'favorites.css' %}
 
 {% block page_content %}
 <!-- Favorites Cards -->
@@ -41,7 +40,7 @@
           </dl>
 
           <div class="book-actions d-flex gap-1 justify-content-center">
-            <a href="/reading" class="btn start-reading" title="Iniciar leitura"><i class="fas fa-play"></i></a>
+            <a href="{{ url_for('books.reading') }}" class="btn start-reading" title="Iniciar leitura"><i class="fas fa-play"></i></a>
             <button class="btn delete" data-toggle="modal" data-target="#deleteFavoriteModal"
               title="Remover dos favoritos"><i class="fas fa-trash-alt"></i></button>
           </div>

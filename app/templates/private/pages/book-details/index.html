@@ -1,8 +1,8 @@
 {% extends 'private/pages/base/index.html' %}
 
-{% block title %}Detalhes - PS, Eu Te Amo{% endblock %}
+{% set page_title = 'Detalhes - PS, Eu Te Amo' %}
 
-{% block custom_style %}book-details.css{% endblock %}
+{% set custom_style = 'book-details.css' %}
 
 {% block page_content %}
 <!-- Book Details Card -->
@@ -58,7 +58,7 @@
           <i class="fas fa-heart"></i> Adicionar aos Favoritos
         </button>
 
-        <a href="/reading"
+        <a href="{{ url_for('books.reading') }}"
           class="btn start-reading p-2 bg-dark text-white rounded d-flex gap-0.5 align-items-center text-center justify-content-center">
           <i class="fas fa-book"></i> Iniciar Leitura
         </a>
@@ -87,8 +87,3 @@
   </div>
 </div>
 {% endblock %}
-
-
-
-
-

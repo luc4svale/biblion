@@ -2,3 +2,12 @@
 
 /* specific styles */
 
+body main {
+    & #login-container {
+
+        & #email,
+        & #password {
+            padding-right: 2rem;
+        }
+    }
+}

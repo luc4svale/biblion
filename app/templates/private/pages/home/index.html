@@ -1,8 +1,8 @@
 {% extends 'private/pages/base/index.html' %}
 
-{% block title %}Início{% endblock %}
+{% set page_title = 'Início' %}
 
-{% block custom_style %}home.css{% endblock %}
+{% set custom_style = 'home.css' %}
 
 {% block page_content %}
 <!-- Begin Page Content -->
@@ -13,7 +13,7 @@
     <h2 class="category-title font-weight-bold fs-md text-blue-dark">Romance</h2>
 
     <div class="category-books-container d-flex w-100 pt-1 pb-2">
-      <a class="book-card" href="/book-details">
+      <a class="book-card" href="{{ url_for('books.book_details')}}">
         <img src="{{ url_for('static', filename='images/ps-eu-te-amo.jpg') }}" alt="Capa do livro 'PS, Eu Te Amo'">
         <h3>PS, Eu Te Amo</h3>
       </a>

@@ -1,11 +1,11 @@
 import re
-from app.models.category import Category
+from app.models.publisher import Publisher
 from app.models.database import db
 from app.exceptions import APIException
 
-class CategoryService:
+class PublisherService:
 
-    def verify_is_valid_name(self, name, field="nome da categoria"):
+    def verify_is_valid_name(self, name, field="nome da editora"):
         invalid_chars_pattern = r"[^a-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ\s']"
         if re.search(invalid_chars_pattern, name):
             raise ValueError(f"O {field} contém caracteres inválidos")
@@ -18,28 +18,28 @@ class CategoryService:
 
 
     def is_name_registered(self, name):
-        if Category.query.filter_by(name=name).first() is None:
+        if Publisher.query.filter_by(name=name).first() is None:
             return False
         return True
 
 
-    def is_valid_category(self, category, verify_name_exists=False):
+    def is_valid_publisher(self, publisher, verify_name_exists=False):
         try:
-            if "name" in category:
-                self.verify_is_valid_name(category["name"], "nome da categoria")
-                if (verify_name_exists and self.is_name_registered(category["name"])):
-                    raise ValueError("Nome de categoria já registrado.")
+            if "name" in publisher:
+                self.verify_is_valid_name(publisher["name"], "nome da editora")
+                if (verify_name_exists and self.is_name_registered(publisher["name"])):
+                    raise ValueError("Nome de editora já registrado.")
             return True
         except Exception as e:
             raise APIException(f"{str(e)}", 400) from e
 
 
-    def get_category_by_id(self, category_id):
+    def get_publisher_by_id(self, publisher_id):
         try:
-            category = Category.query.get(category_id)
-            if not category:
-                raise APIException("Categoria não encontrada", 404)
-            return category
+            publisher = Publisher.query.get(publisher_id)
+            if not publisher:
+                raise APIException("Editora não encontrada", 404)
+            return publisher
             
         except APIException as e:
             raise APIException(f"{str(e)}", e.status_code) from e
@@ -48,22 +48,22 @@ class CategoryService:
             raise APIException ("Erro desconhecido", 500) from e
 
 
-    def get_all_categories(self):
+    def get_all_publishers(self):
         try:
-            return Category.query.all()
+            return Publisher.query.all()
 
         except Exception as e:
             raise APIException("Erro desconhecido", 500) from e
 
 
 
-    def create_category(self, category):
-        new_category = Category(name=category["name"])
+    def create_publisher(self, publisher):
+        new_publisher = Publisher(name=publisher["name"])
 
         try:
-            db.session.add(new_category)
+            db.session.add(new_publisher)
             db.session.commit()
-            return new_category.id
+            return new_publisher.id
 
         except Exception as e:
             db.session.rollback()
@@ -71,23 +71,23 @@ class CategoryService:
 
 
 
-    def update_category(self, category_id, category_data):
+    def update_publisher(self, publisher_id, publisher_data):
         try:
-            category = self.get_category_by_id(category_id)
+            publisher = self.get_publisher_by_id(publisher_id)
 
-            if not category:
-                raise APIException("Categoria não encontrada", 404)
+            if not publisher:
+                raise APIException("Editora não encontrada", 404)
 
-            equal_fields = category_data["name"] == category.name
+            equal_fields = publisher_data["name"] == publisher.name
 
             if equal_fields:
                 raise APIException("Nenhuma alteração foi detectada", 400)
 
-            category.name = category_data["name"]
+            publisher.name = publisher_data["name"]
 
             db.session.commit()
 
-            return category.to_dict()
+            return publisher.to_dict()
 
         except APIException as e:
             db.session.rollback()
@@ -98,14 +98,14 @@ class CategoryService:
             raise APIException ("Erro desconhecido", 500) from e
 
 
-    def delete_category(self, category_id):
+    def delete_publisher(self, publisher_id):
         try:
-            category = self.get_category_by_id(category_id)
+            publisher = self.get_publisher_by_id(publisher_id)
 
-            if not category:
-                raise APIException("Categoria não encontrada", 404)
+            if not publisher:
+                raise APIException("Editora não encontrada", 404)
 
-            db.session.delete(category)
+            db.session.delete(publisher)
             db.session.commit()
 
         except APIException as e:

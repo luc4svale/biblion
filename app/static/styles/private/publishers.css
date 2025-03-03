@@ -1,0 +1,11 @@
+@import url("./common.css");
+
+/* specific styles */
+
+#categories-table {
+    & tbody tr {
+        & td {
+            vertical-align: middle;
+        }
+    }
+}

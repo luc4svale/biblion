@@ -12,7 +12,7 @@
 
       <!-- Home -->
       <li class="nav-item mt-2">
-        <a class="nav-link" href="/home">
+        <a class="nav-link" href="{{ url_for('books.home') }}">
           <i class="fas fa-fw fa-house text-white"></i>
           <span class="text-white">Início</span>
         </a>
@@ -20,7 +20,7 @@
 
       <!-- Favorites -->
       <li class="nav-item">
-        <a class="nav-link" href="/favorites">
+        <a class="nav-link" href="/{{ url_for('books.favorites') }}">
           <i class="fas fa-fw fa-heart text-white"></i>
           <span class="text-white">Favoritos</span>
         </a>
@@ -34,7 +34,7 @@
 
       <!-- Logout -->
       <li class="nav-item mb-5">
-        <a class="nav-link" href="/logout" data-toggle="modal" data-target="#logoutModal">
+        <a class="nav-link" href="{{ url_for('auth.logout') }}" data-toggle="modal" data-target="#logoutModal">
           <i class="fas fa-fw fa-sign-out-alt text-white"></i>
           <span class="text-white">Sair</span>
         </a>

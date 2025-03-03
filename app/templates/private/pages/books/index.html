@@ -1,8 +1,8 @@
 {% extends 'private/pages/base/index.html' %}
 
-{% block title %}Cadastrar Livro{% endblock %}
+{% set page_title = 'Cadastrar Livro' %}
 
-{% block custom_style %}book-register.css{% endblock %}
+{% set custom_style = 'book-register.css' %}
 
 {% block page_content %}
     <main class="container-fluid d-flex flex-column align-items-center justify-content-center py-5">
@@ -56,4 +56,4 @@
     </main>
 {% endblock %}
 
-{% block custom_script %}book-register.js{% endblock %}
+{% set custom_script = 'book-register.js' %}

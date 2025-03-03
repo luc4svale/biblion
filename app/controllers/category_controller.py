@@ -65,3 +65,16 @@ class CategoryController:
 
         except APIException as e:
             return { "message": str(e), "status": e.status_code }
+
+
+    def delete_category(self, category_id):
+        try:
+            category_service.delete_category(category_id)
+
+            return {
+                "message": "Categoria deletada com sucesso!", 
+                "status": 200, 
+            }
+
+        except APIException as e:
+            return { "message": str(e), "status": e.status_code }

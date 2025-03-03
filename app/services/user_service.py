@@ -140,9 +140,10 @@ class UserService:
     def get_user_by_id(self, user_id):
         try:
             user = User.query.get(user_id)
-            if user:
-                return user
-            raise APIException("Usuário não encontrado", 404)
+            if not user:
+                raise APIException("Usuário não encontrado", 404)
+            return user
+            
 
         except APIException as e:
             raise APIException(f"{str(e)}", e.status_code) from e
@@ -179,40 +180,39 @@ class UserService:
         try:
             user = self.get_user_by_id(user_id)
 
-            if user:
+            if not user:
+                raise APIException("Usuário não encontrado", 404)
 
-                has_changed_email = user_data["email"] != user.email
-                has_changed_photo = user_data.get("photo", None) is not None
-
-
-                equal_fields = (
-                    (not has_changed_photo)
-                    and (not has_changed_email)
-                    and (user_data["first_name"] == user.first_name)
-                    and (user_data["last_name"] == user.last_name)
-                )
+            has_changed_email = user_data["email"] != user.email
+            has_changed_photo = user_data.get("photo", None) is not None
 
 
-                if equal_fields:
-                    raise APIException("Nenhuma alteração foi detectada", 400)
+            equal_fields = (
+                (not has_changed_photo)
+                and (not has_changed_email)
+                and (user_data["first_name"] == user.first_name)
+                and (user_data["last_name"] == user.last_name)
+            )
 
-                photo_filename = self.save_photo(user_data["photo"]) if has_changed_photo else None
 
-                user.first_name = user_data["first_name"]
-                user.last_name = user_data["last_name"]
-                user.email = user_data["email"]
+            if equal_fields:
+                raise APIException("Nenhuma alteração foi detectada", 400)
 
-                last_photo_path = os.path.join("uploads/profiles", user.photo)
-                user.photo = user.photo if photo_filename is None else photo_filename
+            photo_filename = self.save_photo(user_data["photo"]) if has_changed_photo else None
 
-                if has_changed_photo:
-                    self.delete_photo(last_photo_path)
+            user.first_name = user_data["first_name"]
+            user.last_name = user_data["last_name"]
+            user.email = user_data["email"]
 
-                db.session.commit()
+            last_photo_path = os.path.join("uploads/profiles", user.photo)
+            user.photo = user.photo if photo_filename is None else photo_filename
 
-                return { "keep_logged": not has_changed_email, "updated_user": user.to_dict() }
+            if has_changed_photo:
+                self.delete_photo(last_photo_path)
 
-            raise APIException("Usuário não encontrado", 404)
+            db.session.commit()
+
+            return { "keep_logged": not has_changed_email, "updated_user": user.to_dict() }
 
         except APIException as e:
             db.session.rollback()

@@ -1,24 +1,24 @@
-const categoriesTable = document.querySelector('#categories-table')
+const publishersTable = document.querySelector('#publishers-table')
 
-const registerCategoryModal = document.querySelector('#register-category-modal')
-const registerCategoryModalButton = document.querySelector('#register-category-modal-button')
-const registerCategoryForm = registerCategoryModal.querySelector('#register-category-form')
-const registerCategoryName = registerCategoryForm.querySelector('#register-category-name')
-const registerCategoryFormButton = registerCategoryForm.querySelector('#register-category-form-button')
-
-
-const editCategoryModal = document.querySelector('#edit-category-modal')
-const editCategoryModalOverlay = editCategoryModal.querySelector('#edit-category-overlay')
-const editCategoryModalButtons = categoriesTable.querySelectorAll(".edit-category-modal-button")
-const editCategoryForm = editCategoryModal.querySelector('#edit-category-form')
-const editCategoryName = editCategoryForm.querySelector('#edit-category-name')
-const editCategoryFormButton = editCategoryForm.querySelector('#edit-category-form-button')
+const registerPublisherModal = document.querySelector('#register-publisher-modal')
+const registerPublisherModalButton = document.querySelector('#register-publisher-modal-button')
+const registerPublisherForm = registerPublisherModal.querySelector('#register-publisher-form')
+const registerPublisherName = registerPublisherForm.querySelector('#register-publisher-name')
+const registerPublisherFormButton = registerPublisherForm.querySelector('#register-publisher-form-button')
 
 
-const names = [registerCategoryName, editCategoryName]
+const editPublisherModal = document.querySelector('#edit-publisher-modal')
+const editPublisherModalOverlay = editPublisherModal.querySelector('#edit-publisher-overlay')
+const editPublisherModalButtons = publishersTable.querySelectorAll(".edit-publisher-modal-button")
+const editPublisherForm = editPublisherModal.querySelector('#edit-publisher-form')
+const editPublisherName = editPublisherForm.querySelector('#edit-publisher-name')
+const editPublisherFormButton = editPublisherForm.querySelector('#edit-publisher-form-button')
 
 
-const deleteCategorySwalButtons = categoriesTable.querySelectorAll('.delete-category-swal-button')
+const names = [registerPublisherName, editPublisherName]
+
+
+const deletePublisherSwalButtons = publishersTable.querySelectorAll('.delete-publisher-swal-button')
 
 //------- Names Mask -------//
 names.forEach(name => {
@@ -49,15 +49,15 @@ names.forEach(name => {
 })
 
 
-//-------- Submit Register Category Form --------//
-registerCategoryFormButton.addEventListener('click', async (event) => {
+//-------- Submit Register Publisher Form --------//
+registerPublisherFormButton.addEventListener('click', async (event) => {
   event.preventDefault()
 
   Swal.fire({
-    title: 'Cadastrando categoria...',
+    title: 'Cadastrando editora...',
     didOpen: async () => {
       Swal.showLoading()
-      registerCategoryModal.style.display = 'none'
+      registerPublisherModal.style.display = 'none'
     },
     allowOutsideClick: () => !Swal.isLoading(),
     backdrop: 'var(--swal-backdrop)',
@@ -65,12 +65,12 @@ registerCategoryFormButton.addEventListener('click', async (event) => {
   })
 
 
-  const response = await submitRegisterCategoryForm()
+  const response = await submitRegisterPublisherForm()
 
   if (response.status == 201) {
 
     Swal.fire({
-      title: '<h3>Categoria cadastrada com sucesso!</h3>',
+      title: '<h3>Editora cadastrada com sucesso!</h3>',
       icon: 'success',
       iconHtml: '<i class="fas fa-check-circle text-success"></i>',
       backdrop: 'var(--swal-backdrop)',
@@ -85,7 +85,7 @@ registerCategoryFormButton.addEventListener('click', async (event) => {
 
   } else {
     Swal.fire({
-      title: 'Falha ao cadastrar categoria!',
+      title: 'Falha ao cadastrar editora!',
       html: response.message,
       icon: 'error',
       iconHtml: '<i class="fas fa-times-circle text-danger"></i>',
@@ -96,18 +96,18 @@ registerCategoryFormButton.addEventListener('click', async (event) => {
         confirmButton: 'btn-primary'
       },
     }).then(() => {
-      registerCategoryModal.style.display = "block"
+      registerPublisherModal.style.display = "block"
     })
   }
 })
 
 
-async function submitRegisterCategoryForm() {
+async function submitRegisterPublisherForm() {
 
-  const formData = new FormData(registerCategoryForm)
+  const formData = new FormData(registerPublisherForm)
 
   try {
-    const response = await fetch('/category', {
+    const response = await fetch('/publisher', {
       method: 'POST',
       body: formData,
     })
@@ -126,18 +126,18 @@ async function submitRegisterCategoryForm() {
 
 
 
-//-------- Fill Edit Category Modal on Edit Button Click --------//
-editCategoryModalButtons.forEach((button) =>
+//-------- Fill Edit Publisher Modal on Edit Button Click --------//
+editPublisherModalButtons.forEach((button) =>
   button.addEventListener('click', async (event) => {
 
-    overlay(editCategoryModalOverlay, true)
+    overlay(editPublisherModalOverlay, true)
 
-    const response = await getCategoryInfo(button.dataset.categoryId)
+    const response = await getPublisherInfo(button.dataset.publisherId)
 
     if (!response.status == 200) {
 
       await Swal.fire({
-        title: '<h3>Categoria não encontrado!</h3>',
+        title: '<h3>Editora não encontrado!</h3>',
         icon: 'error',
         iconHtml: '<i class="fas fa-times-circle text-danger"></i>',
         backdrop: 'var(--swal-backdrop)',
@@ -150,17 +150,17 @@ editCategoryModalButtons.forEach((button) =>
       })
 
     } else {
-      fillEditCategoryForm(response.data)
-      overlay(editCategoryModalOverlay, false)
+      fillEditPublisherForm(response.data)
+      overlay(editPublisherModalOverlay, false)
     }
 
 
   })
 )
 
-async function getCategoryInfo(categoryId) {
+async function getPublisherInfo(publisherId) {
   try {
-    const response = await fetch(`/category/${categoryId}`, {
+    const response = await fetch(`/publisher/${publisherId}`, {
       method: 'GET'
 
     })
@@ -176,11 +176,11 @@ async function getCategoryInfo(categoryId) {
 }
 
 
-function fillEditCategoryForm(categoryData) {
- const { id, name } = categoryData
+function fillEditPublisherForm(publisherData) {
+ const { id, name } = publisherData
 
- editCategoryName.value = name
- editCategoryFormButton.dataset.categoryId = id
+ editPublisherName.value = name
+ editPublisherFormButton.dataset.publisherId = id
 }
 
 
@@ -195,27 +195,27 @@ function overlay(element, show) {
 
 
 
-//------- Submit Edit Category Form -------//
-editCategoryFormButton.addEventListener('click', async (event) => {
+//------- Submit Edit Publisher Form -------//
+editPublisherFormButton.addEventListener('click', async (event) => {
   event.preventDefault()
 
   Swal.fire({
-    title: 'Editando categoria...',
+    title: 'Editando editora...',
     didOpen: async () => {
       Swal.showLoading()
-      editCategoryModal.style.display = 'none'
+      editPublisherModal.style.display = 'none'
     },
     allowOutsideClick: () => !Swal.isLoading(),
     backdrop: 'var(--swal-backdrop)',
     background: 'var(--surface-secondary)',
   })
 
-  const response = await submitEditCategoryForm()
+  const response = await submitEditPublisherForm()
 
   if (response.status == 200) {
 
     Swal.fire({
-      title: '<h3>Categoria editada com sucesso!</h3>',
+      title: '<h3>Editora editada com sucesso!</h3>',
       icon: 'success',
       iconHtml: '<i class="fas fa-check-circle text-success"></i>',
       backdrop: 'var(--swal-backdrop)',
@@ -225,25 +225,25 @@ editCategoryFormButton.addEventListener('click', async (event) => {
         confirmButton: 'btn-primary'
       },
     }).then(() => {
-      $(editCategoryModal).modal('hide')
+      $(editPublisherModal).modal('hide')
     })
 
     const { name, updated_at } = response.data
 
-    const categoriesTableRow = categoriesTable.querySelector(`#category-row-${editCategoryFormButton.dataset.categoryId}`)
+    const publishersTableRow = publishersTable.querySelector(`#publisher-row-${editPublisherFormButton.dataset.publisherId}`)
 
-    //------- Update Category Table Row Name --------//
-    const categoryTableRowName = categoriesTableRow.querySelector('.category-name')
-    categoryTableRowName.innerHTML = name
+    //------- Update Publisher Table Row Name --------//
+    const publisherTableRowName = publishersTableRow.querySelector('.publisher-name')
+    publisherTableRowName.innerHTML = name
     
 
-    //---- Update Category Table Row Updated At ----//
-    const categoryTableRowUpdatedAt = categoriesTableRow.querySelector('.category-updated-at')
-    categoryTableRowUpdatedAt.innerHTML = updated_at
+    //---- Update Publisher Table Row Updated At ----//
+    const publisherTableRowUpdatedAt = publishersTableRow.querySelector('.publisher-updated-at')
+    publisherTableRowUpdatedAt.innerHTML = updated_at
 
   } else {
     Swal.fire({
-      title: 'Falha ao editar categoria!',
+      title: 'Falha ao editar editora!',
       html: response.message,
       icon: 'error',
       iconHtml: '<i class="fas fa-times-circle text-danger"></i>',
@@ -254,19 +254,19 @@ editCategoryFormButton.addEventListener('click', async (event) => {
         confirmButton: 'btn-primary'
       },
     }).then(() => {
-      editCategoryModal.style.display = 'block'
+      editPublisherModal.style.display = 'block'
     })
   }
 })
 
 
-async function submitEditCategoryForm() {
+async function submitEditPublisherForm() {
 
   try {
 
-    const formData = new FormData(editCategoryForm)
+    const formData = new FormData(editPublisherForm)
 
-    const response = await fetch(`/category/${editCategoryFormButton.dataset.categoryId}`, {
+    const response = await fetch(`/publisher/${editPublisherFormButton.dataset.publisherId}`, {
       method: "PUT",
       body: formData,
     })
@@ -284,8 +284,8 @@ async function submitEditCategoryForm() {
 
 
 
-//-------- Submit Delete Category --------//
-deleteCategorySwalButtons.forEach((button) =>
+//-------- Submit Delete Publisher --------//
+deletePublisherSwalButtons.forEach((button) =>
   button.addEventListener('click', async (event) => {
     event.preventDefault()
 
@@ -294,7 +294,7 @@ deleteCategorySwalButtons.forEach((button) =>
     }, 5)
 
     Swal.fire({
-      text: 'Você tem certeza que deseja excluir essa categoria?',
+      text: 'Você tem certeza que deseja excluir essa editora?',
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Confirmar',
@@ -314,7 +314,7 @@ deleteCategorySwalButtons.forEach((button) =>
       if (result.isConfirmed) {
 
         Swal.fire({
-          title: 'Exluindo categoria...',
+          title: 'Exluindo editora...',
           didOpen: async () => {
             Swal.showLoading();
           },
@@ -323,12 +323,12 @@ deleteCategorySwalButtons.forEach((button) =>
           background: 'var(--surface-secondary)',
         });
 
-        const response = await submitDeleteCategory(button.dataset.categoryId);
+        const response = await submitDeletePublisher(button.dataset.publisherId);
 
         if (response.status == 200) {
 
           Swal.fire({
-            title: '<h3>Categoria excluída com sucesso!</h3>',
+            title: '<h3>Editora excluída com sucesso!</h3>',
             icon: 'success',
             iconHtml: '<i class="fas fa-check-circle text-success"></i>',
             backdrop: 'var(--swal-backdrop)',
@@ -338,13 +338,13 @@ deleteCategorySwalButtons.forEach((button) =>
               confirmButton: 'btn-primary'
             },
           }).then(() => {
-            const categoriesTableRow = categoriesTable.querySelector(`#category-row-${button.dataset.categoryId}`);
-            categoriesTableRow.remove();
+            const publishersTableRow = publishersTable.querySelector(`#publisher-row-${button.dataset.publisherId}`);
+            publishersTableRow.remove();
           });
 
         } else {
           Swal.fire({
-            title: '<h3>Falha ao excluir categoria!</h3>',
+            title: '<h3>Falha ao excluir editora!</h3>',
             icon: 'error',
             iconHtml: `<i class="fas fa-times-circle text-danger"></i>`,
             backdrop: 'var(--swal-backdrop)',
@@ -363,9 +363,9 @@ deleteCategorySwalButtons.forEach((button) =>
 );
 
 
-async function submitDeleteCategory(categoryId) {
+async function submitDeletePublisher(publisherId) {
   try {
-    const response = await fetch(`/category/${categoryId}`, {
+    const response = await fetch(`/publisher/${publisherId}`, {
       method: "DELETE",
     });
 
@@ -383,30 +383,30 @@ async function submitDeleteCategory(categoryId) {
 $(document).ready(() => {
 
   //--------- Set Buttons Tooltips ---------//
-  $(registerCategoryModalButton).tooltip()
-  $(".edit-category-modal-button").tooltip()
-  $(".delete-category-swal-button").tooltip()
+  $(registerPublisherModalButton).tooltip()
+  $(".edit-publisher-modal-button").tooltip()
+  $(".delete-publisher-swal-button").tooltip()
 
 
   //---- Register Modal on Hidden ----//
-  $(registerCategoryModal).on("hidden.bs.modal", () => {
-    $(registerCategoryName).val("")
+  $(registerPublisherModal).on("hidden.bs.modal", () => {
+    $(registerPublisherName).val("")
 
     setTimeout(() => {
-      $(registerCategoryModalButton).blur()
+      $(registerPublisherModalButton).blur()
     }, 5)
 
   })
 
 
   //---- Edit Modal on Hidden ----//
-  $(editCategoryModal).on("hidden.bs.modal", () => {
-    $(editCategoryName).val("")
-    $(editCategoryFormButton).data('categoryId', '')
+  $(editPublisherModal).on("hidden.bs.modal", () => {
+    $(editPublisherName).val("")
+    $(editPublisherFormButton).data('publisherId', '')
 
 
     setTimeout(() => {
-      $(editCategoryModalButtons).blur()
+      $(editPublisherModalButtons).blur()
     }, 5)
   })
 
