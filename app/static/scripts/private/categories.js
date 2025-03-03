@@ -237,11 +237,7 @@ editCategoryFormButton.addEventListener('click', async (event) => {
 
     //---- Update Category Table Row Updated At ----//
     const categoryTableRowUpdatedAt = categoryTableRow.querySelector('.category-updated-at')
-    categoryTableRowUpdatedAt.innerHTML = updated_at.toLocaleString('pt-BR', { 
-      year: 'numeric', month: '2-digit', day: '2-digit', 
-      hour: '2-digit', minute: '2-digit', second: '2-digit' 
-    })
-
+    categoryTableRowUpdatedAt.innerHTML = updated_at
 
   } else {
     Swal.fire({

@@ -17,6 +17,6 @@ class Category(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "created_at": self.created_at,
-            "updated_at": self.updated_at,
+            "created_at": self.created_at.strftime('%d/%m/%Y %H:%M:%S'),
+            "updated_at": self.updated_at.strftime('%d/%m/%Y %H:%M:%S'),
         }
