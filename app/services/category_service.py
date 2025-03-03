@@ -50,7 +50,7 @@ class CategoryService:
 
     def get_all_categories(self):
         try:
-            return Category.query.all()
+            return Category.query.order_by(Category.created_at.desc()).all()
 
         except Exception as e:
             raise APIException("Erro desconhecido", 500) from e

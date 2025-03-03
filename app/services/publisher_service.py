@@ -50,7 +50,7 @@ class PublisherService:
 
     def get_all_publishers(self):
         try:
-            return Publisher.query.all()
+            return Publisher.query.order_by(Publisher.created_at.desc()).all()
 
         except Exception as e:
             raise APIException("Erro desconhecido", 500) from e

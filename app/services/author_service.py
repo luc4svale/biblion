@@ -50,7 +50,7 @@ class AuthorService:
 
     def get_all_authors(self):
         try:
-            return Author.query.all()
+            return Author.query.order_by(Author.created_at.desc()).all()
 
         except Exception as e:
             raise APIException("Erro desconhecido", 500) from e

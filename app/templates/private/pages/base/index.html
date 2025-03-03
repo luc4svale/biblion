@@ -14,11 +14,17 @@
     <link rel="icon" href="{{ url_for('static', filename='icons/biblion-favicon.svg') }}" type="image/x-icon" />
 
     <!-- Template fonts -->
-    <link href="{{ url_for('static', filename='styles/private/libs/sb-admin-2/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='libs/sb-admin-2/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet" />
 
     <!-- Template styles -->
     <link href="{{ url_for('static', filename='libs/sb-admin-2/css/sb-admin-2.css') }}" rel="stylesheet" />
+
+    {% set has_datatable = has_datatable|default(False) %}
+    {% if has_datatable %}
+      <!-- Styles for Datatables -->
+      <link href="{{ url_for('static', filename='libs/sb-admin-2/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
+    {% endif %}
 
     <!-- Custom styles -->
     {% set custom_style = custom_style|default('common.css') %}
@@ -73,6 +79,12 @@
 
     <!-- Sweet Alert 2 -->
     <script src="{{ url_for('static', filename='libs/sweetalert-2/index.js') }}"></script>
+
+    {% if has_datatable %}
+      <!-- Datatables plugins -->
+      <script src="{{ url_for('static', filename='libs/sb-admin-2/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='libs/sb-admin-2/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    {% endif %}
 
     <!-- Custom Page Script -->
     {% set custom_script = custom_script|default('common.js') %}

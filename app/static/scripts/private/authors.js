@@ -338,8 +338,13 @@ deleteAuthorSwalButtons.forEach((button) =>
               confirmButton: 'btn-primary'
             },
           }).then(() => {
-            const authorsTableRow = authorsTable.querySelector(`#author-row-${button.dataset.authorId}`);
-            authorsTableRow.remove();
+            const authorsTableRow = authorsTable.querySelector(`#author-row-${button.dataset.authorId}`)
+            authorsTableRow.remove()
+
+            const authorsTableRows = authorsTable.querySelectorAll('.author-row')
+            if (authorsTableRows.length == 0) {
+              window.location.reload()
+            }
           });
 
         } else {
@@ -381,6 +386,46 @@ async function submitDeleteAuthor(authorId) {
 
 
 $(document).ready(() => {
+
+
+  //----- Set Authors Datatable Config ------//
+  $(authorsTable).DataTable({
+    "language": {
+        "decimal": "",
+        "emptyTable": "Nenhum dado disponível na tabela",
+        "info": "", //"Mostrando _START_ até _END_ de _TOTAL_ registros", 
+        "infoEmpty": "", //"Mostrando 0 até 0 de 0 registros", 
+        "infoFiltered": "(filtrado de _MAX_ registros totais)",
+        "infoPostFix": "",
+        "thousands": ".",
+        "lengthMenu": "Mostrar _MENU_ registros por página",
+        "loadingRecords": "Carregando...",
+        "processing": "Processando...",
+        "search": "Pesquisar:",
+        "zeroRecords": "Nenhum registro correspondente foi encontrado",
+        "paginate": {
+            "first": "Primeiro",
+            "last": "Último",
+            "next": ">",
+            "previous": "<"
+        },
+        "aria": {
+            "sortAscending": ": ativar para classificar coluna ascendente",
+            "sortDescending": ": ativar para classificar coluna descendente"
+        }
+    },
+    "paging": true,
+    "searching": true,
+    "info": true,
+    "lengthChange": true,
+    "columnDefs": [
+        { "orderable": true, "targets": 0 },
+        { "orderable": true, "targets": 1 },
+        { "orderable": true, "targets": 2 },
+        { "orderable": false, "targets": 3 },
+    ],
+    "order": []
+});
 
   //--------- Set Buttons Tooltips ---------//
   $(registerAuthorModalButton).tooltip()
