@@ -20,6 +20,7 @@ form {
 
         & #photo-preview {
           border-radius: 50%;
+          border: 2px solid var(--surface-primary);
         }
 
         &:hover {

@@ -14,7 +14,7 @@ authors_bp = Blueprint("authors", __name__)
 @admin_required
 def register_author():
     author_data = request.form
-    response = author_controller.resgiter_author(author_data)
+    response = author_controller.register_author(author_data)
     return jsonify(response), response["status"]
 
 
@@ -22,10 +22,22 @@ def register_author():
 @admin_required
 def render_authors():
     response = author_controller.get_all_authors()
+    if response["status"] != 200:
+        return redirect("/home")
+    return render_template(
+        f"{COMMON_TEMPLATE_PATH}/authors/index.html",
+        user=current_user,
+        authors=response["data"]["authors"]
+    )
+
+
+@authors_bp.route("/api/author", methods=["GET"])
+@admin_required
+def render_api_authors():
+    response = author_controller.get_all_authors()
     if response["status"] == 200:
-        print(response["data"]["authors"])
-        return render_template(f"{COMMON_TEMPLATE_PATH}/authors/index.html", user=current_user, authors=response["data"]["authors"])
-    return redirect("/home")
+        response["data"]["authors"] =[autor.to_dict() for autor in response["data"]["authors"]]
+    return jsonify(response), response["status"]
 
 
 @authors_bp.route("/author/<author_id>", methods=["GET"])

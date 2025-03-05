@@ -5,7 +5,7 @@ from app.exceptions import APIException
 publisher_service = PublisherService()
 
 class PublisherController:
-    def resgiter_publisher(self, publisher_data):
+    def register_publisher(self, publisher_data):
 
         publisher = {
             "name": publisher_data.get("name", "").strip() 

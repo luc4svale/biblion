@@ -10,6 +10,7 @@ const registerCategoryFormButton = registerCategoryForm.querySelector('#register
 const editCategoryModal = document.querySelector('#edit-category-modal')
 const editCategoryModalOverlay = editCategoryModal.querySelector('#edit-category-overlay')
 const editCategoryModalButtons = categoriesTable.querySelectorAll(".edit-category-modal-button")
+const deleteCategorySwalButtons = categoriesTable.querySelectorAll('.delete-category-swal-button')
 const editCategoryForm = editCategoryModal.querySelector('#edit-category-form')
 const editCategoryName = editCategoryForm.querySelector('#edit-category-name')
 const editCategoryFormButton = editCategoryForm.querySelector('#edit-category-form-button')
@@ -18,7 +19,7 @@ const editCategoryFormButton = editCategoryForm.querySelector('#edit-category-fo
 const names = [registerCategoryName, editCategoryName]
 
 
-const deleteCategorySwalButtons = categoriesTable.querySelectorAll('.delete-category-swal-button')
+
 
 //------- Names Mask -------//
 names.forEach(name => {
@@ -29,7 +30,7 @@ names.forEach(name => {
 
     const cursorPosition = name.selectionStart
 
-    const pattern = /[^\sa-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ']|^\s+$|^'/g
+    const pattern = /[^\sa-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ'\.]|^\s+$|^'/g
 
     if (pattern.test(name.value)) {
       name.value = name.value.replace(pattern, '')
@@ -45,8 +46,14 @@ names.forEach(name => {
       name.value = name.value.replace(/'{2,}/g, "'")
       name.setSelectionRange(cursorPosition - 1, cursorPosition - 1)
     }
+
+    if (/\.{2,}/g.test(name.value)) {
+      name.value = name.value.replace(/\.{2,}/g, ".")
+      name.setSelectionRange(cursorPosition - 1, cursorPosition - 1)
+    }
   })
 })
+
 
 
 //-------- Submit Register Category Form --------//
@@ -100,7 +107,6 @@ registerCategoryFormButton.addEventListener('click', async (event) => {
     })
   }
 })
-
 
 async function submitRegisterCategoryForm() {
 
@@ -175,14 +181,12 @@ async function getCategoryInfo(categoryId) {
   }
 }
 
-
 function fillEditCategoryForm(categoryData) {
  const { id, name } = categoryData
 
  editCategoryName.value = name
  editCategoryFormButton.dataset.categoryId = id
 }
-
 
 function overlay(element, show) {
   if (show) {
@@ -258,7 +262,6 @@ editCategoryFormButton.addEventListener('click', async (event) => {
     })
   }
 })
-
 
 async function submitEditCategoryForm() {
 
@@ -369,7 +372,6 @@ deleteCategorySwalButtons.forEach((button) =>
   })
 );
 
-
 async function submitDeleteCategory(categoryId) {
   try {
     const response = await fetch(`/category/${categoryId}`, {
@@ -386,57 +388,56 @@ async function submitDeleteCategory(categoryId) {
   }
 } 
 
-
 $(document).ready(() => {
 
     //----- Set Categories Datatable Config ------//
     $(categoriesTable).DataTable({
-      "language": {
-          "decimal": "",
-          "emptyTable": "Nenhum dado disponível na tabela",
-          "info": "", //"Mostrando _START_ até _END_ de _TOTAL_ registros", 
-          "infoEmpty": "", //"Mostrando 0 até 0 de 0 registros", 
-          "infoFiltered": "(filtrado de _MAX_ registros totais)",
-          "infoPostFix": "",
-          "thousands": ".",
-          "lengthMenu": "Mostrar _MENU_ registros por página",
-          "loadingRecords": "Carregando...",
-          "processing": "Processando...",
-          "search": "Pesquisar:",
-          "zeroRecords": "Nenhum registro correspondente foi encontrado",
-          "paginate": {
-              "first": "Primeiro",
-              "last": "Último",
-              "next": ">",
-              "previous": "<"
+      'language': {
+          'decimal': '',
+          'emptyTable': 'Nenhum dado disponível na tabela',
+          'info': '', //'Mostrando _START_ até _END_ de _TOTAL_ registros', 
+          'infoEmpty': '', //'Mostrando 0 até 0 de 0 registros', 
+          'infoFiltered': '(filtrado de _MAX_ registros totais)',
+          'infoPostFix': '',
+          'thousands': '.',
+          'lengthMenu': 'Mostrar _MENU_ registros por página',
+          'loadingRecords': 'Carregando...',
+          'processing': 'Processando...',
+          'search': 'Pesquisar:',
+          'zeroRecords': 'Nenhum registro correspondente foi encontrado',
+          'paginate': {
+              'first': 'Primeiro',
+              'last': 'Último',
+              'next': '>',
+              'previous': '<'
           },
-          "aria": {
-              "sortAscending": ": ativar para classificar coluna ascendente",
-              "sortDescending": ": ativar para classificar coluna descendente"
+          'aria': {
+              'sortAscending': ': ativar para classificar coluna ascendente',
+              'sortDescending': ': ativar para classificar coluna descendente'
           }
       },
-      "paging": true,
-      "searching": true,
-      "info": true,
-      "lengthChange": true,
-      "columnDefs": [
-          { "orderable": true, "targets": 0 },
-          { "orderable": true, "targets": 1 },
-          { "orderable": true, "targets": 2 },
-          { "orderable": false, "targets": 3 },
+      'paging': true,
+      'searching': true,
+      'info': true,
+      'lengthChange': true,
+      'columnDefs': [
+          { 'orderable': true, 'targets': 0 },
+          { 'orderable': true, 'targets': 1 },
+          { 'orderable': true, 'targets': 2 },
+          { 'orderable': false, 'targets': 3 },
       ],
-      "order": []
+      'order': [['1', 'desc']]
   });
 
   //--------- Set Buttons Tooltips ---------//
   $(registerCategoryModalButton).tooltip()
-  $(".edit-category-modal-button").tooltip()
-  $(".delete-category-swal-button").tooltip()
+  $('.edit-category-modal-button').tooltip()
+  $('.delete-category-swal-button').tooltip()
 
 
   //---- Register Modal on Hidden ----//
-  $(registerCategoryModal).on("hidden.bs.modal", () => {
-    $(registerCategoryName).val("")
+  $(registerCategoryModal).on('hidden.bs.modal', () => {
+    $(registerCategoryName).val('')
 
     setTimeout(() => {
       $(registerCategoryModalButton).blur()
@@ -446,8 +447,8 @@ $(document).ready(() => {
 
 
   //---- Edit Modal on Hidden ----//
-  $(editCategoryModal).on("hidden.bs.modal", () => {
-    $(editCategoryName).val("")
+  $(editCategoryModal).on('hidden.bs.modal', () => {
+    $(editCategoryName).val('')
     $(editCategoryFormButton).data('categoryId', '')
 
 

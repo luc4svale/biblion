@@ -1,15 +1,14 @@
 import re
-from app.models.author import Author
-from app.models.database import db
+from app.models.author import db, Author
 from app.exceptions import APIException
 
 class AuthorService:
 
     def verify_is_valid_name(self, name, field="nome do autor"):
-        invalid_chars_pattern = r"[^a-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ\s']"
+        invalid_chars_pattern = r"[^\.a-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ\s']"
         if re.search(invalid_chars_pattern, name):
             raise ValueError(f"O {field} contém caracteres inválidos")
-        invalid_chars_position_or_combination_pattern = r"\s{2,}|'{2,}|^\s+|^'"
+        invalid_chars_position_or_combination_pattern = r"\.{2,}|\s{2,}|'{2,}|^\s+|^'"
         if re.search(invalid_chars_position_or_combination_pattern, name):
             raise ValueError(f"O {field} contém posição ou combinação inválida de caracteres.")
         if (not name) or (len(name) < 2 or len(name) > 100):
@@ -18,9 +17,13 @@ class AuthorService:
 
 
     def is_name_registered(self, name):
-        if Author.query.filter_by(name=name).first() is None:
-            return False
-        return True
+        try:
+            if Author.query.filter_by(name=name).first() is None:
+                return False
+            return True
+        except Exception as e:
+            raise APIException ("Erro desconhecido", 500) from e
+
 
 
     def is_valid_author(self, author, verify_name_exists=False):
@@ -37,6 +40,7 @@ class AuthorService:
     def get_author_by_id(self, author_id):
         try:
             author = Author.query.get(author_id)
+            
             if not author:
                 raise APIException("Autor não encontrado", 404)
             return author
@@ -50,7 +54,7 @@ class AuthorService:
 
     def get_all_authors(self):
         try:
-            return Author.query.order_by(Author.created_at.desc()).all()
+            return Author.query.order_by(Author.name.asc()).all()
 
         except Exception as e:
             raise APIException("Erro desconhecido", 500) from e

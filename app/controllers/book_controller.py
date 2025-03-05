@@ -1,75 +1,156 @@
-import os
-from uuid import uuid4
-from werkzeug.utils import secure_filename
-from flask import flash
-from app import db
-from app.models.book import Book
-from app.utils.allowed_files import allowed_file
+from app.services.book_service import BookService
+from app.exceptions import APIException
 
-# Função para garantir que os diretórios de upload existam
-def create_upload_directory(path):
-    """Verifica se o diretório existe, se não, cria o diretório"""
-    if not os.path.exists(path):
-        os.makedirs(path)
 
-def register_book(form_data, book_files):
-    # Capturando os dados do formulário
-    title = form_data['title']
-    synopsis = form_data['synopsis']
-    publication_year = form_data['publication_year']
-    author_id = form_data['author_id']
-    category_id = form_data['category_id']
-    publisher_id = form_data['publisher_id']
+book_service = BookService()
 
-    # Verificando os arquivos do livro e da capa
-    book_file = book_files.get('book_file')
-    cover_image = book_files.get('cover_image')
+class BookController:
+    def register_book(self, book_data):
 
-    # Validação dos campos obrigatórios
-    if not title or not synopsis or not author_id or not category_id or not publisher_id:
-        flash('Todos os campos obrigatórios devem ser preenchidos!', 'error')
-        return None
+        book = {
+            "cover": book_data["cover"],
+            "title": book_data.get("title", "").strip(),
+            "author": book_data.get("author", "").strip(),
+            "publisher": book_data.get("publisher", "").strip(),
+            "category": book_data.get("category", "").strip(),
+            "publication_year": book_data.get("publication_year", "").strip(),
+            "synopsis": book_data.get("synopsis", "").strip(),
+            "file": book_data["file"],
+        }
 
-    # Definindo os caminhos dos arquivos
-    file_path = None
-    if book_file and allowed_file(book_file.filename):
-        # Criando o diretório de livros se não existir
-        books_dir = os.path.join('uploads', 'books')
-        create_upload_directory(books_dir)
+        try:
+            if book_service.is_valid_book(book, verify_title_exists=True):
+                book_service.create_book(book)
+                return { "message": "Livro cadastrado com sucesso", "status": 201 }
 
-        filename = secure_filename(f'{uuid4()}_{book_file.filename}')
-        file_path = os.path.join(books_dir, filename)
-        book_file.save(file_path)
+            return { "message": "Dados inválidos.", "status": 400 }
 
-    cover_image_path = None
-    if cover_image and allowed_file(cover_image.filename):
-        # Criando o diretório de capas se não existir
-        covers_dir = os.path.join('uploads', 'covers')
-        create_upload_directory(covers_dir)
+        except APIException as e:
+            return { "message": f"{str(e)}", "status": e.status_code}
 
-        filename = secure_filename(f'{uuid4()}_{cover_image.filename}')
-        cover_image_path = os.path.join(covers_dir, filename)
-        cover_image.save(cover_image_path)
 
-    # Criando o novo livro
-    new_book = Book(
-        title=title,
-        synopsis=synopsis,
-        publication_year=int(publication_year),
-        file_path=file_path,
-        cover_image_path=cover_image_path,
-        author_id=author_id,
-        category_id=category_id,
-        publisher_id=publisher_id
-    )
+    def get_all_books(self):
+        try:
+            books = book_service.get_all_books()
+            books_data = {
+                "books": books,
+                "books_count": len(books) 
+            }
 
-    try:
-        # Salvando o livro no banco de dados
-        db.session.add(new_book)
-        db.session.commit()
-        flash('Livro cadastrado com sucesso!', 'success')
-        return new_book
-    except Exception as e:
-        db.session.rollback()
-        flash(f'Erro ao cadastrar livro: {str(e)}', 'error')
-        return None
+            return { "message": "Livros encontrados", "data": books_data, "status": 200}
+
+        except APIException as e:
+            return {"message": str(e), "status": e.status_code}
+
+
+    def get_book(self, book_id):
+        try:
+            author = book_service.get_book_by_id(book_id)
+
+            return { "message": "Livro encontrado", "data": author.to_dict(), "status": 200}
+
+        except APIException as e:
+            return {"message": str(e), "status": e.status_code}
+
+
+    def edit_book(self, book_id, book_data):
+        try:
+            book = {
+                "title":  book_data.get("title", "").strip(),
+                "author": book_data.get("author", "").strip(),
+                "publisher": book_data.get("publisher", "").strip(),
+                "category": book_data.get("category", "").strip(),
+                "publication_year": book_data.get("publication_year", "").strip(),
+                "synopsis": book_data.get("synopsis", "").strip(),
+            }
+
+            if book_data["cover"]:
+                book["cover"] = book_data["cover"]
+
+            if book_data["file"]:
+                book["file"] = book_data["file"]
+
+            book_data = book
+
+            if book_service.is_valid_book(book):
+                response = book_service.update_book(book_id, book_data)
+
+                return {
+                    "message": "Livro editado com sucesso!", 
+                    "data": response["updated_book"],
+                    "status": 200, 
+                }
+
+            return { "message": "Dados inválidos.", "status": 400 }
+
+        except APIException as e:
+            return { "message": str(e), "status": e.status_code }
+
+
+    def delete_book(self, book_id):
+        try:
+            book_service.delete_book(book_id)
+
+            return {
+                "message": "Livro deletado com sucesso!", 
+                "status": 200, 
+            }
+
+        except APIException as e:
+            return { "message": str(e), "status": e.status_code }
+
+
+    def get_books_by_category(self):
+        try:
+            books_by_category = book_service.get_books_by_category()
+
+            return {
+                "message": "Livros por categoria encontrados",
+                "data": books_by_category,
+                "status": 200
+            }
+
+        except APIException as e:
+            return {
+                "message": str(e),
+                "data": {},
+                "status": e.status_code
+            }
+
+
+    def get_book_details(self, book_id):
+        try:
+            book = book_service.get_book_by_id(book_id)
+
+            return {
+                "message": "Detalhes do livro encontrados",
+                "data": {
+                    "id": book.id,
+                    "title": book.title,
+                    "synopsis": book.synopsis,
+                    "publication_year": book.publication_year,
+                    "cover": book.cover,
+                    "author": book.author.name if book.author else "Desconhecido",
+                    "publisher": book.publisher.name if book.publisher else "Desconhecido",
+                },
+                "status": 200
+            }
+
+        except APIException as e:
+            return {"message": str(e), "data": None, "status": e.status_code}
+
+
+
+    def get_book_file(self, book_id):
+        try:
+            book_file = book_service.get_book_file(book_id)
+            print("CONTROLLER:", book_file)
+
+            return {
+                "message": "Arquivo do livro encontrado",
+                "data": book_file,
+                "status": 200
+            }
+
+        except APIException as e:
+            return {"message": str(e), "data": None, "status": e.status_code}

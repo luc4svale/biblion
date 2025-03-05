@@ -5,7 +5,7 @@ from app.exceptions import APIException
 category_service = CategoryService()
 
 class CategoryController:
-    def resgiter_category(self, category_data):
+    def register_category(self, category_data):
 
         category = {
             "name": category_data.get("name", "").strip() 

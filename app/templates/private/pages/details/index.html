@@ -1,0 +1,70 @@
+{% extends 'private/pages/base/index.html' %}
+
+{% set page_title = 'Detalhes do Livro' %}
+
+{% set custom_style = 'book-details.css' %}
+
+{% block page_content %}
+  <div class="container-fluid mt-4">
+    {% if book %}
+      <!-- Book Details Card -->
+      <section class="card shadow my-3 mx-2 mx-lg-5 d-flex flex-column align-items-center">
+        <header class="card-header w-100 py-3 px-4">
+          <h1 class="font-weight-bold text-blue-dark mb-0">Detalhes do livro | {{ book.title }}</h1>
+        </header>
+
+        <div class="card-body book-container row max-w-100 p-3">
+          <div class="col-12 col-md-3 text-center mb-3 mb-md-0">
+            <img src="{{ url_for('uploads.get_cover_image', filename=book.cover) }}" class="book-cover w-100 object-fit-cover" alt="Capa do Livro '{{ book.title }}'" />
+          </div>
+
+          <div class="col-12 col-md-9 book-info d-flex flex-column justify-content-around">
+            <div class="short-info d-md-flex gap-2">
+              <p class="text-gray">
+                <strong class="d-inline-flex gap-0.5 align-items-center text-blue-dark"><i class="fas fa-user"></i> Autor:</strong> {{ book.author }}
+              </p>
+              <p class="text-gray">
+                <strong class="d-inline-flex gap-0.5 align-items-center text-blue-dark"><i class="fas fa-book-open"></i> Editora:</strong> {{ book.publisher }}
+              </p>
+              <p class="text-gray">
+                <strong class="d-inline-flex gap-0.5 align-items-center text-blue-dark"><i class="fas fa-calendar-alt"></i> Ano:</strong> {{ book.publication_year }}
+              </p>
+            </div>
+
+            <p class="book-description text-gray">
+              <strong class="d-inline-flex gap-0.5 align-items-center text-blue-dark"><i class="fas fa-align-left"></i> Sinopse:</strong> {{ book.synopsis }}
+            </p>
+
+            <div class="btn-group gap-1 d-flex flex-column flex-lg-row">
+              <button class="btn add-favorite p-2 bg-blue-hover text-white rounded d-flex gap-0.5 align-items-center justify-content-center" data-toggle="modal" data-target="#addFavoriteModal"><i class="fas fa-heart"></i> Adicionar aos Favoritos</button>
+
+              <a href="{{ url_for('books.reading', book_id=book.id) }}" class="btn start-reading p-2 bg-dark text-white rounded d-flex gap-0.5 align-items-center text-center justify-content-center"><i class="fas fa-book"></i> Iniciar Leitura</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Add Favorite Modal -->
+      <div class="modal fade" id="addFavoriteModal" tabindex="-1" role="dialog" aria-labelledby="addFavoriteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addFavoriteModalLabel">Adicionar aos Favoritos</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">Deseja adicionar esse livro aos favoritos?</div>
+            <div class="modal-footer">
+              <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
+              <button class="btn btn-primary" type="button" data-dismiss="modal">Confirmar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="alert alert-warning text-center mt-5">
+        <h3>Livro não encontrado.</h3>
+        <p>O livro que você está tentando acessar não existe ou foi removido.</p>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

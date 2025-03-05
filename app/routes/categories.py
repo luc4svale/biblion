@@ -15,7 +15,7 @@ categories_bp = Blueprint("categories", __name__)
 @admin_required
 def register_category():
     category_data = request.form
-    response = category_controller.resgiter_category(category_data)
+    response = category_controller.register_category(category_data)
     return jsonify(response), response["status"]
 
 
@@ -23,11 +23,18 @@ def register_category():
 @admin_required
 def render_categories():
     response = category_controller.get_all_categories()
-    if response["status"] == 200:
-        print(response["data"]["categories"])
-        return render_template(f"{COMMON_TEMPLATE_PATH}/categories/index.html", user=current_user, categories=response["data"]["categories"])
-    return redirect("/home")
+    if response["status"] != 200:
+        return redirect("/home")
+    return render_template(f"{COMMON_TEMPLATE_PATH}/categories/index.html", user=current_user, categories=response["data"]["categories"])
 
+
+@categories_bp.route("/api/category", methods=["GET"])
+@admin_required
+def render_api_categories():
+    response = category_controller.get_all_categories()
+    if response["status"] == 200:
+        response["data"]["categories"] =[category.to_dict() for category in response["data"]["categories"]]
+    return jsonify(response), response["status"]
 
 @categories_bp.route("/category/<category_id>", methods=["GET"])
 @admin_required

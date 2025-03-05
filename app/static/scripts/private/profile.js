@@ -28,15 +28,15 @@ photoInput.addEventListener('change', async (event) => {
 
     if (file) {
 
-        let validPhotoNewsObject = await validatePhoto(photoInput)
+        let validPhotoObject = await validatePhoto(photoInput)
 
-        if (!validPhotoNewsObject.status == 200) {
+        if (validPhotoObject.status != 200) {
 
             photoInput.value = ""
 
             Swal.fire({
                 title: '<h3>Ocorreu um problema!</h3>',
-                html: validPhotoNewsObject.message,
+                html: validPhotoObject.message,
                 icon: 'error',
                 iconHtml: '<i class="fas fa-times-circle text-danger"></i>',
                 backdrop: 'var(--swal-backdrop)',
@@ -75,7 +75,7 @@ photoInput.addEventListener('change', async (event) => {
 async function validatePhoto(input) {
     let file = input.files[0]
 
-    if (file.size > 5000000) {
+    if (file.size > (1024 * 1024 * 5)) {
         return {
             status: 400,
             message: "Tamanho máximo de 5MB excedido para <strong>imagem de perfil</strong>."

@@ -19,10 +19,10 @@
       <div id="photo-container" class="col-12 col-lg-6 my-3 d-flex justify-content-center align-items-center">
         <label for="photo" class="mb-0 d-flex embed-responsive embed-responsive-1by1 position-relative">
           <span id="photo-overlay"
-            class="d-grid content-center text-light embed-responsive-item bg-overlay font-weight-bold rounded rounded-circle">Escolher
-            foto de perfil</span>
+            class="d-grid content-center text-center text-light embed-responsive-item bg-overlay font-weight-bold rounded rounded-circle">Escolher
+            foto de perfil <br><br> jpg, png, webp e svg <br> máximo de 5MB</span>
           <img id="photo-preview" src="{{ url_for('uploads.get_profile_image', filename=user.photo) }}" alt="Foto de {{ user_profile.first_name }} {{ user_profile.last_name }}"
-            class="object-fit-cover embed-responsive-item">
+            class="object-fit-cover embed-responsive-item border-white">
           <input type="file" name="photo" id="photo" class="invisible embed-responsive-item">
         </label>
       </div>

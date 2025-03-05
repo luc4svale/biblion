@@ -15,7 +15,7 @@ publishers_bp = Blueprint("publishers", __name__)
 @admin_required
 def register_publisher():
     publisher_data = request.form
-    response = publisher_controller.resgiter_publisher(publisher_data)
+    response = publisher_controller.register_publisher(publisher_data)
     return jsonify(response), response["status"]
 
 
@@ -23,10 +23,18 @@ def register_publisher():
 @admin_required
 def render_publishers():
     response = publisher_controller.get_all_publishers()
+    if response["status"] != 200:
+        return redirect("/home")
+    return render_template(f"{COMMON_TEMPLATE_PATH}/publishers/index.html", user=current_user, publishers=response["data"]["publishers"])
+
+
+@publishers_bp.route("/api/publisher", methods=["GET"])
+@admin_required
+def render_api_publishers():
+    response = publisher_controller.get_all_publishers()
     if response["status"] == 200:
-        print(response["data"]["publishers"])
-        return render_template(f"{COMMON_TEMPLATE_PATH}/publishers/index.html", user=current_user, publishers=response["data"]["publishers"])
-    return redirect("/home")
+        response["data"]["publishers"] =[publisher.to_dict() for publisher in response["data"]["publishers"]]
+    return jsonify(response), response["status"]
 
 
 @publishers_bp.route("/publisher/<publisher_id>", methods=["GET"])

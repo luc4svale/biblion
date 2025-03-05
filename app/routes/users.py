@@ -25,6 +25,7 @@ def change_personal_info():
     user_data = request.form.to_dict()
     photo = request.files.get("photo", None)
     user_data["photo"] = photo if photo and photo.filename else None
+    print(user_data)
     response = user_controller.change_user_personal_info(current_user.id, user_data)
     return jsonify(response), response["status"]
 

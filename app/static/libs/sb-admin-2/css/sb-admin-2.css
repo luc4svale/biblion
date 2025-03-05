@@ -1862,7 +1862,7 @@ pre code {
   background-color: #fff;
   border-color: #bac8f3;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+  box-shadow: 0 0 0 0.2rem #4e73df40;
 }
 
 .form-control::-webkit-input-placeholder {
@@ -6847,6 +6847,10 @@ button.bg-dark:focus {
 
 .embed-responsive-4by3::before {
   padding-top: 75%;
+}
+
+.embed-responsive-2by3::before {
+  padding-top: 150%;
 }
 
 .embed-responsive-1by1::before {

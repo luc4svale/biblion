@@ -1,15 +1,14 @@
 import re
-from app.models.category import Category
-from app.models.database import db
+from app.models.category import db, Category
 from app.exceptions import APIException
 
 class CategoryService:
 
     def verify_is_valid_name(self, name, field="nome da categoria"):
-        invalid_chars_pattern = r"[^a-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ\s']"
+        invalid_chars_pattern = r"[^\.a-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ\s']"
         if re.search(invalid_chars_pattern, name):
             raise ValueError(f"O {field} contém caracteres inválidos")
-        invalid_chars_position_or_combination_pattern = r"\s{2,}|'{2,}|^\s+|^'"
+        invalid_chars_position_or_combination_pattern = r"\.{2,}|\s{2,}|'{2,}|^\s+|^'"
         if re.search(invalid_chars_position_or_combination_pattern, name):
             raise ValueError(f"O {field} contém posição ou combinação inválida de caracteres.")
         if (not name) or (len(name) < 2 or len(name) > 100):
@@ -18,9 +17,13 @@ class CategoryService:
 
 
     def is_name_registered(self, name):
-        if Category.query.filter_by(name=name).first() is None:
-            return False
-        return True
+        try:
+            if Category.query.filter_by(name=name).first() is None:
+                return False
+            return True
+        except Exception as e:
+            raise APIException ("Erro desconhecido", 500) from e
+
 
 
     def is_valid_category(self, category, verify_name_exists=False):
@@ -50,7 +53,7 @@ class CategoryService:
 
     def get_all_categories(self):
         try:
-            return Category.query.order_by(Category.created_at.desc()).all()
+            return Category.query.order_by(Category.name.asc()).all()
 
         except Exception as e:
             raise APIException("Erro desconhecido", 500) from e

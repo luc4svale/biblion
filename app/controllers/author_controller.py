@@ -5,7 +5,7 @@ from app.exceptions import APIException
 author_service = AuthorService()
 
 class AuthorController:
-    def resgiter_author(self, author_data):
+    def register_author(self, author_data):
 
         author = {
             "name": author_data.get("name", "").strip() 
@@ -26,7 +26,7 @@ class AuthorController:
         try:
             author = author_service.get_author_by_id(author_id)
 
-            return { "message": "Autor encontrada", "data": author.to_dict(), "status": 200}
+            return { "message": "Autor encontrado", "data": author.to_dict(), "status": 200}
 
         except APIException as e:
             return {"message": str(e), "status": e.status_code}

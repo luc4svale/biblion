@@ -1,12 +1,18 @@
 {% extends 'private/pages/base/index.html' %}
 
-{% set page_title = 'Leitura - PS, Eu Te Amo' %}
+{% set page_title = 'Leitura' %}
 
 {% set custom_style = 'reading.css' %}
 
 {% block page_content %}
-<!-- Reader Container -->
 <section id="reader-container" class="container-fluid px-2 px-lg-5 py-3 d-flex justify-content-center">
-  <iframe id="book-reader" class="w-100" src="{{ url_for('static', filename='books/ps-eu-te-amo.pdf') }}" frameborder="0"></iframe>
+  {% if book_file %}
+    <iframe id="book-reader" class="w-100" src="{{ url_for('uploads.get_book_file', filename=book_file) }}" frameborder="0"></iframe>
+  {% else %}
+    <div class="alert alert-warning text-center">
+      <h3>Arquivo do livro não encontrado.</h3>
+      <p>Este livro pode não estar disponível para leitura no momento.</p>
+    </div>
+  {% endif %}
 </section>
 {% endblock %}

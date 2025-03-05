@@ -10,6 +10,7 @@ const registerAuthorFormButton = registerAuthorForm.querySelector('#register-aut
 const editAuthorModal = document.querySelector('#edit-author-modal')
 const editAuthorModalOverlay = editAuthorModal.querySelector('#edit-author-overlay')
 const editAuthorModalButtons = authorsTable.querySelectorAll(".edit-author-modal-button")
+const deleteAuthorSwalButtons = authorsTable.querySelectorAll('.delete-author-swal-button')
 const editAuthorForm = editAuthorModal.querySelector('#edit-author-form')
 const editAuthorName = editAuthorForm.querySelector('#edit-author-name')
 const editAuthorFormButton = editAuthorForm.querySelector('#edit-author-form-button')
@@ -18,7 +19,7 @@ const editAuthorFormButton = editAuthorForm.querySelector('#edit-author-form-but
 const names = [registerAuthorName, editAuthorName]
 
 
-const deleteAuthorSwalButtons = authorsTable.querySelectorAll('.delete-author-swal-button')
+
 
 //------- Names Mask -------//
 names.forEach(name => {
@@ -29,7 +30,7 @@ names.forEach(name => {
 
     const cursorPosition = name.selectionStart
 
-    const pattern = /[^\sa-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ']|^\s+$|^'/g
+    const pattern = /[^\sa-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ'\.]|^\s+$|^'/g
 
     if (pattern.test(name.value)) {
       name.value = name.value.replace(pattern, '')
@@ -43,6 +44,11 @@ names.forEach(name => {
 
     if (/'{2,}/g.test(name.value)) {
       name.value = name.value.replace(/'{2,}/g, "'")
+      name.setSelectionRange(cursorPosition - 1, cursorPosition - 1)
+    }
+
+    if (/\.{2,}/g.test(name.value)) {
+      name.value = name.value.replace(/\.{2,}/g, ".")
       name.setSelectionRange(cursorPosition - 1, cursorPosition - 1)
     }
   })
@@ -294,7 +300,7 @@ deleteAuthorSwalButtons.forEach((button) =>
     }, 5)
 
     Swal.fire({
-      text: 'Você tem certeza que deseja excluir essa autor?',
+      text: 'Você tem certeza que deseja excluir esse autor?',
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Confirmar',
@@ -390,52 +396,52 @@ $(document).ready(() => {
 
   //----- Set Authors Datatable Config ------//
   $(authorsTable).DataTable({
-    "language": {
-        "decimal": "",
-        "emptyTable": "Nenhum dado disponível na tabela",
-        "info": "", //"Mostrando _START_ até _END_ de _TOTAL_ registros", 
-        "infoEmpty": "", //"Mostrando 0 até 0 de 0 registros", 
-        "infoFiltered": "(filtrado de _MAX_ registros totais)",
-        "infoPostFix": "",
-        "thousands": ".",
-        "lengthMenu": "Mostrar _MENU_ registros por página",
-        "loadingRecords": "Carregando...",
-        "processing": "Processando...",
-        "search": "Pesquisar:",
-        "zeroRecords": "Nenhum registro correspondente foi encontrado",
-        "paginate": {
-            "first": "Primeiro",
-            "last": "Último",
-            "next": ">",
-            "previous": "<"
+    'language': {
+        'decimal': '',
+        'emptyTable': 'Nenhum dado disponível na tabela',
+        'info': '', //'Mostrando _START_ até _END_ de _TOTAL_ registros', 
+        'infoEmpty': '', //'Mostrando 0 até 0 de 0 registros', 
+        'infoFiltered': '(filtrado de _MAX_ registros totais)',
+        'infoPostFix': '',
+        'thousands': '.',
+        'lengthMenu': 'Mostrar _MENU_ registros por página',
+        'loadingRecords': 'Carregando...',
+        'processing': 'Processando...',
+        'search': 'Pesquisar:',
+        'zeroRecords': 'Nenhum registro correspondente foi encontrado',
+        'paginate': {
+            'first': 'Primeiro',
+            'last': 'Último',
+            'next': '>',
+            'previous': '<'
         },
-        "aria": {
-            "sortAscending": ": ativar para classificar coluna ascendente",
-            "sortDescending": ": ativar para classificar coluna descendente"
+        'aria': {
+            'sortAscending': ': ativar para classificar coluna ascendente',
+            'sortDescending': ': ativar para classificar coluna descendente'
         }
     },
-    "paging": true,
-    "searching": true,
-    "info": true,
-    "lengthChange": true,
-    "columnDefs": [
-        { "orderable": true, "targets": 0 },
-        { "orderable": true, "targets": 1 },
-        { "orderable": true, "targets": 2 },
-        { "orderable": false, "targets": 3 },
+    'paging': true,
+    'searching': true,
+    'info': true,
+    'lengthChange': true,
+    'columnDefs': [
+        { 'orderable': true, 'targets': 0 },
+        { 'orderable': true, 'targets': 1 },
+        { 'orderable': true, 'targets': 2 },
+        { 'orderable': false, 'targets': 3 },
     ],
-    "order": []
+    'order': [['1', 'desc']]
 });
 
   //--------- Set Buttons Tooltips ---------//
   $(registerAuthorModalButton).tooltip()
-  $(".edit-author-modal-button").tooltip()
-  $(".delete-author-swal-button").tooltip()
+  $('.edit-author-modal-button').tooltip()
+  $('.delete-author-swal-button').tooltip()
 
 
   //---- Register Modal on Hidden ----//
-  $(registerAuthorModal).on("hidden.bs.modal", () => {
-    $(registerAuthorName).val("")
+  $(registerAuthorModal).on('hidden.bs.modal', () => {
+    $(registerAuthorName).val('')
 
     setTimeout(() => {
       $(registerAuthorModalButton).blur()
@@ -445,8 +451,8 @@ $(document).ready(() => {
 
 
   //---- Edit Modal on Hidden ----//
-  $(editAuthorModal).on("hidden.bs.modal", () => {
-    $(editAuthorName).val("")
+  $(editAuthorModal).on('hidden.bs.modal', () => {
+    $(editAuthorName).val('')
     $(editAuthorFormButton).data('authorId', '')
 
 

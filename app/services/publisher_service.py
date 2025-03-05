@@ -1,15 +1,14 @@
 import re
-from app.models.publisher import Publisher
-from app.models.database import db
+from app.models.publisher import db, Publisher
 from app.exceptions import APIException
 
 class PublisherService:
 
     def verify_is_valid_name(self, name, field="nome da editora"):
-        invalid_chars_pattern = r"[^a-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ\s']"
+        invalid_chars_pattern = r"[^\.a-zA-ZàáâãéêíóôõúÀÁÂÃÉÊÍÓÔÕÚçÇ\s']"
         if re.search(invalid_chars_pattern, name):
             raise ValueError(f"O {field} contém caracteres inválidos")
-        invalid_chars_position_or_combination_pattern = r"\s{2,}|'{2,}|^\s+|^'"
+        invalid_chars_position_or_combination_pattern = r"\.{2,}|\s{2,}|'{2,}|^\s+|^'"
         if re.search(invalid_chars_position_or_combination_pattern, name):
             raise ValueError(f"O {field} contém posição ou combinação inválida de caracteres.")
         if (not name) or (len(name) < 2 or len(name) > 100):
@@ -18,9 +17,13 @@ class PublisherService:
 
 
     def is_name_registered(self, name):
-        if Publisher.query.filter_by(name=name).first() is None:
-            return False
-        return True
+        try:
+            if Publisher.query.filter_by(name=name).first() is None:
+                return False
+            return True
+        except Exception as e:
+            raise APIException ("Erro desconhecido", 500) from e
+
 
 
     def is_valid_publisher(self, publisher, verify_name_exists=False):
@@ -50,7 +53,7 @@ class PublisherService:
 
     def get_all_publishers(self):
         try:
-            return Publisher.query.order_by(Publisher.created_at.desc()).all()
+            return Publisher.query.order_by(Publisher.name.asc()).all()
 
         except Exception as e:
             raise APIException("Erro desconhecido", 500) from e

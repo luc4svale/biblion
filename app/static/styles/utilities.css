@@ -33,6 +33,10 @@
   background-color: var(--stroke-primary);
 }
 
+.stroke-primary{
+  border: var(--stroke-primary);
+}
+
 
 
 /* text colors */

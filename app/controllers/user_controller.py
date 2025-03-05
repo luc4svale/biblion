@@ -32,6 +32,7 @@ class UserController:
                 user["photo"] = user_data["photo"]
 
             user_data = user
+            
 
             if user_service.is_valid_user(user):
                 response = user_service.update_user_personal_info(user_id, user_data)
@@ -46,7 +47,6 @@ class UserController:
 
         except APIException as e:
             return { "message": str(e), "status": e.status_code }
-
 
 
     def change_user_password(self, user_id, password_data):

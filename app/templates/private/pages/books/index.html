@@ -1,59 +1,263 @@
 {% extends 'private/pages/base/index.html' %}
 
-{% set page_title = 'Cadastrar Livro' %}
+{% set page_title = 'Livros' %}
 
-{% set custom_style = 'book-register.css' %}
+{% set custom_style = 'books.css' %}
+
+{% set has_datatable = True %}
 
 {% block page_content %}
-    <main class="container-fluid d-flex flex-column align-items-center justify-content-center py-5">
-        <section  id="book-register-container" class="d-grid items-center">
-            <header>
-                <h1 class="text-blue-dark font-weight-bold text-center fs-2xl">Cadastre seu <strong
-                        class="text-blue-light font-weight-bolder logo-text">Livro</strong></h1>
-            </header>
-    
-            <form id="book-register-form" class="row gap-1 w-100 px-lg-4 d-flex justify-content-center" method="POST" enctype="multipart/form-data">
-    
-                <div class="d-grid d-lg-flex gap-1 col-6 p-0">
-                    <label for="title" class="d-flex align-items-center position-relative w-100 mb-0 p-0">
-                        <input type="text" name="title" id="title" placeholder="Título" class="form-control" required>
-                    </label>
-    
-                    <label for="synopsis" class="d-flex align-items-center position-relative w-100 mb-0 p-0">
-                        <input type="text" name="synopsis" id="synopsis" placeholder="Sinopse" class="form-control" required>
-                    </label>
+  <!-- Books Datatable -->
+  <div class="card shadow mt-4 mb-5 mx-2 mx-md-5">
+    <div class="card-header py-2 px-4 d-flex justify-content-between align-items-center">
+      <h2 class="m-0 text-blue-dark font-weight-bold">Livros</h2>
+      <!-- Register Book Buttons -->
+      <button id="register-book-modal-button" type="button" data-placement="top" title="Cadastrar livro" class="btn btn-circle d-flex icon-wrapper content-center bg-white text-center fs-base" data-toggle="modal" data-target="#register-book-modal"><i class="fas fa-layer-group text-blue-dark"></i><i class="fas fa-plus text-blue-dark"></i></button>
+    </div>
+
+    <div class="card-body px-md-5 px-lg-5 border-white">
+      <div class="table-responsive">
+        <table id="books-table" class="table table-bordered table-striped bg-white shadow-sm" width="100%" cellspacing="0">
+          <thead class="text-white bg-table-header">
+            <tr>
+              <th class="text-center">Capa</th>
+              <th class="text-center">Título</th>
+              <th class="text-center">Autor</th>
+              <th class="text-center">Editora</th>
+              <th class="text-center">Categoria</th>
+              <th class="text-center">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for book in books %}
+              <tr id="book-row-{{ book.id }}" class="book-row">
+                <td class="book-cover text-center">
+                  <img src="{{ url_for('uploads.get_cover_image', filename=book.cover) }}" alt="Capa do livro '{{ book.title }}'">
+                </td>
+                <td class="book-title text-center">{{ book.title }}</td>
+                <td class="book-author text-center">{{ book.author.name }}</td>
+                <td class="book-publisher text-center">{{ book.publisher.name }}</td>
+                <td class="book-category text-center">{{ book.category.name }}</td>
+                <td class="book-actions text-center">
+                  <div class="d-flex justify-content-center gap-1">
+                    <!-- Edit Book Button -->
+                    <button type="button" class="btn edit-book-modal-button" data-toggle="modal" data-placement="bottom" title="Editar livro" data-target="#edit-book-modal" data-book-id="{{ book.id }}"><i class="fas fa-pencil-alt"></i></button>
+
+                    <!-- Delete Book Button -->
+                    <button type="button" class="btn delete-book-swal-button" data-placement="bottom" title="Excluir livro" data-book-id="{{ book.id }}"><i class="fas fa-trash-alt"></i></button>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register Book Modal -->
+  <div class="modal fade" id="register-book-modal" tabindex="-1" role="dialog" aria-labelledby="register-book-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h3 class="modal-title" id="register-book-modal-label">Cadastrar livro</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body px-3 px-lg-4">
+          <!-- Modal Body -->
+          <form id="register-book-form" class="row mx-0 book-form">
+
+            <div id="register-book-cover-container" class="col-12 col-lg-4 my-3 px-lg-2 d-flex justify-content-center align-items-center cover-container">
+              <label for="register-book-cover" class="mb-0 d-flex embed-responsive embed-responsive-2by3 position-relative">
+                <span id="register-book-cover-overlay"
+                  class="d-grid content-center text-center text-light embed-responsive-item bg-overlay font-weight-bold rounded cover-overlay">Escolher
+                  capa do livro <br><br> jpg, png, webp e svg <br> máximo de 5MB</span>
+                <img id="register-book-cover-preview" src="{{ url_for('uploads.get_cover_image', filename='default-cover.jpg') }}" alt="Capa do livro tal"
+                  class="object-fit-cover embed-responsive-item cover-preview">
+                <input type="file" name="cover" id="register-book-cover" class="invisible embed-responsive-item">
+              </label>
+            </div>
+
+            <div class="col-12 col-lg-8 pl-lg-3 my-3 p-0 d-flex flex-column justify-content-around">
+
+              <div class="form-group px-0 px-lg-2 w-100">
+                <label for="register-book-title" class="mb-1">Título</label>
+                <input id="register-book-title" name="title" type="text"  class="form-control" placeholder="Qual é o título do livro?"/>
+              </div>
+              
+              <div class="row mx-0">
+                <div class="form-group px-0 px-lg-2 col-12 col-lg-6">
+                  <label for="register-book-author" class="mb-1">Autor</label>
+                  <select id="register-book-author" name="author" type="text" value="" class="form-control">
+                    <option value="" selected disabled>Selecione um autor</option>
+                  </select>
                 </div>
-    
-                <label for="publication_year" class="col-6 d-flex align-items-center position-relative mb-0 p-0">
-                    <input type="date" name="publication_year" id="publication_year" placeholder="Ano de Publicação"
-                        class="form-control" required>
-                </label>
-    
-                <label for="author_id" class="col-6 d-flex align-items-center position-relative mb-0 p-0">
-                    <input type="text" name="author_id" id="author_id" placeholder="Autor" class="form-control" required>
-                </label>
-    
-                <label for="category_id" class="col-6 d-flex align-items-center position-relative mb-0 p-0">
-                    <input type="text" name="category_id" id="category_id" placeholder="Categoria" class="form-control" required>
-                </label>
-    
-                <label for="publisher_id" class="col-6 d-flex align-items-center position-relative mb-0 p-0">
-                    <input type="text" name="publisher_id" id="publisher_id" placeholder="Editora" class="form-control" required>
-                </label>
-                
-                
-                <label for="book_file" class="col-6 d-flex align-items-center position-relative mb-0 p-0">
-                    <input type="file" name="book_file" id="book_file" class="form-control" accept=".pdf, .epub, .mobi" required>
-                </label>
-    
-                <label for="cover_image" class="col-6 d-flex align-items-center position-relative mb-0 p-0">
-                    <input type="file" name="cover_image" id="cover_image" class="form-control" accept=".jpg, .png, .jpeg">
-                </label>
-    
-                <button id="book-register-button" type="submit" class="btn btn-register text-white bg-blue-light col-6 mt-2">Cadastrar</button>
-            </form>
-        </section>
-    </main>
+
+        
+                <div class="form-group px-0 px-lg-2 col-12 col-lg-6">
+                  <label for="register-book-publisher" class="mb-1">Editora</label>
+                  <select id="register-book-publisher" name="publisher" type="text"  class="form-control">
+                    <option value="" selected disabled>Selecione uma editora</option>
+                  </select>
+                </div>
+
+              </div>
+
+              <div class="row mx-0">
+
+                <div class="form-group px-0 px-lg-2 col-12 col-lg-6">
+                  <label for="register-book-category" class="mb-1">Categoria</label>
+                  <select id="register-book-category" name="category" type="text" value="" class="form-control">
+                    <option value="" selected disabled>Selecione uma categoria</option>
+                  </select>
+                </div>
+        
+                <div class="form-group px-0 px-lg-2 col-12 col-lg-6">
+                  <label for="register-book-publication-year" class="mb-1">Ano de publicação</label>
+                  <input id="register-book-publication-year" name="publication_year" type="number" min="1500" max="{{ current_year }}" class="form-control" />
+                </div>
+
+              </div>
+
+              <div class="form-group px-0 px-lg-2 mb-0 w-100">
+                <label for="register-book-synopsis" class="mb-1">Sinopse</label>
+                <textarea name="synopsis" id="register-book-synopsis" rows="3" class="w-100 form-control" placeholder="Digite aqui um breve resumo do livro, destacando os principais eventos e personagens em um texto contendo entre 20 e 600 caracteres."></textarea>
+              </div>
+
+            </div>
+
+
+            <div class="form-group px-0 px-lg-2 mb-0 w-100 pt-2 border-top stroke-primary">
+              <label for="register-book-file" class="mb-1">Arquivo com o conteúdo do livro (pdf com no máximo 20MB)</label>
+              <div class="dropzone">
+                <i class="upload-icon"></i>
+                <span class="upload-legend">Clique para escolher um arquivo</span>
+                <input id="register-book-file" name="file" type="file" />
+              </div>
+              
+            </div>
+
+
+            <button id="register-book-form-button" class="btn btn-primary mt-4 m-0 mx-lg-2 w-100">Cadastrar</button>
+          </form>
+        </div>
+        <!-- Modal Footer -->
+        <div class="modal-footer px-3 px-lg-4">
+          <button type="button" class="btn btn-danger m-0 mx-lg-2 w-100" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Edit Book Modal -->
+  <div class="modal fade" id="edit-book-modal" tabindex="-1" role="dialog" aria-labelledby="edit-book-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <!-- Modal Overlay -->
+        <div id="edit-book-overlay" class="overlay">
+          <div class="spinner-border text-light" role="status">
+            <span class="sr-only"></span>
+          </div>
+        </div>
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h3 class="modal-title" id="edit-book-modal-label">Editar livro</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <!-- Modal Body -->
+          <form id="edit-book-form" class="row mx-0 book-form">
+
+            <div id="edit-book-cover-container" class="col-12 col-lg-4 my-3 px-lg-2 d-flex justify-content-center align-items-center cover-container">
+              <label for="edit-book-cover" class="mb-0 d-flex embed-responsive embed-responsive-2by3 position-relative">
+                <span id="edit-book-cover-overlay"
+                  class="d-grid content-center text-center text-light embed-responsive-item bg-overlay font-weight-bold rounded cover-overlay">Escolher
+                  capa do livro <br><br> jpg, png, webp e svg <br> máximo de 5MB</span>
+                <img id="edit-book-cover-preview" src="{{ url_for('uploads.get_cover_image', filename='default-cover.jpg') }}" alt="Capa do livro tal"
+                  class="object-fit-cover embed-responsive-item cover-preview">
+                <input type="file" name="cover" id="edit-book-cover" class="invisible embed-responsive-item">
+              </label>
+            </div>
+
+            <div class="col-12 col-lg-8 pl-lg-3 my-3 p-0 d-flex flex-column justify-content-around">
+
+              <div class="form-group px-0 px-lg-2 w-100">
+                <label for="edit-book-title" class="mb-1">Título</label>
+                <input id="edit-book-title" name="title" type="text"  class="form-control" placeholder="Qual é o título do livro?"/>
+              </div>
+              
+              <div class="row mx-0">
+                <div class="form-group px-0 px-lg-2 col-12 col-lg-6">
+                  <label for="edit-book-author" class="mb-1">Autor</label>
+                  <select id="edit-book-author" name="author" type="text" class="form-control">
+                    <option value="" selected disabled>Selecione um autor</option>
+                  </select>
+                </div>
+
+        
+                <div class="form-group px-0 px-lg-2 col-12 col-lg-6">
+                  <label for="edit-book-publisher" class="mb-1">Editora</label>
+                  <select id="edit-book-publisher" name="publisher" type="text" class="form-control">
+                    <option value="" selected disabled>Selecione uma editora</option>
+                  </select>
+                </div>
+
+              </div>
+
+              <div class="row mx-0">
+
+                <div class="form-group px-0 px-lg-2 col-12 col-lg-6">
+                  <label for="edit-book-category" class="mb-1">Categoria</label>
+                  <select id="edit-book-category" name="category" type="text" class="form-control">
+                    <option value="" selected disabled>Selecione uma categoria</option>
+                  </select>
+                </div>
+        
+                <div class="form-group px-0 px-lg-2 col-12 col-lg-6">
+                  <label for="edit-book-publication-year" class="mb-1">Ano de publicação</label>
+                  <input id="edit-book-publication-year" name="publication_year" type="number" min="1500" max="{{ current_year }}" class="form-control" />
+                </div>
+
+              </div>
+
+              <div class="form-group px-0 px-lg-2 mb-0 w-100">
+                <label for="edit-book-synopsis" class="mb-1">Sinopse</label>
+                <textarea name="synopsis" id="edit-book-synopsis" rows="3" class="w-100 form-control" placeholder="Digite aqui um breve resumo do livro, destacando os principais eventos e personagens em um texto contendo entre 20 e 600 caracteres."></textarea>
+              </div>
+
+            </div>
+
+
+            <div class="form-group px-0 px-lg-2 mb-0 w-100 pt-2 border-top stroke-primary">
+              <label for="edit-book-file" class="mb-1">Arquivo com o conteúdo do livro (pdf com no máximo 20MB)</label>
+              <div class="dropzone">
+                <i class="upload-icon"></i>
+                <span class="upload-legend">Clique para escolher um arquivo</span>
+                <input id="edit-book-file" name="file" type="file" />
+                <a class="btn" id="edit-book-file-preview" href="" target="_blank" title="Visualizar Arquivo" data-placement="bottom">
+                  <i class="fas fa-eye"></i>
+                </a>
+              </div>
+              
+            </div>
+
+
+            <button id="edit-book-form-button" class="btn btn-primary mx-0 mx-lg-2 w-100 mt-4">Editar</button>
+          </form>
+        </div>
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger mx-0 mx-lg-2 w-100" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
 {% endblock %}
 
-{% set custom_script = 'book-register.js' %}
+{% set custom_script = 'books.js' %}

@@ -1,0 +1,134 @@
+@import url("./common.css");
+
+/* specific styles */
+
+#books-table {
+    & tbody {
+        & tr td {
+            vertical-align: middle;
+
+            &.book-cover img {
+                width: 3.5rem;
+                aspect-ratio: 2/3;
+            }
+
+        }
+    }
+}
+
+form {
+    max-width: 80rem;
+    flex: 1;
+  
+    &.book-form {
+      & .cover-container {
+        & label {
+          cursor: pointer;
+
+          & .cover-preview {
+            border: 2px solid var(--surface-primary);
+          }
+  
+          & .cover-overlay {
+            z-index: 99;
+            opacity: 0;
+          }
+
+  
+          &:hover {
+            & .cover-overlay {
+              opacity: 1;
+            }
+          }
+        }
+      }
+
+      & .form-group {
+        & .form-control {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        & select {
+            padding-right: 2.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            background: url("../../icons/arrow-down.svg") no-repeat calc(100% - 1rem) center / 1.5rem;
+            background-color: var(--surface-primary);
+
+
+            &:focus {
+              background: url("../../icons/arrow-up.svg") no-repeat calc(100% - 1rem) center / 1.5rem;
+              background-color: var(--surface-primary);
+            }
+        }
+
+        & textarea {
+            resize: none;
+        }
+
+        & .dropzone {
+            position: relative;
+            display: flex;
+            column-gap: 0.75rem;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: var(--surface-primary);
+            cursor: pointer;
+            padding-block: 0.75rem;
+            border-radius: 0.35rem;
+            border: 1px solid #d1d3e2;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+            & input[type="file"] {
+                all: unset;
+                opacity: 0;
+                position: absolute;
+                inset: 0;
+            }
+
+            & .upload-icon {
+                display: inline-block;
+                width: 2rem;
+                height: 2rem;
+                background: url("../../icons/cloud-upload.svg") no-repeat center center / cover;
+            }
+
+            & span {
+                max-width: 45%;
+                height: 2rem;
+                display: -webkit-box;
+                -webkit-line-clamp: 1; 
+                line-clamp: 1;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                word-break: break-all;
+                place-content: center;
+                flex-shrink: 1;
+            }
+
+            & #edit-book-file-preview {
+              position: absolute;
+              right: 1rem;
+              top: 50%;
+              transform: translateY(-50%);
+            }
+
+            &:focus,
+            &:hover,
+            &:focus-within {
+                border-color: #bac8f3;
+                outline: 0;
+                box-shadow: 0 0 0 0.2rem #4e73df40;
+            }
+        }
+
+      }
+
+
+
+    }
+}

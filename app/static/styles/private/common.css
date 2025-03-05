@@ -36,9 +36,11 @@ body {
     
       & div:has(#sidebarToggle) {
         opacity: 0.4;
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: 2rem;
+
+        & #sidebarToggle {
+          height: 2rem;
+          width: 2rem;
+        }
       }
     }
   

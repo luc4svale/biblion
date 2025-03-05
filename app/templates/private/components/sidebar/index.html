@@ -5,7 +5,7 @@
       <!-- Sidebar Brand -->
       <li>
         <a class="sidebar-brand d-flex align-items-center justify-content-center gap-1" href="#">
-          <img class="sidebar-brand-icon" src="static/icons/biblion-logo.svg">
+          <img class="sidebar-brand-icon" src="{{ url_for('static', filename='icons/biblion-logo.svg') }}">
           <strong class="text-blue-light fs-lg font-weight-bold sidebar-brand-text">Biblion</strong>
         </a>
       </li>
@@ -20,20 +20,20 @@
 
       <!-- Favorites -->
       <li class="nav-item">
-        <a class="nav-link" href="/{{ url_for('books.favorites') }}">
+        <a class="nav-link" href="{{ url_for('books.favorites') }}">
           <i class="fas fa-fw fa-heart text-white"></i>
           <span class="text-white">Favoritos</span>
         </a>
       </li>
 
-      <hr class="sidebar-divider my-4 bg-stroke-primary">
+      <hr class="sidebar-divider my-3 bg-stroke-primary">
 
       {% if user.is_authenticated and user.role == 'admin' | default(false) %}
         {% include 'private/components/sidebar/admin-features.html' %}
       {% endif %}
 
       <!-- Logout -->
-      <li class="nav-item mb-5">
+      <li class="nav-item mb-4">
         <a class="nav-link" href="{{ url_for('auth.logout') }}" data-toggle="modal" data-target="#logoutModal">
           <i class="fas fa-fw fa-sign-out-alt text-white"></i>
           <span class="text-white">Sair</span>
@@ -41,7 +41,7 @@
       </li>
 
       <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline mt-5 position-absolute">
+      <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
     </ul>

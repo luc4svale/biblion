@@ -10,8 +10,8 @@ class Book(db.Model):
     title = db.Column(db.String(200), nullable=False)
     synopsis = db.Column(db.Text, nullable=False)
     publication_year = db.Column(db.Integer)
-    file_path = db.Column(db.String(255), nullable=False)  # Caminho do arquivo no sistema
-    cover_image_path = db.Column(db.String(255))  # Caminho da capa do livro
+    file = db.Column(db.String(70), nullable=False)
+    cover = db.Column(db.String(70), nullable=False, server_default="default-cover.jpg")
 
     author_id = db.Column(String(36), db.ForeignKey("authors.id"), nullable=False)
     category_id = db.Column(String(36), db.ForeignKey("categories.id"), nullable=False)
@@ -32,15 +32,15 @@ class Book(db.Model):
 
     def to_dict(self):
         return {
-            "id": self.id,
-            "title": self.title,
-            "synopsis": self.synopsis,
-            "publication_year": self.publication_year,
-            "file_path": self.file_path,
-            "cover_image_path": self.cover_image_path,
-            "author_id": self.author_id,
-            "category_id": self.category_id,
-            "publisher_id": self.publisher_id,
-            "created_at": self.created_at.isoformat() if self.created_at else None,
-            "updated_at": self.updated_at.isoformat() if self.updated_at else None
+        "id": self.id,
+        "title": self.title,
+        "synopsis": self.synopsis,
+        "publication_year": self.publication_year,
+        "file": self.file,
+        "cover": self.cover,
+        "author": {"id": self.author.id, "name": self.author.name} if self.author else None,
+        "category": {"id": self.category.id, "name": self.category.name} if self.category else None,
+        "publisher": {"id": self.publisher.id, "name": self.publisher.name} if self.publisher else None,
+        "created_at": self.created_at.isoformat() if self.created_at else None,
+        "updated_at": self.updated_at.isoformat() if self.updated_at else None
         }

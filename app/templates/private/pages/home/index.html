@@ -1,136 +1,32 @@
 {% extends 'private/pages/base/index.html' %}
 
 {% set page_title = 'Início' %}
-
 {% set custom_style = 'home.css' %}
 
 {% block page_content %}
-<!-- Begin Page Content -->
 <div class="container-fluid mt-4">
 
-  <!-- Categoria: Romance -->
-  <div class="category mb-5">
-    <h2 class="category-title font-weight-bold fs-md text-blue-dark">Romance</h2>
-
-    <div class="category-books-container d-flex w-100 pt-1 pb-2">
-      <a class="book-card" href="{{ url_for('books.book_details')}}">
-        <img src="{{ url_for('static', filename='images/ps-eu-te-amo.jpg') }}" alt="Capa do livro 'PS, Eu Te Amo'">
-        <h3>PS, Eu Te Amo</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/eu-e-esse-meu-coracao.jpg') }}" alt="Capa do livro 'Eu e Esse Meu Coração'">
-        <h3>Eu e esse meu coração</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/e-assim-que-acaba.jpg') }}" alt="Capa do livro 'É assim que acaba'">
-        <h3>É assim que acaba</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/teto-para-dois.jpg') }}" alt="Capa do livro 'Teto para dois'">
-        <h3>Teto para dois</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/verity.jpg') }}" alt="Capa do livro 'Verity'">
-        <h3>Verity</h3>
-      </a>
+  {% if books_by_category %}
+    {% for category_name, books in books_by_category.items() %}
+    <div class="category mb-5">
+      <h2 class="category-title font-weight-bold fs-md text-blue-dark">{{ category_name }}</h2>
+      <div class="category-books-container d-flex w-100 pt-1 pb-2">
+        
+        {% for book in books %}
+        <a class="book-card" href="{{ url_for('books.book_details', book_id=book.id) }}">
+          <img src="{{ url_for('uploads.get_cover_image', filename=book.cover) }}" alt="Capa do livro '{{ book.title }}'">
+          <h3>{{ book.title }}</h3>
+        </a>
+        {% endfor %}
+      
+      </div>
     </div>
-  </div>
-
-  <!-- Categoria: Fantasia -->
-  <div class="category mb-5">
-    <h2 class="category-title font-weight-bold fs-md text-blue-dark">Fantasia</h2>
-    <div class="category-books-container d-flex w-100 pt-1 pb-2">
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/sombra-e-ossos.jpg') }}" alt="Capa do livro 'Sombra e Ossos'">
-        <h3>Sombra e Ossos</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/o-ladrao-de-raios.jpg') }}" alt="Capa do livro 'O Ladrão de Raios'">
-        <h3>O Ladrão de Raios</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/a-rainha-vermelha.jpg') }}" alt="Capa do livro 'A Rainha Vermelha'">
-        <h3>A Rainha Vermelha</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/o-hobbit.jpg') }}" alt="Capa do livro 'O Hobbit'">
-        <h3>O Hobbit</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/duna.jpg') }}" alt="Capa do livro 'Duna'">
-        <h3>Duna</h3>
-      </a>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-warning text-center mt-3">
+      <h3>Nenhum livro disponível no momento.</h3>
     </div>
-  </div>
+  {% endif %}
 
-  <!-- Categoria: Ficção Científica -->
-  <div class="category mb-5">
-    <h2 class="category-title font-weight-bold fs-md text-blue-dark">Ficção Científica</h2>
-    <div class="category-books-container d-flex w-100 pt-1 pb-2">
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/interestelar.jpg') }}" alt="Capa do livro 'Interestelar'">
-        <h3>Interestelar</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/neuromancer.jpg') }}" alt="Capa do livro 'Neuromancer'">
-        <h3>Neuromancer</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/o-conto-da-aia.jpg') }}" alt="Capa do livro 'O Conto da Aia'">
-        <h3>O Conto da Aia</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/frankenstein.jpg') }}" alt="Capa do livro 'Frankenstein'">
-        <h3>Frankenstein</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/fahrenheit-451.png') }}" alt="Capa do livro 'Fahrenheit, 451'">
-        <h3>Fahrenheit, 451</h3>
-      </a>
-    </div>
-  </div>
-
-  <!-- Categoria: Drama -->
-  <div class="category mb-5">
-    <h2 class="category-title font-weight-bold fs-md text-blue-dark">Drama</h2>
-    <div class="category-books-container d-flex w-100 pt-1 pb-2">
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/hamlet.jpg') }}" alt="Capa do livro 'Hamlet'">
-        <h3>Hamlet</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/o-auto-da-barca-do-inferno.png') }}" alt="Capa do livro 'O Auto da Barca do Inferno'">
-        <h3>O Auto da Barca do Inferno</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/o-cacador-de-pipas.jpg') }}" alt="Capa do livro 'O Caçador de Pipas'">
-        <h3>O Caçador de Pipas</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/o-beijo-no-asfalto.jpg') }}" alt="Capa do livro 'O Beijo no Asfalto'">
-        <h3>O Beijo no Asfalto</h3>
-      </a>
-
-      <a class="book-card" href="#">
-        <img src="{{ url_for('static', filename='images/o-menino-do-pijama-listrado.jpg') }}" alt="Capa do livro 'O Menino do Pijama Listrado'">
-        <h3>O Menino do Pijama Listrado</h3>
-      </a>
-    </div>
-  </div>
 </div>
 {% endblock %}
