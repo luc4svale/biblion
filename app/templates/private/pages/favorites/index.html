@@ -1,111 +1,80 @@
 {% extends 'private/pages/base/index.html' %}
 
 {% set page_title = 'Livros favoritos' %}
-
 {% set custom_style = 'favorites.css' %}
 
 {% block page_content %}
-<!-- Favorites Cards -->
-<section class="card shadow my-4 mx-2 mx-lg-5 d-flex flex-column align-items-center">
-  <header class="card-header w-100 py-3 px-4">
-    <h1 class="font-weight-bold text-blue-dark mb-0">Livros favoritos</h1>
-  </header>
+  <section class="card shadow my-4 mx-2 mx-lg-5 d-flex flex-column align-items-center">
+    <header class="card-header w-100 py-3 px-4">
+      <h1 class="font-weight-bold text-blue-dark mb-0">Livros favoritos</h1>
+    </header>
 
-  <div class="card-body row w-100">
+    <div class="card-body row w-100">
+      {% if favorites %}
+        {% for book in favorites %}
+          <div class="favorite-card-wrapper px-4 pb-4 col-lg-4">
+            <div class="favorite-book-card bg-surface-primary rounded row">
+              <div class="book-cover col-6 p-0">
+                <img class="w-100 h-100 rounded" src="{{ url_for('uploads.get_cover_image', filename=book.cover) }}" alt="Capa do livro '{{ book.title }}'" />
+              </div>
 
-    <!-- Exemplo de card de livro favorito -->
-    <div class="favorite-card-wrapper px-4 pb-4 col-lg-4">
-      <div class="favorite-book-card bg-surface-primary rounded row">
-        <div class="book-cover col-6 p-0">
-          <img class="w-100 h-100 rounded" src="{{ url_for('static', filename='images/ps-eu-te-amo.jpg') }}"
-            alt="Capa do livro 'PS, Eu Te Amo'">
-        </div>
+              <div class="col-6 d-flex py-3 px-2 flex-column justify-content-around">
+                <h2 class="book-title text-center fs-base font-weight-bold">{{ book.title }}</h2>
 
-        <div class="col-6 d-flex py-3 px-2 flex-column justify-content-around">
-          <h2 class="book-title text-center fs-base font-weight-bold">PS, Eu Te Amo</h2>
+                <dl class="book-info mx-auto fs-sm d-flex flex-column gap-0.5">
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt>
+                      <i class="fas fa-user"></i>
+                    </dt>
+                    <dd class="truncate book-author">{{ book.author }}</dd>
+                  </div>
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt>
+                      <i class="fas fa-book-open"></i>
+                    </dt>
+                    <dd class="truncate book-publisher">{{ book.publisher }}</dd>
+                  </div>
+                  <div class="d-flex align-items-center gap-0.5">
+                    <dt>
+                      <i class="fas fa-calendar-days"></i>
+                    </dt>
+                    <dd class="truncate book-year">{{ book.publication_year }}</dd>
+                  </div>
+                </dl>
 
-          <dl class="book-info mx-auto fs-sm d-flex flex-column gap-0.5">
-            <div class="d-flex align-items-center gap-0.5">
-              <dt><i class="fas fa-user"></i></dt>
-              <dd class="truncate book-author">Cecelia Ahern</dd>
+                <div class="book-actions d-flex gap-1 justify-content-center">
+                  <a href="{{ url_for('books.reading', book_id=book.id) }}" class="btn start-reading" title="Iniciar leitura"><i class="fas fa-play"></i></a>
+                  <button data-favorite-id="{{ book.favorite_id }}" class="btn delete-favorite"  data-toggle="modal" data-target="#delete-favorite-modal"  title="Remover dos favoritos"><i class="fas fa-trash-alt"></i></button>
+                </div>
+              </div>
             </div>
-            <div class="d-flex align-items-center gap-0.5">
-              <dt><i class="fas fa-book-open"></i></dt>
-              <dd class="truncate book-publisher">Novo Conceito</dd>
-            </div>
-            <div class="d-flex align-items-center gap-0.5">
-              <dt><i class="fas fa-calendar-days"></i></dt>
-              <dd class="truncate book-year">2023</dd>
-            </div>
-          </dl>
-
-          <div class="book-actions d-flex gap-1 justify-content-center">
-            <a href="{{ url_for('books.reading') }}" class="btn start-reading" title="Iniciar leitura"><i class="fas fa-play"></i></a>
-            <button class="btn delete" data-toggle="modal" data-target="#deleteFavoriteModal"
-              title="Remover dos favoritos"><i class="fas fa-trash-alt"></i></button>
           </div>
+        {% endfor %}
+      {% else %}
+        <div class="alert alert-warning text-center w-100">
+          <h3>Nenhum livro favorito encontrado.</h3>
+          <p>Adicione alguns livros aos favoritos para vê-los aqui.</p>
         </div>
-      </div>
+      {% endif %}
     </div>
+  </section>
 
-    <!-- Repetir a estrutura acima para outros livros favoritos -->
-    <!-- Exemplo com outro livro -->
-    <div class="favorite-card-wrapper px-4 pb-4 col-lg-4">
-      <div class="favorite-book-card bg-surface-primary rounded row">
-        <div class="book-cover col-6 p-0">
-          <img class="w-100 h-100 rounded" src="{{ url_for('static', filename='images/neuromancer.jpg') }}"
-            alt="Capa do livro 'Neuromancer'">
+  <!-- Delete Favorite Modal -->
+  <div class="modal fade" id="delete-favorite-modal" tabindex="-1" role="dialog" aria-labelledby="delete-favorite-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="delete-favorite-modal-label">Remover dos Favoritos</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
         </div>
-
-        <div class="col-6 d-flex py-3 px-2 flex-column justify-content-around">
-          <h2 class="book-title text-center fs-base font-weight-bold">Neuromancer</h2>
-
-          <dl class="book-info mx-auto fs-sm d-flex flex-column gap-0.5">
-            <div class="d-flex align-items-center gap-0.5">
-              <dt><i class="fas fa-user"></i></dt>
-              <dd class="truncate book-author">William Gibson</dd>
-            </div>
-            <div class="d-flex align-items-center gap-0.5">
-              <dt><i class="fas fa-book-open"></i></dt>
-              <dd class="truncate book-publisher">Aleph</dd>
-            </div>
-            <div class="d-flex align-items-center gap-0.5">
-              <dt><i class="fas fa-calendar-days"></i></dt>
-              <dd class="truncate book-year">2015</dd>
-            </div>
-          </dl>
-
-          <div class="book-actions d-flex gap-1 justify-content-center">
-            <a href="#" class="btn start-reading" title="Iniciar leitura"><i class="fas fa-play"></i></a>
-            <button class="btn delete" data-toggle="modal" data-target="#deleteFavoriteModal"
-              title="Remover dos favoritos"><i class="fas fa-trash-alt"></i></button>
-          </div>
+        <div class="modal-body">Tem certeza que deseja remover esse livro dos seus favoritos?</div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
+          <button id="delete-favorite-button"  class="btn btn-primary" type="button" data-dismiss="modal">Confirmar</button>
         </div>
-      </div>
-    </div>
-
-    <!-- Adicione mais livros favoritos aqui -->
-
-  </div>
-</section>
-
-<!-- Delete Favorite Modal-->
-<div class="modal fade" id="deleteFavoriteModal" tabindex="-1" role="dialog" aria-labelledby="deleteFavoriteModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteFavoriteModalLabel">Remover dos Favoritos</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">Tem certeza que deseja remover esse livro dos favoritos?</div>
-      <div class="modal-footer">
-        <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
-        <button class="btn btn-primary" type="button" data-dismiss="modal">Confirmar</button>
       </div>
     </div>
   </div>
-</div>
 {% endblock %}
+
+{% set custom_script = 'favorites.js' %}

@@ -4,7 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from config import Config
 from .models import db, User
-from .routes import auth_bp, books_bp, users_bp, categories_bp, uploads_bp, authors_bp, publishers_bp
+from .routes import auth_bp, books_bp, users_bp, categories_bp, uploads_bp, authors_bp, publishers_bp, favorites_bp
 
 bcrypt = Bcrypt()
 login_manager = LoginManager()
@@ -28,6 +28,7 @@ def create_app():
     app.register_blueprint(authors_bp)
     app.register_blueprint(publishers_bp)
     app.register_blueprint(categories_bp)
+    app.register_blueprint(favorites_bp)
     app.register_blueprint(uploads_bp)
 
 

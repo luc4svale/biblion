@@ -61,7 +61,7 @@
         }
       }
 
-      &.delete {
+      &.delete-favorite {
         background-color: var(--red-highlight);
 
         &:hover {

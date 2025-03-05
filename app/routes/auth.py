@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template, jsonify, redirect
 from flask_login import login_required, current_user, logout_user
-from app.controllers.auth_controller import AuthController
+from app.controllers import AuthController
 from app.utils.decorators import logout_required
 
 auth_controller = AuthController()

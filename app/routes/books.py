@@ -2,10 +2,11 @@ from datetime import datetime
 from flask import Blueprint, request, render_template,  jsonify, redirect
 from flask_login import login_required, current_user
 from app.utils.decorators import admin_required
-from app.controllers.book_controller import BookController
+from app.controllers import BookController, FavoriteController
 
 
 book_controller = BookController()
+favorite_controller = FavoriteController()
 
 COMMON_TEMPLATE_PATH = "private/pages"
 
@@ -83,12 +84,14 @@ def home():
 @books_bp.route("/details/<book_id>", methods=["GET"])
 @login_required
 def book_details(book_id):
-    response = book_controller.get_book_details(book_id)
+    book_details = book_controller.get_book_details(book_id)
+    favorite = favorite_controller.get_favorite_by_user_and_book(current_user.id, book_id)
 
     return render_template(
         f"{COMMON_TEMPLATE_PATH}/details/index.html",
         user=current_user,
-        book=response.get("data")
+        book=book_details.get("data"),
+        favorite=favorite
 )
 
 
@@ -102,14 +105,4 @@ def reading(book_id):
         f"{COMMON_TEMPLATE_PATH}/reading/index.html",
         user=current_user,
         book_file=response.get("data")
-    )
-
-
-@books_bp.route("/favorites", methods=["GET"])
-@login_required
-def favorites():
-    return render_template(
-        f"{COMMON_TEMPLATE_PATH}/favorites/index.html",
-        user=current_user,
-        show_search=True
     )

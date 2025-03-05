@@ -1,4 +1,4 @@
-from app.services.user_service import UserService
+from app.services import UserService
 from app.exceptions import APIException
 
 user_service = UserService()

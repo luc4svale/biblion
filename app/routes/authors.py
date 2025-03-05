@@ -1,7 +1,7 @@
 from flask import Blueprint,request, render_template, redirect, jsonify
 from flask_login import current_user
 from app.utils.decorators import admin_required
-from app.controllers.author_controller import AuthorController
+from app.controllers import AuthorController
 
 author_controller = AuthorController()
 

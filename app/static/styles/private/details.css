@@ -19,6 +19,10 @@
         background-color: var(--blue-dark);
       }
 
+      &.delete-favorite:hover {
+        background-color: var(--red-highlight-hover);
+      }
+
       &.start-reading:hover {
         background-color: var(--text-gray);
       }

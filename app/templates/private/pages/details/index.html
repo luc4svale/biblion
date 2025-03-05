@@ -2,7 +2,7 @@
 
 {% set page_title = 'Detalhes do Livro' %}
 
-{% set custom_style = 'book-details.css' %}
+{% set custom_style = 'details.css' %}
 
 {% block page_content %}
   <div class="container-fluid mt-4">
@@ -36,26 +36,30 @@
             </p>
 
             <div class="btn-group gap-1 d-flex flex-column flex-lg-row">
-              <button class="btn add-favorite p-2 bg-blue-hover text-white rounded d-flex gap-0.5 align-items-center justify-content-center" data-toggle="modal" data-target="#addFavoriteModal"><i class="fas fa-heart"></i> Adicionar aos Favoritos</button>
-
               <a href="{{ url_for('books.reading', book_id=book.id) }}" class="btn start-reading p-2 bg-dark text-white rounded d-flex gap-0.5 align-items-center text-center justify-content-center"><i class="fas fa-book"></i> Iniciar Leitura</a>
+
+              {% if favorite %}
+                <button data-favorite-id="{{ favorite.id }}" class="btn favorite-button delete-favorite p-2 bg-red-highlight text-white rounded d-flex gap-0.5 align-items-center justify-content-center" data-toggle="modal" data-target="#delete-favorite-modal"><i class="fas fa-heart-broken"></i> Remover dos Favoritos</button>
+              {% else %}
+                <button data-book-id="{{ book.id }}" class="btn favorite-button add-favorite p-2 bg-blue-hover text-white rounded d-flex gap-0.5 align-items-center justify-content-center"><i class="fas fa-heart"></i> Adicionar aos Favoritos</button>
+              {% endif %}
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Add Favorite Modal -->
-      <div class="modal fade" id="addFavoriteModal" tabindex="-1" role="dialog" aria-labelledby="addFavoriteModalLabel" aria-hidden="true">
+      <!-- Delete Favorite Modal -->
+      <div class="modal fade" id="delete-favorite-modal" tabindex="-1" role="dialog" aria-labelledby="delete-favorite-modal-label" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="addFavoriteModalLabel">Adicionar aos Favoritos</h5>
+              <h5 class="modal-title" id="delete-favorite-modal-label">Remover dos Favoritos</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
-            <div class="modal-body">Deseja adicionar esse livro aos favoritos?</div>
+            <div class="modal-body">Tem certeza que deseja remover esse livro dos seus favoritos?</div>
             <div class="modal-footer">
               <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
-              <button class="btn btn-primary" type="button" data-dismiss="modal">Confirmar</button>
+              <button id="delete-favorite-button" class="btn btn-primary" type="button" data-dismiss="modal">Confirmar</button>
             </div>
           </div>
         </div>
@@ -68,3 +72,5 @@
     {% endif %}
   </div>
 {% endblock %}
+
+{% set custom_script = 'details.js' %}

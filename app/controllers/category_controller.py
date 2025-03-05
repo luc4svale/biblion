@@ -1,5 +1,5 @@
 
-from app.services.category_service import CategoryService
+from app.services import CategoryService
 from app.exceptions import APIException
 
 category_service = CategoryService()

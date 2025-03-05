@@ -1,4 +1,4 @@
-from app.services.book_service import BookService
+from app.services import BookService
 from app.exceptions import APIException
 
 
@@ -138,7 +138,6 @@ class BookController:
 
         except APIException as e:
             return {"message": str(e), "data": None, "status": e.status_code}
-
 
 
     def get_book_file(self, book_id):

@@ -23,6 +23,9 @@
 .bg-blue-hover {
   background-color: var(--blue-hover);
 }
+.bg-red-highlight {
+  background-color: var(--red-highlight);
+}
 .bg-green-hover {
  background-color: var(--green-hover);
 }

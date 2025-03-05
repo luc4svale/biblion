@@ -1,5 +1,5 @@
 import re
-from app.models.publisher import db, Publisher
+from app.models import db, Publisher
 from app.exceptions import APIException
 
 class PublisherService:

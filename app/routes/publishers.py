@@ -1,7 +1,7 @@
 from flask import Blueprint,request, render_template, redirect, jsonify
 from flask_login import current_user
 from app.utils.decorators import admin_required
-from app.controllers.publisher_controller import PublisherController
+from app.controllers import PublisherController
 
 
 publisher_controller = PublisherController()

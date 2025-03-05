@@ -1,5 +1,5 @@
 
-from app.services.publisher_service import PublisherService
+from app.services import PublisherService
 from app.exceptions import APIException
 
 publisher_service = PublisherService()

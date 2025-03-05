@@ -1,5 +1,5 @@
 import re
-from app.models.category import db, Category
+from app.models import db, Category
 from app.exceptions import APIException
 
 class CategoryService:

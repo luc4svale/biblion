@@ -1,5 +1,5 @@
 
-from app.services.author_service import AuthorService
+from app.services import AuthorService
 from app.exceptions import APIException
 
 author_service = AuthorService()

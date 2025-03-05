@@ -1,5 +1,5 @@
 import re
-from app.models.author import db, Author
+from app.models import db, Author
 from app.exceptions import APIException
 
 class AuthorService:

@@ -1,7 +1,7 @@
 from flask import Blueprint,request, render_template, redirect, jsonify
 from flask_login import current_user
 from app.utils.decorators import admin_required
-from app.controllers.category_controller import CategoryController
+from app.controllers import CategoryController
 
 
 category_controller = CategoryController()
