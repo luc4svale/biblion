@@ -1,65 +1,180 @@
-# Biblion | Sistema de Gerenciamento de Biblioteca Digital
+# Biblion - Biblioteca Digital
 
-Visão Geral
-O projeto Biblion foi criado para oferecer uma solução completa para o gerenciamento de bibliotecas digitais. A aplicação possibilita que usuários cadastrem-se, façam login, realizem buscas, visualizem detalhes dos livros e salvem seus títulos favoritos. Além disso, administradores dispõem de uma área exclusiva para gerenciar o conteúdo – incluindo livros, autores, categorias e editoras – com uma interface baseada no template SB Admin 2.
+## Sumário
 
-Recursos
-Gerenciamento de Livros: Cadastro, atualização, visualização e remoção de livros.
-Gerenciamento de Autores: Inclusão e manutenção dos dados dos autores.
-Categorias e Editoras: Organização dos livros por categorias e editoras.
-Autenticação e Autorização: Sistema completo de registro, login e controle de acesso com Flask-Login.
-Área Administrativa: Interface administrativa intuitiva baseada no template SB Admin 2.
-Favoritos: Permite que os usuários salvem livros de interesse para acesso rápido.
-Uploads de Arquivos: Funcionalidade para upload de imagens, arquivos PDF e outros conteúdos relacionados aos livros.
+- [Descrição](#descrição)
+- [Funcionalidades](#funcionalidades)
+  - [Usuário Comum](#usuário-comum)
+  - [Administrador](#administrador)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Estrutura das Telas](#estrutura-das-telas)
+- [Configuração e Execução](#configuração-e-execução)
+  - [Clonando o Repositório](#clonando-o-repositório)
+  - [Criando e Ativando o Ambiente Virtual](#criando-e-ativando-o-ambiente-virtual)
+  - [Instalando Dependências](#instalando-dependências)
+  - [Configurando Variáveis de Ambiente](#configurando-variáveis-de-ambiente)
+  - [Executando a Aplicação](#executando-a-aplicação)
+  - [Usuário Administrador Padrão](#usuário-administrador-padrão)
+- [Capturas de Tela](#capturas-de-tela)
+- [Licença](#licença)
 
-Tecnologias Utilizadas
-Linguagem: Python 3.x
-Framework Web: Flask
-Banco de Dados: SQLAlchemy (configurável via variável de ambiente, com opção padrão para SQLite)
-Autenticação: Flask-Login e Flask-Bcrypt para segurança
-Migrações: Flask-Migrate para gerenciamento das alterações no banco de dados
-Templates: Jinja2
-Frontend: HTML5, CSS3, JavaScript e o template SB Admin 2
+## Descrição
 
-Instalação
-Siga os passos abaixo para configurar e executar o projeto localmente:
+Biblion é uma biblioteca digital desenvolvida utilizando Flask, permitindo que usuários explorem livros por categorias, favoritem obras e iniciem leituras diretamente na plataforma. Além disso, permite aos usuários com privilégio o gerenciamento de categorias, autores, editoras e livros da biblioteca.
 
-Clone o repositório:
+## Funcionalidades
 
-Copiar:
-git clone git clone https://github.com/luc4svale/biblion.git
+### Usuário Comum
+
+- Cadastro 
+- Login
+- Exploração de livros separados por categorias (gêneros)
+- Visualização dos detalhes de um livro específico
+- Leitura de livros diretamente no sistema
+- Gerenciamento de livros favoritos
+- Edição de informações de perfil e senha
+
+### Administrador
+
+- Todas as funcionalidades do usuário comum
+- Gerenciamento de categorias
+- Gerenciamento de autores
+- Gerenciamento de editoras
+- Gerenciamento de livros
+
+## Tecnologias Utilizadas
+
+- **Back-end**: Flask, Flask-Login, Flask-SQLAlchemy, Flask-Migrate, Flask-Bcrypt
+- **Front-end**: Jinja, SB Admin Template, CSS, JavaScript
+- **Banco de Dados**: SQLite (para desenvolvimento)
+
+## Estrutura das Telas
+1. **Tela de Boas Vindas**:  Apresenta simples mensagem de boas-vindas e botões de redirecionamento para cadastro e login.
+
+2. **Tela de Cadastro**: Permite que novos usuários se registrem na plataforma fornecendo nome, email e senha.
+
+3. **Tela de Login**: Permite a autenticação do usuário na plataforma e o acesso às demais funcionalidades do sistema.
+
+2. **Tela Home**: Exibe os livros separados por categorias.
+
+3. **Tela de Detalhes do Livro**: Apresenta informações detalhadas sobre o livro e permite iniciar a leitura ou adicioná-lo aos favoritos.
+
+4. **Tela de Leitura**: Espaço para a leitura digital do livro.
+
+5. **Tela de Favoritos**: Lista os livros favoritados pelo usuário, permitindo acesso rápido à leitura e remoção de favoritos.
+
+6. **Tela de Perfil**: Permite edição de dados do usuário e alteração de senha.
+
+7. **Tela de Categorias**: Lista e permite o gerenciamento (cadastro, edição e exclusão) de categorias de livros da plataforma.
+
+8. **Tela de Autores**: Lista e permite o gerenciamento (cadastro, edição e exclusão) de autores de livros da plataforma.
+
+9. **Tela de Editoras**: Lista e permite o gerenciamento (cadastro, edição e exclusão) de editoras de livros da plataforma.
+
+10. **Tela de Livros** Lista e permite o gerenciamento (cadastro, edição e exclusão) de livros da plataforma.
+
+
+
+## Configuração e Execução
+
+### Clonando o Repositório
+
+```sh
+git clone https://github.com/luc4svale/biblion.git
 cd biblion
+```
 
-Crie e ative um ambiente virtual:
+### Criando e Ativando o Ambiente Virtual
 
-Copiar:
+```sh
+# Windows
 python -m venv venv
-# No Windows:
 venv\Scripts\activate
-# No Linux/Mac:
+
+# Linux/Mac
+python3 -m venv venv
 source venv/bin/activate
-Instale as dependências:
+```
 
-Copiar:
+
+### Instalando Dependências
+```sh
 pip install -r requirements.txt
-Configure as variáveis de ambiente:
+```
 
-Crie um arquivo .env na raiz do projeto com as seguintes configurações básicas:
+### Configurando Variáveis de Ambiente
+```sh
+# Windows (PowerShell)
+copy .env.example .env
+copy .flaskenv.example .flaskenv
 
-env
-Copiar:
-FLASK_APP=biblion/app
-FLASK_ENV=development
-SECRET_KEY=sua_chave_secreta
-DATABASE_URL=sqlite:///biblion.db
+# Linux/Mac
+cp .env.example .env
+cp .flaskenv.example .flaskenv
+```
+Edite os arquivos .env e .flaskenv conforme necessário.
 
-Execute as migrações do banco de dados:
+### Executando a Aplicação
 
-Copiar
-flask db init
-flask db migrate -m "Initial migration."
-flask db upgrade
-Configuração
-Variáveis de Ambiente: Ajuste o arquivo .env conforme as necessidades do ambiente (desenvolvimento, produção, etc.).
-Banco de Dados: A configuração padrão utiliza SQLite, mas você pode alterar para outro SGBD modificando a variável DATABASE_URL.
-Segurança: Certifique-se de definir uma SECRET_KEY forte para a segurança da aplicação.
+```sh 
+$ flask db upgrade  # Executa as migrações do banco de dados
+$ flask run         # Inicia o servidor Flask
+```
+A aplicação estará acessível em http://127.0.0.1:5000.
+
+### Usuário Administrador Padrão
+
+A migração do banco de dados cria automaticamente um usuário administrador padrão com as seguintes credenciais:
+
+- E-mail: admin@example.com
+- Senha: Admin123@
+
+Esse usuário pode ser utilizado para acessar a área administrativa do sistema.
+
+# Capturas de Tela
+
+## Tela de Boas Vindas
+![Tela de Boas Vindas](docs/screenshots/welcome.png)
+
+## Tela de Cadastro
+![Tela de Cadastro](docs/screenshots/register.png)
+
+## Tela de Login
+![Tela de Login](docs/screenshots/login.png)
+
+## Tela Home
+![Tela Home](docs/screenshots/home.png)
+
+## Tela de Detalhes do Livro
+![Tela de Detalhes do Livro](docs/screenshots/details.png)
+
+## Tela de Leitura
+![Tela de Leitura](docs/screenshots/reading.png)
+
+## Tela de Favoritos
+![Tela de Favoritos](docs/screenshots/favorites.png)
+
+## Tela de Perfil
+![Tela de Perfil](docs/screenshots/profile-01.png)
+![Tela de Perfil](docs/screenshots/profile-02.png)
+
+## Tela de Categorias
+![Tela de Categorias](docs/screenshots/categories.png)
+
+## Tela de Autores
+![Tela de Autores](docs/screenshots/authors.png)
+
+## Tela de Editoras
+![Tela de Editoras](docs/screenshots/publishers.png)
+
+## Tela de Livros
+![Tela de Livros](docs/screenshots/books-01.png)
+![Tela de Livros](docs/screenshots/books-02.png)
+
+
+
+# Licença
+Este projeto está licenciado sob a [MIT License](./LICENSE).
+
+
+
