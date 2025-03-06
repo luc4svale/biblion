@@ -87,6 +87,15 @@ async function submitDeleteFavoriteBook(favoriteId) {
 
 $(document).ready(() => {
 
+
+    //---------- Set Buttons ToolTips ----------//
+    $('.delete-favorite').tooltip()
+    $('.start-reading').tooltip()
+
+
+
+
+
     //---- Delete Favorite Modal on Hidden ----//
     $(deleteFavoriteModal).on('hidden.bs.modal', () => {
         $(deleteFavoriteModalButton).data('favoriteId', '')

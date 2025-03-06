@@ -43,8 +43,8 @@
                 </dl>
 
                 <div class="book-actions d-flex gap-1 justify-content-center">
-                  <a href="{{ url_for('books.reading', book_id=book.id) }}" class="btn start-reading" title="Iniciar leitura"><i class="fas fa-play"></i></a>
-                  <button data-favorite-id="{{ book.favorite_id }}" class="btn delete-favorite"  data-toggle="modal" data-target="#delete-favorite-modal"  title="Remover dos favoritos"><i class="fas fa-trash-alt"></i></button>
+                  <a href="{{ url_for('books.reading', book_id=book.id) }}" class="btn start-reading" title="Iniciar leitura" data-placement="bottom"><i class="fas fa-play"></i></a>
+                  <button data-favorite-id="{{ book.favorite_id }}" class="btn delete-favorite"  data-toggle="modal" data-target="#delete-favorite-modal"  title="Remover dos favoritos" data-placement="bottom"><i class="fas fa-trash-alt"></i></button>
                 </div>
               </div>
             </div>

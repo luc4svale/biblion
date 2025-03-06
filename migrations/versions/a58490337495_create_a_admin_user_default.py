@@ -6,7 +6,6 @@ Create Date: 2025-03-03 16:32:44.542132
 
 """
 
-import uuid
 from datetime import datetime, timezone
 from alembic import op
 import sqlalchemy as sa
@@ -25,7 +24,7 @@ def upgrade():
     conn = op.get_bind()
 
     admin_user = {
-        'id': str(uuid.uuid4()),
+        'id': '188bfdca-c0f5-4424-a12c-ec4c5de8c9e3',
         'first_name': 'Admin',
         'last_name': 'User',
         'email': 'admin@example.com',

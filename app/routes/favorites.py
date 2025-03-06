@@ -21,9 +21,7 @@ def register_favorite():
 @favorites_bp.route("/favorites", methods=["GET"])
 @login_required
 def render_user_favorites():
-    print("KKKKKKKKKKKKK")
     favorites = favorite_controller.get_user_favorites(current_user.id)
-    print(favorites)
 
     return render_template(
         f"{COMMON_TEMPLATE_PATH}/favorites/index.html",
