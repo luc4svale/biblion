@@ -131,49 +131,49 @@ A migração do banco de dados cria automaticamente um usuário administrador pa
 
 Esse usuário pode ser utilizado para acessar a área administrativa do sistema.
 
-# Capturas de Tela
+## Capturas de Tela
 
-## Tela de Boas Vindas
+### Tela de Boas Vindas
 ![Tela de Boas Vindas](docs/screenshots/welcome.png)
 
-## Tela de Cadastro
+### Tela de Cadastro
 ![Tela de Cadastro](docs/screenshots/register.png)
 
-## Tela de Login
+### Tela de Login
 ![Tela de Login](docs/screenshots/login.png)
 
-## Tela Home
+### Tela Home
 ![Tela Home](docs/screenshots/home.png)
 
-## Tela de Detalhes do Livro
+### Tela de Detalhes do Livro
 ![Tela de Detalhes do Livro](docs/screenshots/details.png)
 
-## Tela de Leitura
+### Tela de Leitura
 ![Tela de Leitura](docs/screenshots/reading.png)
 
-## Tela de Favoritos
+### Tela de Favoritos
 ![Tela de Favoritos](docs/screenshots/favorites.png)
 
-## Tela de Perfil
+### Tela de Perfil
 ![Tela de Perfil](docs/screenshots/profile-01.png)
 ![Tela de Perfil](docs/screenshots/profile-02.png)
 
-## Tela de Categorias
+### Tela de Categorias
 ![Tela de Categorias](docs/screenshots/categories.png)
 
-## Tela de Autores
+### Tela de Autores
 ![Tela de Autores](docs/screenshots/authors.png)
 
-## Tela de Editoras
+### Tela de Editoras
 ![Tela de Editoras](docs/screenshots/publishers.png)
 
-## Tela de Livros
+### Tela de Livros
 ![Tela de Livros](docs/screenshots/books-01.png)
 ![Tela de Livros](docs/screenshots/books-02.png)
 
 
 
-# Licença
+## Licença
 Este projeto está licenciado sob a [MIT License](./LICENSE).
 
 
