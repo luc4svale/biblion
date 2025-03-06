@@ -51,7 +51,8 @@ class FavoriteService:
 
 
     def get_user_favorites(self, user_id):
-        return Favorite.query.filter_by(user_id=user_id).all()
+        return Favorite.query.filter_by(user_id=user_id).order_by(Favorite.created_at.desc()).all()
+
 
     def remove_favorite(self, favorite_id):
         try:
